@@ -3044,19 +3044,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Familia\\.nuget\\packages\\": {}
+    "C:\\Users\\GAMING\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Familia\\Documents\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj",
+      "projectUniqueName": "C:\\Users\\GAMING\\OneDrive\\Documentos\\IN6AV\\Restaurante\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj",
       "projectName": "AuthService.Persistence",
-      "projectPath": "C:\\Users\\Familia\\Documents\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj",
-      "packagesPath": "C:\\Users\\Familia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Familia\\Documents\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Persistence\\obj\\",
+      "projectPath": "C:\\Users\\GAMING\\OneDrive\\Documentos\\IN6AV\\Restaurante\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj",
+      "packagesPath": "C:\\Users\\GAMING\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\GAMING\\OneDrive\\Documentos\\IN6AV\\Restaurante\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Familia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\GAMING\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -3068,8 +3068,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Familia\\Documents\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj": {
-              "projectPath": "C:\\Users\\Familia\\Documents\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj"
+            "C:\\Users\\GAMING\\OneDrive\\Documentos\\IN6AV\\Restaurante\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj": {
+              "projectPath": "C:\\Users\\GAMING\\OneDrive\\Documentos\\IN6AV\\Restaurante\\Restaurante ICE\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj"
             }
           }
         }
@@ -3078,11 +3078,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3126,7 +3121,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.417/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.122/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
