@@ -4,7 +4,7 @@ services:
     container_name: ice_postgres
     environment:
       POSTGRES_USER: ICE
-      POSTGRES_PASSWORD: 123456789
+      POSTGRES_PASSWORD: restaICE1@
       POSTGRES_DB: restaurant_ice
     ports:
       - "5436:5432"

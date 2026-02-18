@@ -1,0 +1,106 @@
+[2026-02-17 00:06:11 ERR] Failed executing DbCommand (58ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM "__EFMigrationsHistory"
+ORDER BY migration_id; {"EventId":{"Id":20102,"Name":"Microsoft.EntityFrameworkCore.Database.Command.CommandError"},"SourceContext":"Microsoft.EntityFrameworkCore.Database.Command"}
+[2026-02-17 00:30:41 INF] Verificando conexión a la base de datos... {"SourceContext":"Program"}
+[2026-02-17 00:30:48 INF] Base de datos lista. Ejecutando datos semilla... {"SourceContext":"Program"}
+[2026-02-17 00:30:54 INF] Inicialización de base de datos completada exitosamente {"SourceContext":"Program"}
+[2026-02-17 00:30:57 INF] API de AuthService está ejecutándose en http://localhost:5227. Endpoint de salud: http://localhost:5227/health {"SourceContext":"Program"}
+[2026-02-17 01:20:04 INF] Verificando conexión a la base de datos... {"SourceContext":"Program"}
+[2026-02-17 01:20:09 INF] Base de datos lista. Ejecutando datos semilla... {"SourceContext":"Program"}
+[2026-02-17 01:20:10 INF] Inicialización de base de datos completada exitosamente {"SourceContext":"Program"}
+[2026-02-17 01:20:11 INF] API de AuthService está ejecutándose en http://localhost:5227. Endpoint de salud: http://localhost:5227/health {"SourceContext":"Program"}
+[2026-02-17 01:20:39 WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNJDUK6F00SQ:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUK6F00SQ"}
+[2026-02-17 01:20:43 ERR] An unhandled exception occurred {"SourceContext":"AuthService.Api.Middlewares.GlobalExceptionMiddleware","RequestId":"0HNJDUK6F00SQ:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUK6F00SQ"}
+System.ArgumentException: Cloud name must be specified in Account!
+   at CloudinaryDotNet.ApiShared..ctor(Account account)
+   at CloudinaryDotNet.Api..ctor(Account account)
+   at CloudinaryDotNet.Cloudinary..ctor(Account account)
+   at AuthService.Application.Services.CloudinaryService..ctor(IConfiguration configuration) in C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\Services\CloudinaryService.cs:line 11
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitCache(ServiceCallSite callSite, RuntimeResolverContext context, ServiceProviderEngineScope serviceProviderEngine, RuntimeResolverLock lockType)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.DynamicServiceProviderEngine.<>c__DisplayClass2_0.<RealizeService>b__0(ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceProviderEngineScope.GetService(Type serviceType)
+   at lambda_method26(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.RateLimiting.RateLimitingMiddleware.InvokeInternal(HttpContext context, EnableRateLimitingAttribute enableRateLimitingAttribute)
+   at AuthService.Api.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Api\Middlewares\GlobalExceptionMiddleware.cs:line 18
+[2026-02-17 01:20:49 INF] HTTP POST /api/v1/auth/register responded 400 in 10031.9763 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNJDUK6F00SQ:00000001","ConnectionId":"0HNJDUK6F00SQ"}
+[2026-02-17 01:27:33 INF] Verificando conexión a la base de datos... {"SourceContext":"Program"}
+[2026-02-17 01:27:52 INF] Base de datos lista. Ejecutando datos semilla... {"SourceContext":"Program"}
+[2026-02-17 01:27:54 INF] Inicialización de base de datos completada exitosamente {"SourceContext":"Program"}
+[2026-02-17 01:27:58 INF] API de AuthService está ejecutándose en http://localhost:5227. Endpoint de salud: http://localhost:5227/health {"SourceContext":"Program"}
+[2026-02-17 01:29:17 WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNJDUP0Q8J4H:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUP0Q8J4H"}
+[2026-02-17 01:30:14 INF] User cnavarro registered successfully {"EventId":{"Id":1001,"Name":"LogUserRegistered"},"SourceContext":"AuthService.Application.Services.AuthService","ActionId":"86af65bb-997e-4db6-9f09-5be5446cb218","ActionName":"AuthService.Api.Controllers.AuthController.Register (AuthService.Api)","RequestId":"0HNJDUP0Q8J4H:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUP0Q8J4H"}
+[2026-02-17 01:30:40 INF] HTTP POST /api/v1/auth/register responded 201 in 82217.4530 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNJDUP0Q8J4H:00000001","ConnectionId":"0HNJDUP0Q8J4H"}
+[2026-02-17 01:30:42 WRN] Validación de certificados SSL deshabilitada. Solo usar en desarrollo. {"SourceContext":"AuthService.Application.Services.EmailService","ActionId":"86af65bb-997e-4db6-9f09-5be5446cb218","ActionName":"AuthService.Api.Controllers.AuthController.Register (AuthService.Api)","RequestId":"0HNJDUP0Q8J4H:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUP0Q8J4H"}
+[2026-02-17 01:30:47 INF] Email enviado exitosamente {"SourceContext":"AuthService.Application.Services.EmailService","ActionId":"86af65bb-997e-4db6-9f09-5be5446cb218","ActionName":"AuthService.Api.Controllers.AuthController.Register (AuthService.Api)","RequestId":"0HNJDUP0Q8J4H:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUP0Q8J4H"}
+[2026-02-17 01:30:47 INF] Pipeline de email completado {"SourceContext":"AuthService.Application.Services.EmailService","ActionId":"86af65bb-997e-4db6-9f09-5be5446cb218","ActionName":"AuthService.Api.Controllers.AuthController.Register (AuthService.Api)","RequestId":"0HNJDUP0Q8J4H:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUP0Q8J4H"}
+[2026-02-17 01:30:47 INF] Email processed {"SourceContext":"AuthService.Application.Services.EmailService","ActionId":"86af65bb-997e-4db6-9f09-5be5446cb218","ActionName":"AuthService.Api.Controllers.AuthController.Register (AuthService.Api)","RequestId":"0HNJDUP0Q8J4H:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUP0Q8J4H"}
+[2026-02-17 01:30:48 INF] Verification email sent {"SourceContext":"AuthService.Application.Services.AuthService","ActionId":"86af65bb-997e-4db6-9f09-5be5446cb218","ActionName":"AuthService.Api.Controllers.AuthController.Register (AuthService.Api)","RequestId":"0HNJDUP0Q8J4H:00000001","RequestPath":"/api/v1/auth/register","ConnectionId":"0HNJDUP0Q8J4H"}
+[2026-02-17 01:38:40 INF] Verificando conexión a la base de datos... {"SourceContext":"Program"}
+[2026-02-17 01:38:54 INF] Base de datos lista. Ejecutando datos semilla... {"SourceContext":"Program"}
+[2026-02-17 01:39:03 INF] Inicialización de base de datos completada exitosamente {"SourceContext":"Program"}
+[2026-02-17 01:39:07 INF] API de AuthService está ejecutándose en http://localhost:5227. Endpoint de salud: http://localhost:5227/health {"SourceContext":"Program"}
+[2026-02-17 01:39:50 WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNJDUUTIEKBH:00000001","RequestPath":"/api/v1/auth/verify-email","ConnectionId":"0HNJDUUTIEKBH"}
+[2026-02-17 01:40:03 WRN] Validación de certificados SSL deshabilitada. Solo usar en desarrollo. {"SourceContext":"AuthService.Application.Services.EmailService","ActionId":"9725fc12-798b-46f5-9826-66ef58644553","ActionName":"AuthService.Api.Controllers.AuthController.VerifyEmail (AuthService.Api)","RequestId":"0HNJDUUTIEKBH:00000001","RequestPath":"/api/v1/auth/verify-email","ConnectionId":"0HNJDUUTIEKBH"}
+[2026-02-17 01:40:09 INF] Email enviado exitosamente {"SourceContext":"AuthService.Application.Services.EmailService","ActionId":"9725fc12-798b-46f5-9826-66ef58644553","ActionName":"AuthService.Api.Controllers.AuthController.VerifyEmail (AuthService.Api)","RequestId":"0HNJDUUTIEKBH:00000001","RequestPath":"/api/v1/auth/verify-email","ConnectionId":"0HNJDUUTIEKBH"}
+[2026-02-17 01:40:12 INF] Pipeline de email completado {"SourceContext":"AuthService.Application.Services.EmailService","ActionId":"9725fc12-798b-46f5-9826-66ef58644553","ActionName":"AuthService.Api.Controllers.AuthController.VerifyEmail (AuthService.Api)","RequestId":"0HNJDUUTIEKBH:00000001","RequestPath":"/api/v1/auth/verify-email","ConnectionId":"0HNJDUUTIEKBH"}
+[2026-02-17 01:40:14 INF] Email processed {"SourceContext":"AuthService.Application.Services.EmailService","ActionId":"9725fc12-798b-46f5-9826-66ef58644553","ActionName":"AuthService.Api.Controllers.AuthController.VerifyEmail (AuthService.Api)","RequestId":"0HNJDUUTIEKBH:00000001","RequestPath":"/api/v1/auth/verify-email","ConnectionId":"0HNJDUUTIEKBH"}
+[2026-02-17 01:40:15 INF] Email verified successfully for user cnavarro {"SourceContext":"AuthService.Application.Services.AuthService","ActionId":"9725fc12-798b-46f5-9826-66ef58644553","ActionName":"AuthService.Api.Controllers.AuthController.VerifyEmail (AuthService.Api)","RequestId":"0HNJDUUTIEKBH:00000001","RequestPath":"/api/v1/auth/verify-email","ConnectionId":"0HNJDUUTIEKBH"}
+[2026-02-17 01:40:17 INF] HTTP POST /api/v1/auth/verify-email responded 200 in 26763.2244 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNJDUUTIEKBH:00000001","ConnectionId":"0HNJDUUTIEKBH"}
+[2026-02-17 01:41:59 INF] User login succeeded {"EventId":{"Id":1002,"Name":"LogUserLoggedIn"},"SourceContext":"AuthService.Application.Services.AuthService","ActionId":"1ccb1187-29f5-402e-a6a6-95c3a574371e","ActionName":"AuthService.Api.Controllers.AuthController.Login (AuthService.Api)","RequestId":"0HNJDUUTIEKBJ:00000001","RequestPath":"/api/v1/auth/login","ConnectionId":"0HNJDUUTIEKBJ"}
+[2026-02-17 01:42:00 ERR] An unhandled exception occurred {"SourceContext":"AuthService.Api.Middlewares.GlobalExceptionMiddleware","RequestId":"0HNJDUUTIEKBJ:00000001","RequestPath":"/api/v1/auth/login","ConnectionId":"0HNJDUUTIEKBJ"}
+System.ArgumentOutOfRangeException: IDX10720: Unable to create KeyedHashAlgorithm for algorithm 'HS256', the key size must be greater than: '256' bits, key has '224' bits. (Parameter 'keyBytes')
+   at Microsoft.IdentityModel.Tokens.CryptoProviderFactory.ValidateKeySize(Byte[] keyBytes, String algorithm, Int32 expectedNumberOfBytes)
+   at Microsoft.IdentityModel.Tokens.CryptoProviderFactory.CreateKeyedHashAlgorithm(Byte[] keyBytes, String algorithm)
+   at Microsoft.IdentityModel.Tokens.SymmetricSignatureProvider.CreateKeyedHashAlgorithm()
+   at Microsoft.IdentityModel.Tokens.DisposableObjectPool`1.CreateInstance()
+   at Microsoft.IdentityModel.Tokens.DisposableObjectPool`1.Allocate()
+   at Microsoft.IdentityModel.Tokens.SymmetricSignatureProvider.GetKeyedHashAlgorithm(Byte[] keyBytes, String algorithm)
+   at Microsoft.IdentityModel.Tokens.SymmetricSignatureProvider.Sign(Byte[] input)
+   at Microsoft.IdentityModel.JsonWebTokens.JwtTokenUtilities.CreateEncodedSignature(String input, SigningCredentials signingCredentials)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.WriteToken(SecurityToken token)
+   at AuthService.Application.Services.JwtTokenService.GenerateToken(User user) in C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\Services\JwtTokenService.cs:line 43
+   at AuthService.Application.Services.AuthService.LoginAsync(LoginDto loginDto) in C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\Services\AuthService.cs:line 197
+   at AuthService.Api.Controllers.AuthController.Login(LoginDto loginDto) in C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Api\Controllers\AuthController.cs:line 18
+   at lambda_method559(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.RateLimiting.RateLimitingMiddleware.InvokeInternal(HttpContext context, EnableRateLimitingAttribute enableRateLimitingAttribute)
+   at AuthService.Api.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Api\Middlewares\GlobalExceptionMiddleware.cs:line 18
+[2026-02-17 01:42:04 INF] HTTP POST /api/v1/auth/login responded 400 in 8083.7087 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNJDUUTIEKBJ:00000001","ConnectionId":"0HNJDUUTIEKBJ"}
+[2026-02-17 01:45:54 INF] Verificando conexión a la base de datos... {"SourceContext":"Program"}
+[2026-02-17 01:45:59 INF] Base de datos lista. Ejecutando datos semilla... {"SourceContext":"Program"}
+[2026-02-17 01:46:01 INF] Inicialización de base de datos completada exitosamente {"SourceContext":"Program"}
+[2026-02-17 01:46:02 INF] API de AuthService está ejecutándose en http://localhost:5227. Endpoint de salud: http://localhost:5227/health {"SourceContext":"Program"}
+[2026-02-17 01:46:23 WRN] Failed to determine the https port for redirect. {"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HNJDV2IKJ11S:00000001","RequestPath":"/api/v1/auth/login","ConnectionId":"0HNJDV2IKJ11S"}
+[2026-02-17 01:46:42 INF] User login succeeded {"EventId":{"Id":1002,"Name":"LogUserLoggedIn"},"SourceContext":"AuthService.Application.Services.AuthService","ActionId":"536d0a43-d366-463e-b9e4-3bf071781ef8","ActionName":"AuthService.Api.Controllers.AuthController.Login (AuthService.Api)","RequestId":"0HNJDV2IKJ11S:00000001","RequestPath":"/api/v1/auth/login","ConnectionId":"0HNJDV2IKJ11S"}
+[2026-02-17 01:46:45 INF] HTTP POST /api/v1/auth/login responded 200 in 21504.4172 ms {"SourceContext":"Serilog.AspNetCore.RequestLoggingMiddleware","RequestId":"0HNJDV2IKJ11S:00000001","ConnectionId":"0HNJDV2IKJ11S"}

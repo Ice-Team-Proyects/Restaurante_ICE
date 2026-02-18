@@ -13,3 +13,19 @@ C:\Users\Familia\Documents\Restaurante ICE\authentication-service\auth-service\s
 C:\Users\Familia\Documents\Restaurante ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\refint\AuthService.Application.dll
 C:\Users\Familia\Documents\Restaurante ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.pdb
 C:\Users\Familia\Documents\Restaurante ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\ref\AuthService.Application.dll
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\bin\Debug\net8.0\AuthService.Application.deps.json
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\bin\Debug\net8.0\AuthService.Application.dll
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\bin\Debug\net8.0\AuthService.Application.pdb
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\bin\Debug\net8.0\AuthService.Domain.dll
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\bin\Debug\net8.0\AuthService.Domain.pdb
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.csproj.AssemblyReference.cache
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.AssemblyInfoInputs.cache
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.AssemblyInfo.cs
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.csproj.CoreCompileInputs.cache
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.sourcelink.json
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthServ.67992DEE.Up2Date
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.dll
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\refint\AuthService.Application.dll
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\AuthService.Application.pdb
+C:\Users\Familia\Desktop\Restaurante_ICE\authentication-service\auth-service\src\AuthService.Application\obj\Debug\net8.0\ref\AuthService.Application.dll
