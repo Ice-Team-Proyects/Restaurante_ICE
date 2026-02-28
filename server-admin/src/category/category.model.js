@@ -32,7 +32,7 @@ const categorySchema = new Schema(
 );
 
 categorySchema.index({ isActive: 1 });
-categorySchema.index({ categoryName: 1 });
-categorySchema.index({ isActive: 1, categoryName: 1 });
+categorySchema.index({ name: 1 });
+categorySchema.index({ isActive: 1, name: 1 });
 
 export default model('Category', categorySchema);

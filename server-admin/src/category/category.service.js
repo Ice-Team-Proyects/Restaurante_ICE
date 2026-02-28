@@ -34,3 +34,11 @@ export const fetchCategorys = async ({
         },
     };
 };
+
+export const deleteCategory = async (id) => {
+    return await Category.findByIdAndUpdate(id, { isActive: false }, { new: true });
+};
+
+export const restoreCategory = async (id) => {
+    return await Category.findByIdAndUpdate(id, { isActive: true }, { new: true });
+};

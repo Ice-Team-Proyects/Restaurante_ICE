@@ -17,7 +17,7 @@ const productSchema = new Schema(
             maxLength: [500, 'La Descripcion es Demasiado largo, no puede superar los 500 caracteres']
         },
         price:{
-            type: Double,
+            type: Number,
             required: [true, 'Debe Darle Un Precio Al Producto'],
             trim: true,
             maxLength: [10, 'El Precio es Demasiado Alto, No Puede Superar las 10 Sifras' ]

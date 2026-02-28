@@ -1,4 +1,4 @@
-'use strinct';
+'use strict';
 
 import {Schema, model} from 'mongoose';
 
@@ -25,7 +25,8 @@ const reservationSchema = new Schema(
             type: Boolean,
             default: true,
         },
-    }
+    },
+    { timestamps: true }
 );
 
 productSchema.index({ isActive: 1 });
