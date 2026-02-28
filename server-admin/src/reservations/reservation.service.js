@@ -34,3 +34,21 @@ export const fetchReservation = async ({
         },
     };
 };
+
+export const deleteReservation = async (id) => {
+    const reservation = await Reservation.findByIdAndUpdate(
+        id,
+        { isActive: false },
+        { new: true }
+    );
+    return reservation;
+};
+
+export const restoreReservation = async (id) => {
+    const reservation = await Reservation.findByIdAndUpdate(
+        id,
+        { isActive: true },
+        { new: true }
+    );
+    return reservation;
+};

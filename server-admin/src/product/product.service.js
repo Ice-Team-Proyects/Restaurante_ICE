@@ -5,12 +5,10 @@ export const createProductRecord = async ({ productData, file}) => {
 
     if (file) {
         const filename = file.filename;
-        // Adaptamos el regex para la carpeta de restaurantes
         const match = filename.match(/Products\/.+$/);
         data.photo = match ? match[0] : filename;
     } else {
-        // Imagen por defecto si no se sube ninguna
-        data.photo = 'Products/default_';
+        data.photo = 'Products/default_product_image.png';
     }
 
     const product = new Product(data);
@@ -43,4 +41,12 @@ export const fetchProducts = async ({
             limit: limitNumber,
         },
     };
+};
+
+export const deleteProduct = async (id) => {
+    return await Product.findByIdAndUpdate(id, { isActive: false }, { new: true });
+};
+
+export const restoreProduct = async (id) => {
+    return await Product.findByIdAndUpdate(id, { isActive: true }, { new: true });
 };
