@@ -10,13 +10,12 @@ import { helmetOptions } from './helmet.configuration.js'
 import { requestLimit } from './rateLimit.configuration.js';
 import { errorHandler } from '../middleware/handle-errors.js';
 
-// 1. IMPORTA TUS RUTAS DE RESTAURANTES AQUÍ:
+// 1. IMPORTA TUS RUTAS AQUÍ:
 //import categoryRoutes from '../src/Category/category.routes.js';
 //import productRoutes from '../src/product/product.routes.js';
 import restaurantRoutes from '../src/restaurant/restaurant.routes.js'; 
-import tableRoutes from '../src/table/table.routes.js';
-
-
+import tableRoutes from '../src/table/table.routes.js'; // Del repo principal
+import orderRoutes from '../src/order/order.routes.js'; // Tu aporte de Orders
 
 const BASE_PATH = '/RestauranteICE/v1';
 
@@ -32,13 +31,12 @@ const middlewares = (app) =>{
 const routes = (app) =>{
     
     // 2. DILE AL SERVIDOR QUE USE TUS RUTAS AQUÍ:
-     // 2. DILE AL SERVIDOR QUE USE TUS RUTAS AQUÍ:
-
 
     //app.use(`${BASE_PATH}/product`, productRoutes);
     //app.use(`${BASE_PATH}/category`, categoryRoutes);
     app.use(`${BASE_PATH}/restaurant`, restaurantRoutes);
-    app.use(`${BASE_PATH}/table`, tableRoutes);
+    app.use(`${BASE_PATH}/table`, tableRoutes); // Del repo principal
+    app.use(`${BASE_PATH}/order`, orderRoutes); // Tu aporte de Orders
 
     app.get(`${BASE_PATH}/health`, (req, res) =>{
         res.status(200).json({
@@ -60,7 +58,6 @@ export const initServer = async () =>{
     app.set('trust proxy', 1);
 
     try{
-        // ... (el resto queda exactamente igual)
         await dbConnection();
         middlewares(app);
         routes(app);
