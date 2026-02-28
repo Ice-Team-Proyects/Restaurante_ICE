@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: restaICE1@
       POSTGRES_DB: restaurant_ice
     ports:
-      - "5436:5432"
+      - "5437:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped

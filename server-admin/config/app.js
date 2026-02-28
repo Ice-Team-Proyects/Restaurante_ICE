@@ -11,6 +11,8 @@ import { requestLimit } from './rateLimit.configuration.js';
 import { errorHandler } from '../middleware/handle-errors.js';
 
 // 1. IMPORTA TUS RUTAS AQUÍ:
+import analyticsRoutes from '../src/analytics/analytics.routes.js'; // CORREGIDO AQUÍ
+
 //import categoryRoutes from '../src/Category/category.routes.js';
 //import productRoutes from '../src/product/product.routes.js';
 import restaurantRoutes from '../src/restaurant/restaurant.routes.js'; 
@@ -29,8 +31,8 @@ const middlewares = (app) =>{
 }
 
 const routes = (app) =>{
-    
     // 2. DILE AL SERVIDOR QUE USE TUS RUTAS AQUÍ:
+    app.use(`${BASE_PATH}/analytics`, analyticsRoutes); // CORREGIDO AQUÍ
 
     //app.use(`${BASE_PATH}/product`, productRoutes);
     //app.use(`${BASE_PATH}/category`, categoryRoutes);
