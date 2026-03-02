@@ -14,8 +14,8 @@ import { errorHandler } from '../middleware/handle-errors.js';
 // 1. IMPORTA TUS RUTAS AQUÍ:
 import analyticsRoutes from '../src/analytics/analytics.routes.js'; // CORREGIDO AQUÍ
 
-//import categoryRoutes from '../src/Category/category.routes.js';
-//import productRoutes from '../src/product/product.routes.js';
+import categoryRoutes from '../src/Category/category.routes.js';
+import productRoutes from '../src/product/product.routes.js';
 import restaurantRoutes from '../src/restaurant/restaurant.routes.js'; 
 import tableRoutes from '../src/table/table.routes.js'; // Del repo principal
 import orderRoutes from '../src/order/order.routes.js'; // Tu aporte de Orders
@@ -36,8 +36,8 @@ const routes = (app) =>{
     // 2. DILE AL SERVIDOR QUE USE TUS RUTAS AQUÍ:
     app.use(`${BASE_PATH}/analytics`, analyticsRoutes); // CORREGIDO AQUÍ
 
-    //app.use(`${BASE_PATH}/product`, productRoutes);
-    //app.use(`${BASE_PATH}/category`, categoryRoutes);
+    app.use(`${BASE_PATH}/product`, productRoutes);
+    app.use(`${BASE_PATH}/category`, categoryRoutes);
     app.use(`${BASE_PATH}/restaurant`, restaurantRoutes);
     app.use(`${BASE_PATH}/table`, tableRoutes); // Del repo principal
     app.use(`${BASE_PATH}/order`, orderRoutes); // Tu aporte de Orders
