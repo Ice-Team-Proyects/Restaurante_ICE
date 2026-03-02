@@ -1,0 +1,57 @@
+# ======================
+# Sistema Operativo
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# Logs / Temporales
+# ======================
+*.log
+logs/
+
+# ======================
+# IDE / Editor
+# ======================
+.vscode/
+.idea/
+*.suo
+*.user
+*.sln
+
+# ======================
+# Builds / Dependencias
+# ======================
+/bin/
+/obj/
+/build/
+/dist/
+/out/
+/target/
+
+# ======================
+# Configs sensibles
+# ======================
+*.env
+*.secret
+*.config
+*.credentials
+*.keystore
+
+# ======================
+# Bases de datos locales
+# ======================
+*.db
+*.sqlite
+*.sql
+*.mdb
+*.ldf
+
+# ======================
+# Java / .NET / Node
+# ======================
+node_modules/
+npm-debug.log*
+*.class
+*.jar
+*.war
