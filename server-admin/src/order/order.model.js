@@ -19,14 +19,14 @@ const orderItemSchema = new Schema({
         required: [true, 'El precio es requerido'],
         min: [0, 'El precio no puede ser negativo']
     }
-}, { _id: false }); // _id: false para que Mongoose no le asigne un ID propio a cada item
+}, { _id: false }); 
 
 const orderSchema = new Schema(
     {
         tableId: {
-            type: String,
-            required: [true, 'El identificador de la mesa es requerido'],
-            trim: true
+            type: Schema.Types.ObjectId, 
+            ref: 'Table',                
+            required: [true, 'El identificador de la mesa es requerido']
         },
         items: {
             type: [orderItemSchema],

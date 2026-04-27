@@ -21,6 +21,11 @@ const reservationSchema = new Schema(
             type: Date,
             required: [true, 'Debe Establecer Hora Para La Reserva']
         },
+        table: {
+        type: Schema.Types.ObjectId,
+        ref: 'Table',
+        required: [true, 'Una reservación debe tener una mesa asignada']
+        },
         isActive: {
             type: Boolean,
             default: true,
@@ -29,8 +34,8 @@ const reservationSchema = new Schema(
     { timestamps: true }
 );
 
-productSchema.index({ isActive: 1 });
-productSchema.index({ name_custumer: 1 });
-productSchema.index({ isActive: 1, name_custumer: 1 });
+reservationSchema.index({ isActive: 1 });
+reservationSchema.index({ name_customer: 1 });
+reservationSchema.index({ isActive: 1, name_customer: 1 });
 
 export default model('Reservation', reservationSchema);

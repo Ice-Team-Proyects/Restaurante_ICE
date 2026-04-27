@@ -1,15 +1,30 @@
 import Order from './order.model.js';
+import Table from '../table/table.model.js';
 
 export const createOrderRecord = async ({ orderData }) => {
+    if (!orderData) {
+        throw new Error('No se proporcionaron datos para la orden (orderData is missing).');
+    }
+
+    const { tableId, items } = orderData;
+
+    const tableExists = await Table.findOne({ _id: tableId, isActive: true });
+    
+    if (!tableExists) {
+        throw new Error('La mesa proporcionada no existe o no está activa en el sistema.');
+    }
+
     const data = { ...orderData };
 
-    // Si no viene el totalAmount, lo calculamos sumando (precio * cantidad) de cada item
-    if (!data.totalAmount && data.items && data.items.length > 0) {
-        data.totalAmount = data.items.reduce((acc, item) => acc + (item.quantity * item.price), 0);
+    if (items && items.length > 0) {
+        data.totalAmount = items.reduce((acc, item) => {
+            return acc + (item.quantity * item.price);
+        }, 0);
     }
 
     const order = new Order(data);
     await order.save();
+    
     return order;
 };
 
@@ -26,6 +41,7 @@ export const fetchOrders = async ({
     const limitNumber = parseInt(limit);
 
     const orders = await Order.find(filter)
+        .populate('tableId', 'number capacity')
         .limit(limitNumber * 1)
         .skip((pageNumber - 1) * limitNumber)
         .sort({ createdAt: -1 });

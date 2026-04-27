@@ -8,14 +8,14 @@ import {
 // 1. Crear pedido (POST)
 export const createOrder = async (req, res) => {
     try {
-        const order = await createOrderRecord({
+        const newOrder = await createOrderRecord({
             orderData: req.body
         });
         
         res.status(201).json({
             success: true,
             message: 'Pedido creado exitosamente',
-            data: order
+            data: newOrder
         });
     } catch (err) {
         res.status(500).json({

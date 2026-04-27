@@ -1,16 +1,20 @@
-import { createCategoryRecord as createCategoryService, fetchCategorys } from './category.service.js';
-import { Category } from './category.model.js'
+import { 
+    createCategoryRecord as createCategoryService, 
+    fetchCategorys, 
+    deleteCategory as deleteCategoryService, 
+    restoreCategory as restoreCategoryService 
+} from './category.service.js';
 
 export const createCategoryRecord = async (req, res) => {
     try {
+
         const category = await createCategoryService({
-            categoryDataData: req.body,
-            file: req.file
+            categoryData: req.body
         });
         
         res.status(201).json({
             success: true,
-            message: 'Categoria Creado Exitosamente',
+            message: 'Categoria Creada Exitosamente',
             data: category
         });
     } catch (err) {
@@ -24,21 +28,26 @@ export const createCategoryRecord = async (req, res) => {
 
 export const getCategorys = async (req, res) => {
     try {
-        const { page = 1, limit = 10, isActive = true } = req.query;
-        const active = isActive === 'true';
+        const { page = 1, limit = 10, isActive } = req.query;
         
-        const { category, pagination } = await fetchCategorys({ page, limit, isActive:active});
+        const active = isActive !== 'false'; 
+        
+        const { category, pagination } = await fetchCategorys({ 
+            page, 
+            limit, 
+            isActive: active 
+        });
 
         res.status(200).json({
             success: true,
-            message: 'Categorias Listados Exitosamente',
+            message: 'Categorias Listadas Exitosamente',
             data: category,
             pagination
         });
     } catch (err) {
         res.status(500).json({
             success: false,
-            message: 'Error al Listar las Categorias Registrados',
+            message: 'Error al Listar las Categorias',
             error: err.message
         });
     }
@@ -47,35 +56,25 @@ export const getCategorys = async (req, res) => {
 export const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const category = await Category.findByIdAndUpdate(
-      id,
-      { isActive: false },
-      { new: true }
-    );
+    // LLAMAMOS AL SERVICIO, no al modelo Category que no existe aquí
+    const category = await deleteCategoryService(id);
 
     if (!category) return res.status(404).json({ message: 'Categoría no encontrada' });
-
-    res.json({ message: 'Categoría eliminada', category });
+    res.json({ success: true, message: 'Categoría eliminada', data: category });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 
 export const restoreCategory = async (req, res) => {
   try {
     const { id } = req.params;
-
-    const category = await Category.findByIdAndUpdate(
-      id,
-      { isActive: true },
-      { new: true }
-    );
+    // LLAMAMOS AL SERVICIO
+    const category = await restoreCategoryService(id);
 
     if (!category) return res.status(404).json({ message: 'Categoría no encontrada' });
-
-    res.json({ message: 'Categoría restaurada', category });
+    res.json({ success: true, message: 'Categoría restaurada', data: category });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 };

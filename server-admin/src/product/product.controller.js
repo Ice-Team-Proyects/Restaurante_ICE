@@ -3,7 +3,7 @@ import { createProductRecord as createProductService, fetchProducts, deleteProdu
 export const createProductRecord = async (req, res) => {
     try {
         const menu = await createProductService({
-            restaurantData: req.body,
+            productData: req.body,
             file: req.file
         });
         

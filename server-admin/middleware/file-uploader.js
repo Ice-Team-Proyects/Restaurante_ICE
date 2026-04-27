@@ -67,5 +67,7 @@ export const uploadRestaurantImage = createCloudinaryUploader(
 //export const upload_Image = createCloudinaryUploader(
   //  "Restaurante_ICE/_",
 //);
-
+export const uploadMenuImage = createCloudinaryUploader(
+    "Restaurante_ICE/Products" 
+);
 export { cloudinary };

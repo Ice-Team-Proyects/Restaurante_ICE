@@ -14,7 +14,7 @@ const categorySchema = new Schema(
             type: String,
             required: [true, 'El tipo de campo es requerido'],
             enum: {
-                values: ['Bebidas Frias', 'Paltillos', 'Bebidas Calientes', 'Sopas'],
+                values: ['Bebidas Frias', 'Platillos', 'Bebidas Calientes', 'Sopas'],
                 message: 'Categoria De Alimento no Válida',
             },
         },
@@ -35,4 +35,4 @@ categorySchema.index({ isActive: 1 });
 categorySchema.index({ name: 1 });
 categorySchema.index({ isActive: 1, name: 1 });
 
-export default model('Category', categorySchema);
+export default model('Category', categorySchema, 'category');

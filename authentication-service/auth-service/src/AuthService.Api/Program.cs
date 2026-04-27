@@ -6,6 +6,7 @@ using Serilog;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 
+// 1. INICIALIZAR EL BUILDER
 var builder = WebApplication.CreateBuilder(args);
 
 // CORRECCIÓN: Omitir validación SSL (Cloudinary, etc.)
@@ -16,6 +17,20 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) =>
     loggerConfiguration
         .ReadFrom.Configuration(context.Configuration)
         .ReadFrom.Services(services));
+
+// --- INICIO DE CONFIGURACIÓN DE SERVICIOS ---
+
+// 2. AGREGAR CORS AQUÍ (Antes del Build)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.WithOrigins("https://localhost:3021")
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 // Add services to the container
 builder.Services.AddControllers(options =>
@@ -39,7 +54,12 @@ builder.Services.AddRateLimitingPolicies();
 builder.Services.AddSecurityPolicies(builder.Configuration);
 builder.Services.AddSecurityOptions();
 
+// --- FIN DE CONFIGURACIÓN DE SERVICIOS ---
+
+// 3. CONSTRUIR LA APLICACIÓN (Solo una vez)
 var app = builder.Build();
+
+// --- INICIO DE PIPELINE DE MIDDLEWARES ---
 
 // Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
@@ -52,43 +72,45 @@ if (app.Environment.IsDevelopment())
 app.UseSerilogRequestLogging();
 
 // Add Security Headers using NetEscapades package
-app.UseSecurityHeaders(policies => policies
-    .AddDefaultSecurityHeaders()
-    .RemoveServerHeader()
-    .AddFrameOptionsDeny()
-    .AddXssProtectionBlock()
-    .AddContentTypeOptionsNoSniff()
-    .AddReferrerPolicyStrictOriginWhenCrossOrigin()
-    .AddContentSecurityPolicy(builder =>
-    {
-        builder.AddDefaultSrc().Self();
-        builder.AddScriptSrc().Self().UnsafeInline();
-        builder.AddStyleSrc().Self().UnsafeInline();
-        builder.AddImgSrc().Self().Data();
-        builder.AddFontSrc().Self().Data();
-        builder.AddConnectSrc().Self();
-        builder.AddFrameAncestors().None();
-        builder.AddBaseUri().Self();
-        builder.AddFormAction().Self();
-    })
-    .AddCustomHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
-    .AddCustomHeader("Cache-Control", "no-store, no-cache, must-revalidate, private")
-);
+// app.UseSecurityHeaders(policies => policies
+//     .AddDefaultSecurityHeaders()
+//     .RemoveServerHeader()
+//     .AddFrameOptionsDeny()
+//     .AddXssProtectionBlock()
+//     .AddContentTypeOptionsNoSniff()
+//     .AddReferrerPolicyStrictOriginWhenCrossOrigin()
+//     .AddContentSecurityPolicy(builder =>
+//     {
+//         builder.AddDefaultSrc().Self();
+//         builder.AddScriptSrc().Self().UnsafeInline();
+//         builder.AddStyleSrc().Self().UnsafeInline();
+//         builder.AddImgSrc().Self().Data();
+//         builder.AddFontSrc().Self().Data();
+//         builder.AddConnectSrc().Self();
+//         builder.AddFrameAncestors().None();
+//         builder.AddBaseUri().Self();
+//         builder.AddFormAction().Self();
+//     })
+//     .AddCustomHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
+//     .AddCustomHeader("Cache-Control", "no-store, no-cache, must-revalidate, private")
+// );
 
 // Manejo global de excepciones
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// Middlewares principales
-app.UseHttpsRedirection();
-app.UseCors("DefaultCorsPolicy");
+// Middlewares principales (El orden aquí es vital)
+// app.UseHttpsRedirection();
+
+// 4. USAR EL MIDDLEWARE DE CORS AQUÍ (Debe ir antes de Auth y RateLimiter)
+app.UseCors("AllowAll");
+
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
-// Endpoints de verificación de salud - ambas versiones para compatibilidad
-// Endpoint estándar de verificación de salud
+// Endpoints de verificación de salud
 app.MapHealthChecks("/health");
 
 // Endpoint personalizado de salud para coincidir con formato de respuesta Node.js
@@ -103,6 +125,8 @@ app.MapGet("/health", () =>
 });
 
 app.MapHealthChecks("/api/v1/health");
+
+// --- LÓGICA DE INICIO Y BASE DE DATOS ---
 
 // Log de inicio: direcciones y endpoint de salud
 var startupLogger = app.Services.GetRequiredService<ILogger<Program>>();
@@ -143,7 +167,7 @@ using (var scope = app.Services.CreateScope())
     {
         logger.LogInformation("Verificando conexión a la base de datos...");
 
-        // Garantizar que la base de datos se crea (similar a Sequelize sync en Node.js)
+        // Garantizar que la base de datos se crea
         await context.Database.EnsureCreatedAsync();
 
         logger.LogInformation("Base de datos lista. Ejecutando datos semilla...");
@@ -158,4 +182,5 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+// 5. ARRANCAR LA APLICACIÓN
 app.Run();

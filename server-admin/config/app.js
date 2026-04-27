@@ -10,16 +10,17 @@ import { helmetOptions } from './helmet.configuration.js'
 import { requestLimit } from './rateLimit.configuration.js';
 import { errorHandler } from '../middleware/handle-errors.js';
 
+// IMPORTANTE: Cambiamos YAML por tus nuevos archivos de configuración
+import { swaggerDocs, swaggerUi } from './documentation.js';
 
-// 1. IMPORTA TUS RUTAS AQUÍ:
-import analyticsRoutes from '../src/analytics/analytics.routes.js'; // CORREGIDO AQUÍ
-
+import analyticsRoutes from '../src/analytics/analytics.routes.js'; 
 import categoryRoutes from '../src/Category/category.routes.js';
 import productRoutes from '../src/product/product.routes.js';
 import restaurantRoutes from '../src/restaurant/restaurant.routes.js'; 
-import tableRoutes from '../src/table/table.routes.js'; // Del repo principal
-import orderRoutes from '../src/order/order.routes.js'; // Tu aporte de Orders
+import tableRoutes from '../src/table/table.routes.js'; 
+import orderRoutes from '../src/order/order.routes.js'; 
 import eventRoutes from '../src/event/eventRoutes.js';
+import reservationsRoutes from '../src/reservations/reservation.routes.js';
 
 const BASE_PATH = '/RestauranteICE/v1';
 
@@ -33,15 +34,17 @@ const middlewares = (app) =>{
 }
 
 const routes = (app) =>{
-    // 2. DILE AL SERVIDOR QUE USE TUS RUTAS AQUÍ:
-    app.use(`${BASE_PATH}/analytics`, analyticsRoutes); // CORREGIDO AQUÍ
-
+    // Servir la documentación usando swagger-jsdoc (el que lee los comentarios)
+    app.use(`${BASE_PATH}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    
+    app.use(`${BASE_PATH}/analytics`, analyticsRoutes); 
     app.use(`${BASE_PATH}/product`, productRoutes);
     app.use(`${BASE_PATH}/category`, categoryRoutes);
     app.use(`${BASE_PATH}/restaurant`, restaurantRoutes);
-    app.use(`${BASE_PATH}/table`, tableRoutes); // Del repo principal
-    app.use(`${BASE_PATH}/order`, orderRoutes); // Tu aporte de Orders
+    app.use(`${BASE_PATH}/table`, tableRoutes); 
+    app.use(`${BASE_PATH}/order`, orderRoutes); 
     app.use(`${BASE_PATH}/event`, eventRoutes);
+    app.use(`${BASE_PATH}/reservation`, reservationsRoutes);
 
     app.get(`${BASE_PATH}/health`, (req, res) =>{
         res.status(200).json({
@@ -49,6 +52,7 @@ const routes = (app) =>{
             service: 'Restaurante ICE Server'
         })
     })
+
     app.use((req, res) =>{
         res.status(404).json({
             success: false,
@@ -59,7 +63,7 @@ const routes = (app) =>{
 
 export const initServer = async () =>{
     const app = express();
-    const PORT = process.env.PORT;
+    const PORT = process.env.PORT || 3021; 
     app.set('trust proxy', 1);
 
     try{
@@ -70,6 +74,7 @@ export const initServer = async () =>{
 
         app.listen(PORT, () => {
             console.log(`Restaurante_ICE server running on port ${PORT}`);
+            console.log(`Documentation: http://localhost:${PORT}${BASE_PATH}/api-docs`);
             console.log(`Health check: http://localhost:${PORT}${BASE_PATH}/health`)
         });
     }catch(err){

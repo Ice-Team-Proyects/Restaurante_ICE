@@ -3,9 +3,9 @@ import Category from './category.model.js';
 export const createCategoryRecord = async ({ categoryData}) => {
     const data = { ...categoryData };
 
-    const Category = new Category(data);
-    await Category.save();
-    return Category;
+    const newCategory = new Category(data);
+    await newCategory.save();
+    return newCategory;
 };
 
 export const fetchCategorys = async ({
@@ -13,7 +13,7 @@ export const fetchCategorys = async ({
     limit = 10,
     isActive = true,
 }) => {
-    const filter = { isActive };
+    const filter = {isActive};
     const pageNumber = parseInt(page);
     const limitNumber = parseInt(limit);
 
@@ -21,6 +21,9 @@ export const fetchCategorys = async ({
         .limit(limitNumber * 1)
         .skip((pageNumber - 1) * limitNumber)
         .sort({ createdAt: -1 });
+    
+    console.log("Filtro usado:", filter); 
+    console.log("Categorías encontradas en DB:", category);
 
     const total = await Category.countDocuments(filter);
 

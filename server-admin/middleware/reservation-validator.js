@@ -2,7 +2,7 @@ import { body, param } from 'express-validator';
 import { validateJWT } from './validate-JWT.js';
 import { checkValidators } from './check-validators.js';
 
-export const validateCreateProduct = [
+export const validateCreateReservation = [
     validateJWT,
     body('name_customer')
         .notEmpty()
@@ -21,5 +21,10 @@ export const validateCreateProduct = [
         .isISO8601()
         .withMessage('Debe ingresar una fecha válida')
         .toDate(),
+    body('table')
+        .notEmpty()
+        .withMessage('La reservación debe tener una mesa asignada')
+        .isMongoId()
+        .withMessage('El ID de la mesa no es válido'),
     checkValidators,
 ];

@@ -22,6 +22,11 @@ const productSchema = new Schema(
             trim: true,
             maxLength: [10, 'El Precio es Demasiado Alto, No Puede Superar las 10 Sifras' ]
         },
+        category: {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+        required: [true, 'La categoría es obligatoria']
+        },
         photo: {
             type: String,
             default: 'Menus/default_menu_image',

@@ -1,4 +1,7 @@
-import { createReservationRecord as createReservationService, fetchReservation } from './reservation.service.js';
+import { createReservationRecord as createReservationService,
+    fetchReservation,
+    deleteReservation as deleteReservationService, 
+    restoreReservation as restoreReservationService } from './reservation.service.js';
 
 export const createReservationRecord = async (req, res) => {
     try {
@@ -23,7 +26,7 @@ export const createReservationRecord = async (req, res) => {
 export const getReservations = async (req, res) => {
     try {
         const { page = 1, limit = 10, isActive = true } = req.query;
-        const active = isActive === 'true';
+        const active = isActive !== 'false';
         
         const { reservations, pagination } = await fetchReservation({ page, limit, isActive: active });
 
