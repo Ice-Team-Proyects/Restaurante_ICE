@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createRestaurant, getRestaurants, updateRestaurant, deleteRestaurant } from "./restaurant.controller.js";
+import { createRestaurant, getRestaurants, updateRestaurant, deleteRestaurant, restoreRestaurant } from "./restaurant.controller.js";
 import { validateCreateRestaurant } from '../../middleware/restaurant-validator.js';
 import { uploadRestaurantImage } from "../../middleware/file-uploader.js";
 import { cleanupUploadedFileOnFinish } from '../../middleware/delete-file-on-error.js';
@@ -112,8 +112,8 @@ router.put(
 
 /**
  * @swagger
- * /restaurant/{id}:
- *   delete:
+ * /restaurant/delete/{id}:
+ *   patch:
  *     summary: Eliminar un restaurante (Soft Delete)
  *     tags: [Restaurant]
  *     parameters:
@@ -129,6 +129,27 @@ router.put(
  *       404:
  *         description: Restaurante no encontrado
  */
-router.delete('/:id', deleteRestaurant);
+router.patch('/delete/:id', deleteRestaurant);
+
+/**
+ * @swagger
+ * /restaurant/restore/{id}:
+ *   patch:
+ *     summary: Restaurar un restaurante eliminado
+ *     tags: [Restaurant]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del restaurante a restaurar
+ *     responses:
+ *       200:
+ *         description: Restaurante restaurado correctamente
+ *       404:
+ *         description: Restaurante no encontrado
+ */
+router.patch('/restore/:id', restoreRestaurant);
 
 export default router;

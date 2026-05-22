@@ -1,4 +1,4 @@
-import { createRestaurantRecord, fetchRestaurants, updateRestaurantRecord, deleteRestaurantRecord } from './restaurant.service.js';
+import { createRestaurantRecord, fetchRestaurants, updateRestaurantRecord, deleteRestaurantRecord, restoreRestaurantRecord } from './restaurant.service.js';
 
 export const createRestaurant = async (req, res) => {
     try {
@@ -48,5 +48,18 @@ export const deleteRestaurant = async (req, res) => {
         res.status(200).json({ success: true, message: 'Restaurante desactivado exitosamente (Soft Delete)', data: deletedRestaurant });
     } catch (err) {
         res.status(500).json({ success: false, message: 'Error al eliminar el restaurante', error: err.message });
+    }
+};
+
+// NUEVO: Restaurar restaurante
+export const restoreRestaurant = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const restoredRestaurant = await restoreRestaurantRecord(id);
+        
+        if (!restoredRestaurant) return res.status(404).json({ success: false, message: 'Restaurante no encontrado' });
+        res.status(200).json({ success: true, message: 'Restaurante restaurado exitosamente', data: restoredRestaurant });
+    } catch (err) {
+        res.status(500).json({ success: false, message: 'Error al restaurar el restaurante', error: err.message });
     }
 };

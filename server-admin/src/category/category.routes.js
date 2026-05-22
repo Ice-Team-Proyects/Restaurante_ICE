@@ -3,7 +3,8 @@ import {
     createCategoryRecord,
     getCategorys, 
     deleteCategory, 
-    restoreCategory 
+    restoreCategory,
+    updateCategory
 } from "./category.controller.js";
 import { validateCreateCategory } from '../../middleware/category-validator.js'; 
 
@@ -53,6 +54,38 @@ router.post(
   validateCreateCategory,
   createCategoryRecord
 );
+
+/**
+ * @swagger
+ * /category/{id}:
+ *   put:
+ *     summary: Actualizar una categoría existente
+ *     tags: [Category]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID de la categoría a actualizar
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Categoría actualizada con éxito
+ *       404:
+ *         description: La categoría no existe
+ */
+router.put('/:id', updateCategory);
 
 /**
  * @swagger

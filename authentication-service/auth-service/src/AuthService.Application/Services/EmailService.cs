@@ -14,6 +14,8 @@ public class EmailService(IConfiguration configuration, ILogger<EmailService> lo
         var subject = "Verifica tu dirección de correo electrónico";
         var verificationUrl = $"{configuration["AppSettings:FrontendUrl"]}/verify-email?token={token}";
 
+        logger.LogWarning("Verification URL for {Email}: {Url}", email, verificationUrl);
+
         var body = $@"
             <h2>¡Bienvenido {username}!</h2>
             <p>Por favor, verifica tu dirección de correo electrónico haciendo clic en el enlace a continuación:</p>
