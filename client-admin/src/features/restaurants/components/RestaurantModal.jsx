@@ -5,7 +5,7 @@ import { useRestaurantStore } from '../store/restaurantStore';
 
 const RestaurantModal = () => {
   const { isModalOpen, setIsModalOpen, createRestaurant, updateRestaurant, selectedRestaurant, setSelectedRestaurant } = useRestaurantStore();
-  const { register, handleSubmit, reset, setValue, watch } = useForm();
+  const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
   
   const [preview, setPreview] = useState(null);
   const imageFile = watch('image');
@@ -35,13 +35,16 @@ const RestaurantModal = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('address', data.address);
-    formData.append('phone', data.phone);
-    formData.append('openingHours', data.openingHours);
-    formData.append('description', data.description);
+    
+    formData.append('name', data.name || '');
+    formData.append('address', data.address || '');
+    formData.append('phone', data.phone || '');
+    formData.append('openingHours', data.openingHours || '');
+    formData.append('description', data.description || '');
 
-    if (data.image && data.image[0]) {
+    if (data.image && data.image instanceof FileList && data.image[0]) {
+      formData.append('image', data.image[0]);
+    } else if (data.image && data.image[0]) {
       formData.append('image', data.image[0]);
     }
 
@@ -55,6 +58,14 @@ const RestaurantModal = () => {
           text: 'El restaurante se actualizó correctamente',
           confirmButtonColor: '#F97316'
         });
+        handleClose();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo actualizar el restaurante',
+          confirmButtonColor: '#EF4444'
+        });
       }
     } else {
       success = await createRestaurant(formData);
@@ -65,10 +76,20 @@ const RestaurantModal = () => {
           text: 'El restaurante se creó exitosamente',
           confirmButtonColor: '#F97316'
         });
+        handleClose();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al crear el restaurante en el servidor',
+          confirmButtonColor: '#EF4444'
+        });
       }
     }
+  };
 
-    if (success) handleClose();
+  const onInvalidSubmit = (formErrors) => {
+    console.warn("Campos requeridos faltantes o inválidos:", formErrors);
   };
 
   const handleClose = () => {
@@ -79,52 +100,60 @@ const RestaurantModal = () => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-lg w-full max-w-lg p-6">
-        <h3 className="text-xl font-bold mb-4">
-          {selectedRestaurant ? 'Editar Restaurante' : 'Nuevo Restaurante'}
-        </h3>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-lg w-full max-w-lg flex flex-col max-h-[90vh]">
+        <div className="p-6 pb-4 border-b border-gray-100">
+          <h3 className="text-xl font-bold">
+            {selectedRestaurant ? 'Editar Restaurante' : 'Nuevo Restaurante'}
+          </h3>
+        </div>
         
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Nombre</label>
-            <input {...register('name', { required: true })} className="w-full border rounded-lg px-3 py-2" type="text" />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Dirección</label>
-            <input {...register('address', { required: true })} className="w-full border rounded-lg px-3 py-2" type="text" />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit(onSubmit, onInvalidSubmit)} className="flex flex-col flex-1 min-h-0">
+          <div className="p-6 space-y-4 overflow-y-auto max-h-[calc(90vh-160px)]">
             <div>
-              <label className="block text-sm font-medium mb-1">Teléfono</label>
-              <input {...register('phone', { required: true })} className="w-full border rounded-lg px-3 py-2" type="text" />
+              <label className="block text-sm font-medium mb-1">Nombre</label>
+              <input { ...register('name', { required: true }) } className={`w-full border rounded-lg px-3 py-2 ${errors.name ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
+              {errors.name && <span className="text-red-500 text-xs mt-1 block">El nombre es obligatorio</span>}
             </div>
+
             <div>
-              <label className="block text-sm font-medium mb-1">Horario</label>
-              <input {...register('openingHours', { required: true })} className="w-full border rounded-lg px-3 py-2" type="text" />
+              <label className="block text-sm font-medium mb-1">Dirección</label>
+              <input { ...register('address', { required: true }) } className={`w-full border rounded-lg px-3 py-2 ${errors.address ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
+              {errors.address && <span className="text-red-500 text-xs mt-1 block">La dirección es obligatoria</span>}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Teléfono</label>
+                <input { ...register('phone', { required: true }) } className={`w-full border rounded-lg px-3 py-2 ${errors.phone ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
+                {errors.phone && <span className="text-red-500 text-xs mt-1 block">El teléfono es obligatorio</span>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Horario</label>
+                <input { ...register('openingHours', { required: true }) } className={`w-full border rounded-lg px-3 py-2 ${errors.openingHours ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
+                {errors.openingHours && <span className="text-red-500 text-xs mt-1 block">El horario es obligatorio</span>}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">Descripción</label>
+              <textarea { ...register('description') } className="w-full border border-gray-300 rounded-lg px-3 py-2" rows="2"></textarea>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Imagen</label>
+              <input type="file" { ...register('image') } className="w-full text-sm" />
+              { preview && (
+                <img src={preview} className="mt-2 w-full h-32 object-cover rounded-lg border" alt="Previsualización" />
+              ) }
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">Descripción</label>
-            <textarea {...register('description')} className="w-full border rounded-lg px-3 py-2" rows="2"></textarea>
-          </div>
-          
-          <div>
-             <label className="block text-sm font-medium mb-1">Imagen</label>
-             <input type="file" {...register('image')} className="w-full text-sm"/>
-             {preview && (
-               <img src={preview} className="mt-2 w-full h-32 object-cover rounded-lg border" alt="Previsualización" />
-             )}
-          </div>
-
-          <div className="flex justify-end gap-3 pt-4">
-            <button type="button" onClick={handleClose} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+          <div className="p-6 pt-4 border-t border-gray-100 flex justify-end gap-3 bg-gray-50 rounded-b-xl">
+            <button type="button" onClick={handleClose} className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors">
               Cancelar
             </button>
-            <button type="submit" className="bg-main-orange text-white px-4 py-2 rounded-lg">
+            <button type="submit" className="bg-main-orange text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors">
               {selectedRestaurant ? 'Actualizar' : 'Guardar'}
             </button>
           </div>
