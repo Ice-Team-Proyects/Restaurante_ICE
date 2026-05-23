@@ -118,7 +118,7 @@ router.put(
 /**
  * @swagger
  * /table/delete/{id}:
- *   delete:
+ *   patch:
  *     summary: Eliminar una mesa (Soft Delete)
  *     tags: [Table]
  *     parameters:
@@ -134,7 +134,7 @@ router.put(
  *       404:
  *         description: Mesa no encontrada
  */
-router.delete('/delete/:id', validateIdParam, deleteTable);
+router.patch('/delete/:id', validateIdParam, deleteTable);
 
 /**
  * @swagger

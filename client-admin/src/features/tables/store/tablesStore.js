@@ -57,9 +57,11 @@ export const useTablesStore = create((set, get) => ({
   removeTable: async (id) => {
     try {
       set({ loading: true, error: null });
-      await deleteTable(id);
+      const res = await deleteTable(id);
       set({
-        tables: get().tables.filter((t) => t._id !== id),
+        tables: get().tables.map((t) =>
+          t._id === id ? res.data.data : t
+        ),
         loading: false,
       });
       return { success: true };

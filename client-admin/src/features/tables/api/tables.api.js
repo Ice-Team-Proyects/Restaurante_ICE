@@ -13,7 +13,7 @@ export const updateTable = (id, data) =>
   axiosInstance.put(`/table/${id}`, data);
 
 export const deleteTable = (id) =>
-  axiosInstance.delete(`/table/delete/${id}`);
+  axiosInstance.patch(`/table/delete/${id}`);
 
 export const restoreTable = (id) =>
   axiosInstance.patch(`/table/restore/${id}`);

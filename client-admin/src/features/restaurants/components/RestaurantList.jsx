@@ -13,7 +13,7 @@ const getImageUrl = (photo) => {
 const RestaurantList = () => {
   const { restaurants, deleteRestaurant, setSelectedRestaurant, setIsModalOpen } = useRestaurantStore();
 
-  if (!restaurants || !Array.isArray(restaurants) || restaurants.length === 0) {
+  if (!Array.isArray(restaurants) || restaurants.length === 0) {
     return (
       <div className="text-center py-10 text-gray-400">
         No hay restaurantes registrados.
@@ -47,7 +47,7 @@ const RestaurantList = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {restaurants.map((restaurant) => {
-        const imageUrl = getImageUrl(restaurant.photo);
+        const finalImageUrl = restaurant.image || 'https://placehold.co/600x400/eeeeee/999999?text=Sin+Imagen';
 
         return (
           <div key={restaurant._id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
@@ -103,12 +103,24 @@ const RestaurantList = () => {
                 >
                   Editar
                 </button>
-                <button
-                  onClick={() => handleDelete(restaurant._id, restaurant.name)}
-                  className="text-red-500 hover:text-red-700 text-sm font-medium transition-colors"
-                >
-                  Eliminar
-                </button>
+                {restaurant.isActive ? (
+                  <button 
+                    onClick={() => handleDelete(restaurant._id, restaurant.name)}
+                    className="text-red-500 hover:text-red-700 text-sm font-medium transition-colors"
+                  >
+                    Desactivar
+                  </button>
+                ) : (
+                  <button 
+                    onClick={() => {
+                      const { restoreRestaurant } = useRestaurantStore.getState();
+                      restoreRestaurant(restaurant._id);
+                    }}
+                    className="text-green-600 hover:text-green-800 text-sm font-medium transition-colors"
+                  >
+                    Restaurar
+                  </button>
+                )}
               </div>
             </div>
           </div>

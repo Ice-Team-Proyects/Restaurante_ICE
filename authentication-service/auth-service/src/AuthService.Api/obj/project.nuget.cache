@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q1zmaOkwfzw=",
+  "dgSpecHash": "qhd/bOrMXAQ=",
   "success": true,
-  "projectFilePath": "C:\\IN6AV\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
+  "projectFilePath": "C:\\Users\\Informatica\\Documents\\IN6AV\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Informatica\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\Informatica\\.nuget\\packages\\cloudinarydotnet\\1.27.7\\cloudinarydotnet.1.27.7.nupkg.sha512",

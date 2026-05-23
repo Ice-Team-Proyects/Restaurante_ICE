@@ -54,3 +54,8 @@ export const updateRestaurantRecord = async (id, { restaurantData, file }) => {
 export const deleteRestaurantRecord = async (id) => {
     return await Restaurant.findByIdAndUpdate(id, { isActive: false }, { new: true });
 };
+
+// NUEVO: Restore (activar)
+export const restoreRestaurantRecord = async (id) => {
+    return await Restaurant.findByIdAndUpdate(id, { isActive: true }, { new: true });
+};

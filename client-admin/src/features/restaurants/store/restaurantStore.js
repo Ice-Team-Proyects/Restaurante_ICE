@@ -1,8 +1,5 @@
 import { create } from 'zustand';
-import axios from 'axios';
-import { deleteRestaurantRequest } from '../../../shared/api/api';
-
-const BACKEND_URL = 'http://localhost:3021/RestauranteICE/v1/restaurant';
+import { getRestaurantsRequest, createRestaurantRequest, deleteRestaurantRequest, updateRestaurantRequest, restoreRestaurantRequest } from '../../../shared/api/api';
 
 export const useRestaurantStore = create((set, get) => ({
   restaurants: [],
@@ -13,12 +10,19 @@ export const useRestaurantStore = create((set, get) => ({
   fetchRestaurants: async () => {
     set({ loading: true });
     try {
-      const response = await axios.get(BACKEND_URL);
-      
-      const incomingData = response.data?.data || response.data?.restaurants || response.data;
-      const validatedRestaurants = Array.isArray(incomingData) ? incomingData : [];
-      
-      set({ restaurants: validatedRestaurants, loading: false });
+      const response = await getRestaurantsRequest();
+      const rawData = response?.data?.data ?? response?.data;
+      const restaurants = Array.isArray(rawData)
+        ? rawData
+        : Array.isArray(response?.data?.restaurants)
+          ? response.data.restaurants
+          : [];
+
+      if (!Array.isArray(rawData) && !Array.isArray(response?.data?.restaurants)) {
+        console.warn('[RestaurantStore] fetchRestaurants returned unexpected data shape:', response?.data);
+      }
+
+      set({ restaurants, loading: false });
     } catch (error) {
       console.error("Error al listar restaurantes desde el puerto 3021:", error);
       set({ restaurants: [], loading: false });
@@ -44,13 +48,36 @@ export const useRestaurantStore = create((set, get) => ({
     }
   },
 
+  updateRestaurant: async (id, restaurantData) => {
+    set({ loading: true });
+    try {
+      await updateRestaurantRequest(id, restaurantData);
+      await get().fetchRestaurants();
+      set({ loading: false, isModalOpen: false, selectedRestaurant: null });
+      return true;
+    } catch (error) {
+      console.error(error);
+      set({ loading: false });
+      return false;
+    }
+  },
+
   deleteRestaurant: async (id) => {
     try {
-      await deleteRestaurantRequest(id);
+      const res = await deleteRestaurantRequest(id);
       set((state) => ({
-        restaurants: Array.isArray(state.restaurants) 
-          ? state.restaurants.filter((restaurant) => restaurant._id !== id)
-          : []
+        restaurants: state.restaurants.map((r) => r._id === id ? res.data.data : r)
+      }));
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  restoreRestaurant: async (id) => {
+    try {
+      const res = await restoreRestaurantRequest(id);
+      set((state) => ({
+        restaurants: state.restaurants.map((r) => r._id === id ? res.data.data : r)
       }));
     } catch (error) {
       console.error(error);

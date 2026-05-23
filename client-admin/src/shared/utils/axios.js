@@ -11,8 +11,8 @@ axiosInstance.interceptors.request.use((config) => {
   try {
     const stored = localStorage.getItem('ice-auth');
     if (stored) {
-      const { token } = JSON.parse(stored);
-      if (token) config.headers.Authorization = `Bearer ${token}`;
+      const { state } = JSON.parse(stored);
+      if (state?.token) config.headers.Authorization = `Bearer ${state.token}`;
     }
   } catch (_) {}
   return config;

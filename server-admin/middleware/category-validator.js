@@ -12,7 +12,7 @@ export const validateCreateCategory = [
     body('type')
         .notEmpty()
         .withMessage('El tipo de campo es requerido')
-        .isIn(['Bebidas Frias', 'Paltillos', 'Bebidas Calientes', 'Sopas'])
+        .isIn(['Bebidas Frias', 'Platillos', 'Bebidas Calientes', 'Sopas'])
         .withMessage('Categoria De Alimento no Válida'),
     body('description')
         .notEmpty()

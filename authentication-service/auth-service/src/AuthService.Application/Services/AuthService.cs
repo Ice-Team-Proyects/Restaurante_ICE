@@ -177,6 +177,13 @@ public class AuthService(
             throw new UnauthorizedAccessException("Invalid credentials");
         }
 
+        // Verificar si el email ha sido verificado
+        if (user.UserEmail?.EmailVerified == false)
+        {
+            logger.LogWarning("Login attempt with unverified email for user {Username}", user.Username);
+            throw new UnauthorizedAccessException("Email not verified. Please verify your email first.");
+        }
+
         // Verificar si el usuario está activo
         if (!user.Status)
         {
