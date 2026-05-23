@@ -24,20 +24,25 @@ export const useRestaurantStore = create((set, get) => ({
 
       set({ restaurants, loading: false });
     } catch (error) {
-      console.error(error);
-      set({ loading: false });
+      console.error("Error al listar restaurantes desde el puerto 3021:", error);
+      set({ restaurants: [], loading: false });
     }
   },
 
   createRestaurant: async (restaurantData) => {
     set({ loading: true });
     try {
-      await createRestaurantRequest(restaurantData);
+      await axios.post(BACKEND_URL, restaurantData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       await get().fetchRestaurants();
       set({ loading: false, isModalOpen: false });
       return true;
     } catch (error) {
-      console.error(error);
+      console.error("Error al crear restaurante con la ruta de Postman:", error);
       set({ loading: false });
       return false;
     }
@@ -79,7 +84,7 @@ export const useRestaurantStore = create((set, get) => ({
     }
   },
 
-  setRestaurants: (restaurants) => set({ restaurants }),
+  setRestaurants: (restaurants) => set({ restaurants: Array.isArray(restaurants) ? restaurants : [] }),
   setSelectedRestaurant: (restaurant) => set({ selectedRestaurant: restaurant }),
   setIsModalOpen: (isOpen) => set({ isModalOpen: isOpen }),
 }));
