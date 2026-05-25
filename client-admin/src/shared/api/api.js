@@ -69,3 +69,27 @@ export const updateRestaurantRequest = async (id, restaurantData) => {
     },
   });
 };
+
+
+
+// ── Productos ─────────────────────────────────────────────────────────────────
+export const getProductsRequest = async () => {
+    return await axios.get('/product?limit=100');
+};
+
+// ── Menús ─────────────────────────────────────────────────────────────────────
+export const getMenusRequest = async () => {
+    return await axios.get('/menu');
+};
+export const createMenuRequest = async (menuData) => {
+    return await axios.post('/menu', menuData);
+};
+export const updateMenuRequest = async (id, menuData) => {
+    return await axios.put(`/menu/${id}`, menuData);
+};
+export const deleteMenuRequest = async (id) => {
+    return await axios.patch(`/menu/delete/${id}`);
+};
+export const restoreMenuRequest = async (id) => {
+    return await axios.patch(`/menu/restore/${id}`);
+};

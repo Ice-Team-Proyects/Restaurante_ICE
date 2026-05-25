@@ -21,6 +21,7 @@ import tableRoutes from '../src/table/table.routes.js';
 import orderRoutes from '../src/order/order.routes.js'; 
 import eventRoutes from '../src/event/eventRoutes.js';
 import reservationsRoutes from '../src/reservations/reservation.routes.js';
+import menuRoutes from '../src/menu/menu.routes.js';
 
 const BASE_PATH = '/RestauranteICE/v1';
 
@@ -45,6 +46,7 @@ const routes = (app) =>{
     app.use(`${BASE_PATH}/order`, orderRoutes); 
     app.use(`${BASE_PATH}/event`, eventRoutes);
     app.use(`${BASE_PATH}/reservation`, reservationsRoutes);
+    app.use(`${BASE_PATH}/menu`, menuRoutes);
 
     app.get(`${BASE_PATH}/health`, (req, res) =>{
         res.status(200).json({
