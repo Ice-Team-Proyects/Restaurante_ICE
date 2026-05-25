@@ -1,4 +1,4 @@
-import axiosInstance from '../../../shared/utils/axios.js';
+import axiosInstance from '../../../shared/api/axios.js';
 
 export const getTables = (params = {}) =>
   axiosInstance.get('/table', { params: { limit: 100, ...params } });

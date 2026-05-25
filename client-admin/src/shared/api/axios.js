@@ -12,7 +12,9 @@ instance.interceptors.request.use((config) => {
     const stored = localStorage.getItem('ice-auth');
     if (stored) {
       const { state } = JSON.parse(stored);
-      if (state?.token) config.headers.Authorization = `Bearer ${state.token}`;
+      if (state?.token) {
+        config.headers.Authorization = `Bearer ${state.token}`;
+      }
     }
   } catch (_) {}
   return config;

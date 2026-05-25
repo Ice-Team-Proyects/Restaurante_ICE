@@ -98,9 +98,9 @@ router.put('/:id', updateOrder);
 
 /**
  * @swagger
- * /order/{id}:
- *   delete:
- *     summary: Eliminar una orden
+ * /order/delete/{id}:
+ *   patch:
+ *     summary: Eliminar una orden (Soft Delete)
  *     tags: [Order]
  *     parameters:
  *       - in: path
@@ -115,6 +115,6 @@ router.put('/:id', updateOrder);
  *       404:
  *         description: Orden no encontrada
  */
-router.delete('/:id', deleteOrder);
+router.patch('/delete/:id', deleteOrder);
 
 export default router;
