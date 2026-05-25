@@ -1,4 +1,4 @@
-import axiosInstance from '../../../shared/utils/axios.js';
+import axiosInstance from '../../../shared/api/axios.js';
 
 export const getReservations = (params = {}) =>
   axiosInstance.get('/reservation', { params: { limit: 100, ...params } });

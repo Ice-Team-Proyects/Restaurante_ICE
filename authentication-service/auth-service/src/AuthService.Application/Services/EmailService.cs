@@ -12,7 +12,9 @@ public class EmailService(IConfiguration configuration, ILogger<EmailService> lo
     public async Task SendEmailVerificationAsync(string email, string username, string token)
     {
         var subject = "Verifica tu dirección de correo electrónico";
-        var verificationUrl = $"{configuration["AppSettings:FrontendUrl"]}/verify-email?token={token}";
+
+        // Link directly to backend GET verification endpoint so users can verify by clicking from their inbox
+        var verificationUrl = $"{configuration["AppSettings:BackendUrl"]}/api/v1/auth/verify-email?token={token}";
 
         logger.LogWarning("Verification URL for {Email}: {Url}", email, verificationUrl);
 
