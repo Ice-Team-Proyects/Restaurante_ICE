@@ -6,7 +6,6 @@ const axiosInstance = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Interceptor: attach token if present
 axiosInstance.interceptors.request.use((config) => {
   try {
     const stored = localStorage.getItem('ice-auth');

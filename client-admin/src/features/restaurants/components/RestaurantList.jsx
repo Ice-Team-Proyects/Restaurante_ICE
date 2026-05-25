@@ -11,7 +11,13 @@ const getImageUrl = (photo) => {
 };
 
 const RestaurantList = () => {
-  const { restaurants, deleteRestaurant, setSelectedRestaurant, setIsModalOpen } = useRestaurantStore();
+  const { 
+    restaurants, 
+    deleteRestaurant, 
+    setSelectedRestaurant, 
+    setIsModalOpen,
+    restoreRestaurant 
+  } = useRestaurantStore();
 
   if (!Array.isArray(restaurants) || restaurants.length === 0) {
     return (
@@ -47,7 +53,7 @@ const RestaurantList = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {restaurants.map((restaurant) => {
-        const finalImageUrl = restaurant.image || 'https://placehold.co/600x400/eeeeee/999999?text=Sin+Imagen';
+        const imageUrl = getImageUrl(restaurant.photo) || restaurant.image;
 
         return (
           <div key={restaurant._id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
@@ -58,10 +64,13 @@ const RestaurantList = () => {
                 className="w-full h-48 object-cover bg-gray-100"
                 onError={(e) => {
                   e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'flex';
+                  if (e.target.nextSibling) {
+                    e.target.nextSibling.style.display = 'flex';
+                  }
                 }}
               />
             ) : null}
+            
             <div
               className="w-full h-48 bg-gray-100 items-center justify-center text-gray-400 text-sm font-medium"
               style={{ display: imageUrl ? 'none' : 'flex' }}
@@ -103,6 +112,7 @@ const RestaurantList = () => {
                 >
                   Editar
                 </button>
+                
                 {restaurant.isActive ? (
                   <button 
                     onClick={() => handleDelete(restaurant._id, restaurant.name)}
@@ -112,10 +122,7 @@ const RestaurantList = () => {
                   </button>
                 ) : (
                   <button 
-                    onClick={() => {
-                      const { restoreRestaurant } = useRestaurantStore.getState();
-                      restoreRestaurant(restaurant._id);
-                    }}
+                    onClick={() => restoreRestaurant(restaurant._id)}
                     className="text-green-600 hover:text-green-800 text-sm font-medium transition-colors"
                   >
                     Restaurar
