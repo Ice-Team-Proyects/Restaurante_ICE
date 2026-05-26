@@ -12,6 +12,8 @@ const Sidebar = () => {
     { name: 'Reservaciones', path: '/reservations' },
     { name: 'Eventos',       path: '/events' },
     { name: 'Estadísticas',  path: '/analytics' },
+    { name: 'Menus',         path: '/menus' },
+
   ];
 
   return (

@@ -29,7 +29,7 @@ export const useMenuStore = create((set, get) => ({
     fetchProducts: async () => {
         try {
             const response = await getProductsRequest();
-            const list = response.data.data?.products || response.data.data || response.data || [];
+            const list = Array.isArray(response.data.data) ? response.data.data : [];
             // Solo productos activos
             set({ products: list.filter((p) => p.isActive !== false) });
         } catch (error) {

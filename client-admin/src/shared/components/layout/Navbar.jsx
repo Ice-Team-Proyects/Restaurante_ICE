@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../../features/auth/store/authStore.js';
 
 const Navbar = () => {
@@ -12,22 +12,6 @@ const Navbar = () => {
   const userName = user?.username || 'Usuario';
   const userRole = user?.role === 'ADMIN_ROLE' ? 'Administrador' : (user?.role || 'Empleado');
   const initial = userName.charAt(0).toUpperCase();
-  const { pathname } = useLocation();
-
-  const TITLES = {
-    '/': 'Panel',
-    '/restaurants': 'Restaurantes',
-    '/tables': 'Mesas',
-    '/categories': 'Categorías',
-    '/products': 'Productos',
-    '/reservations': 'Reservaciones',
-    '/analytics': 'Estadísticas',
-    '/login': 'Iniciar sesión'
-  };
-
-  // Determine title: exact match or startsWith for nested routes
-  const fallbackKey = Object.keys(TITLES).find((p) => p !== '/' && pathname.startsWith(p));
-  const title = TITLES[pathname] ?? (fallbackKey ? TITLES[fallbackKey] : 'Gestor de Órdenes');
 
   const handleLogout = () => {
     logout();
@@ -42,7 +26,7 @@ const Navbar = () => {
           <span className="text-main-orange font-bold text-xl">ICE</span>
         </div>
         <h1 className="text-white font-bold text-xl tracking-wide">
-          {title}
+          Gestor de Órdenes
         </h1>
       </div>
 
