@@ -12,8 +12,13 @@ import MenuPage from '../../features/menus/page/MenuPage';
 import AnalyticsPage from '../../features/analytics/components/Analytics';
 import EventsPage from '../../features/events/components/EventsPage';
 
+import Profile from '../../pages/Profile'; 
+
 export const AppRouter = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  
+  const user = useAuthStore((s) => s.user);
+  const logout = useAuthStore((s) => s.logout);
 
   return (
     <Routes>
@@ -31,6 +36,9 @@ export const AppRouter = () => {
           <Route path='menus' element={<MenuPage />} />
           <Route path='analytics' element={<AnalyticsPage />} />
           <Route path='events' element={<EventsPage />} />
+          
+          <Route path='perfil' element={<Profile currentUser={user} onLogout={logout} />} />
+          
           <Route path='*' element={<div>Página no encontrada</div>} />
         </Route>
       ) : (
