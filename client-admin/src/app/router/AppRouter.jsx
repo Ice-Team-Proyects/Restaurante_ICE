@@ -9,6 +9,7 @@ import ProductsPage from '../../features/product/components/Product';
 import { Tables } from '../../features/tables/components/Tables.jsx';
 import ReservationsPage from '../../features/reservations/pages/ReservationsPage'; 
 import MenuPage from '../../features/menus/page/MenuPage';
+import AnalyticsPage from '../../features/analytics/components/Analytics';
 
 export const AppRouter = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -27,6 +28,7 @@ export const AppRouter = () => {
           <Route path="products" element={<ProductsPage />} />
           <Route path="reservations" element={<ReservationsPage />} /> 
           <Route path="menus" element= { <MenuPage/> }/>
+          <Route path="analytics" element={<AnalyticsPage />}/>
           <Route path="*" element={<div>Página no encontrada</div>} />
         </Route>
       ) : (
