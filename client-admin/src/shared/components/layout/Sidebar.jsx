@@ -13,7 +13,7 @@ const Sidebar = () => {
     { name: 'Eventos',       path: '/events' },
     { name: 'Estadísticas',  path: '/analytics' },
     { name: 'Menus',         path: '/menus' },
-
+    { name: 'Mi perfil',     path: '/perfil' },
   ];
 
   return (
