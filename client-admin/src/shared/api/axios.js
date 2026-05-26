@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_ADMIN_URL,
   timeout: 8000,
   headers: { 'Content-Type': 'application/json' },
 });
@@ -12,9 +12,7 @@ instance.interceptors.request.use((config) => {
     const stored = localStorage.getItem('ice-auth');
     if (stored) {
       const { state } = JSON.parse(stored);
-      if (state?.token) {
-        config.headers.Authorization = `Bearer ${state.token}`;
-      }
+      if (state?.token) config.headers.Authorization = `Bearer ${state.token}`;
     }
   } catch (_) {}
   return config;
