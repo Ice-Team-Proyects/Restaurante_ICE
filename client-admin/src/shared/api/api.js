@@ -1,9 +1,6 @@
 import adminAxios from './axios';
 import axios from 'axios';
 
-// ══════════════════════════════════════════════════════════════════════════
-// AUTH ENDPOINTS  (servidor .NET → VITE_AUTH_URL)
-// ══════════════════════════════════════════════════════════════════════════
 const authAxios = axios.create({
   baseURL: import.meta.env.VITE_AUTH_URL,
   timeout: 8000,
@@ -28,9 +25,6 @@ export const resendVerificationRequest = async (email) => {
   return await authAxios.post('/auth/resend-verification', { email });
 };
 
-// ══════════════════════════════════════════════════════════════════════════
-// RESTAURANT ENDPOINTS  (servidor Node → VITE_ADMIN_URL)
-// ══════════════════════════════════════════════════════════════════════════
 export const getRestaurantsRequest = async () => {
   return await adminAxios.get('/restaurant');
 };
@@ -55,16 +49,10 @@ export const updateRestaurantRequest = async (id, restaurantData) => {
   });
 };
 
-// ══════════════════════════════════════════════════════════════════════════
-// PRODUCT ENDPOINTS
-// ══════════════════════════════════════════════════════════════════════════
 export const getProductsRequest = async () => {
   return await adminAxios.get('/product?limit=100');
 };
 
-// ══════════════════════════════════════════════════════════════════════════
-// MENU ENDPOINTS
-// ══════════════════════════════════════════════════════════════════════════
 export const getMenusRequest = async () => {
   return await adminAxios.get('/menu');
 };

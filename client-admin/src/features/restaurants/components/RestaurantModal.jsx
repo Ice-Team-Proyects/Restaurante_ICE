@@ -36,15 +36,13 @@ const RestaurantModal = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     
-    formData.append('name', data.name || '');
-    formData.append('address', data.address || '');
-    formData.append('phone', data.phone || '');
-    formData.append('openingHours', data.openingHours || '');
-    formData.append('description', data.description || '');
+    formData.append('name', data.name?.trim() || '');
+    formData.append('address', data.address?.trim() || '');
+    formData.append('phone', data.phone?.trim() || '');
+    formData.append('openingHours', data.openingHours?.trim() || '');
+    formData.append('description', data.description?.trim() || '');
 
-    if (data.image && data.image instanceof FileList && data.image[0]) {
-      formData.append('image', data.image[0]);
-    } else if (data.image && data.image[0]) {
+    if (data.image && data.image[0]) {
       formData.append('image', data.image[0]);
     }
 
@@ -97,6 +95,7 @@ const RestaurantModal = () => {
     setPreview(null);
     setSelectedRestaurant(null);
     setIsModalOpen(false);
+
   };
 
   return (

@@ -32,11 +32,7 @@ export const useRestaurantStore = create((set, get) => ({
   createRestaurant: async (restaurantData) => {
     set({ loading: true });
     try {
-      await axios.post(BACKEND_URL, restaurantData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      await createRestaurantRequest(restaurantData);
 
       await get().fetchRestaurants();
       set({ loading: false, isModalOpen: false });
