@@ -1,0 +1,174 @@
+# Restaurante_ICE/docker-compose.yml
+
+name: restaurant-ice
+
+services:
+  # ── BASE DE DATOS ────────────────────────────────────────────
+  mongodb:
+    image: mongo:7
+    container_name: ice_mongodb
+    restart: unless-stopped
+    ports:
+      - "${MONGO_PORT:-27017}:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - ice-network
+
+  # ── AUTH SERVICE (.NET) ──────────────────────────────────────
+  auth-service:
+    build:
+      context: ./authentication-service/auth-service
+      dockerfile: ../../dockerfiles/Dockerfile.auth-service
+    container_name: ice_auth_service
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:5296
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "1"
+      ConnectionStrings__DefaultConnection: "Host=localhost;Database=restaurant_ice;Username=ICE;Password=restaICE1@;Port=5437"
+      CloudinarySettings__Cloudname: ${CLOUDINARY_CLOUD_NAME:-dss7fs6pl}
+      CloudinarySettings__ApiKey: ${CLOUDINARY_API_KEY:-576915661566217}
+      CloudinarySettings__ApiSecret: ${CLOUDINARY_API_SECRET:-d5QSRBAe6VUFv2zb3oTU6NueJ3g}
+      CloudinarySettings__BaseUrl: ${CLOUDINARY_BASE_URL:-https://res.cloudinary.com/dlhtat4nn/image/upload/v1769726008}
+      CloudinarySettings__Folder: ${CLOUDINARY_FOLDER:-auth_ks_in6av/profiles}
+      CloudinarySettings__DefaultAvatarPath: ${CLOUDINARY_DEFAULT_AVATAR:-avatarDefault-1749508519496.png}
+      SmtpSettings__Host: ${SMTP_HOST:-smtp.gmail.com}
+      SmtpSettings__Port: ${SMTP_PORT:-587}
+      SmtpSettings__EnableSsl: "true"
+      SmtpSettings__UserName: ${SMTP_USERNAME:-2026iceteam@gmail.com}
+      SmtpSettings__Password: ${SMTP_PASSWORD:-xednudcujdbhahsb}
+      SmtpSettings__FromEmail: ${SMTP_FROM_EMAIL:-2026iceteam@gmail.com}
+      SmtpSettings__Enabled: "true"
+      AppSettings__FrontendUrl: ${FRONTEND_URL:-http://localhost:5174}
+      AppSettings__BackendUrl: ${BACKEND_URL:-http://localhost:5227}
+      JwtSettings__SecretKey: ${JWT_SECRET}
+      JwtSettings__Issuer: ${JWT_ISSUER:-AuthService}
+      JwtSettings__Audience: ${JWT_AUDIENCE:-AuthServiceUsers}
+      JwtSettings__ExpiryInMinutes: "60"
+      Security__AllowedOrigins__0: "http://localhost:5173"
+      Security__AllowedOrigins__1: "http://localhost:5174"
+      Security__AllowedOrigins__2: "http://localhost:3000"
+      Security__AllowedOrigins__3: "http://localhost:3001"
+      Security__AdminAllowedOrigins__0: "http://localhost:3000"
+    env_file:
+      - path: .env.docker
+        required: false
+    volumes:
+      - ./authentication-service/auth-service:/src
+      - /src/src/AuthService.Api/bin
+      - /src/src/AuthService.Api/obj
+      - /src/src/AuthService.Application/bin
+      - /src/src/AuthService.Application/obj
+      - /src/src/AuthService.Domain/bin
+      - /src/src/AuthService.Domain/obj
+      - /src/src/AuthService.Persistence/bin
+      - /src/src/AuthService.Persistence/obj
+    ports:
+      - "${AUTH_SERVICE_PORT:-5296}:5296"
+    networks:
+      - ice-network
+
+  # ── SERVER ADMIN (Express) ───────────────────────────────────
+  server-admin:
+    build:
+      context: ./server-admin
+      dockerfile: ../dockerfiles/Dockerfile.server-admin
+    container_name: ice_server_admin
+    restart: unless-stopped
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+    environment:
+      NODE_ENV: development
+      PORT: 3021
+      URI_MONGODB: mongodb://mongodb:27017/${MONGO_DB_NAME:-restICE}
+      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME:-dss7fs6pl}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY:-576915661566217}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET:-d5QSRBAe6VUFv2zb3oTU6NueJ3g}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1h}
+      JWT_ISSUER: ${JWT_ISSUER:-AuthService}
+      JWT_AUDIENCE: ${JWT_AUDIENCE:-AuthServiceUsers}
+      NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    env_file:
+      - path: .env.docker
+        required: false
+    volumes:
+      - ./server-admin:/app
+      - /app/node_modules
+    ports:
+      - "${SERVER_ADMIN_PORT:-3021}:3021"
+    networks:
+      - ice-network
+
+  # ── CLIENT ADMIN (React + Vite) ──────────────────────────────
+  client-admin:
+    build:
+      context: ./client-admin
+      dockerfile: ../dockerfiles/Dockerfile.client-admin
+    container_name: ice_client_admin
+    restart: unless-stopped
+    depends_on:
+      auth-service:
+        condition: service_started
+      server-admin:
+        condition: service_started
+    environment:
+      VITE_AUTH_URL: ${VITE_AUTH_URL:-http://localhost:5227/api/v1}
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3021/RestauranteICE/v1}
+      VITE_ADMIN_URL: ${VITE_ADMIN_URL:-http://localhost:3021/RestauranteICE/v1}
+      CHOKIDAR_USEPOLLING: "true"
+    env_file:
+      - path: .env.docker
+        required: false
+    volumes:
+      - ./client-admin:/app
+      - /app/node_modules
+    ports:
+      - "${CLIENT_ADMIN_PORT:-5173}:5173"
+    networks:
+      - ice-network
+
+  # ── CLIENT CUSTOMER (React + Vite) ───────────────────────────
+  client-customer:
+    build:
+      context: ./client-customer
+      dockerfile: ../dockerfiles/Dockerfile.client-customer
+    container_name: ice_client_customer
+    restart: unless-stopped
+    depends_on:
+      auth-service:
+        condition: service_started
+      server-admin:
+        condition: service_started
+    environment:
+      VITE_AUTH_URL: ${VITE_AUTH_URL:-http://localhost:5227/api/v1}
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3021/RestauranteICE/v1}
+      CHOKIDAR_USEPOLLING: "true"
+    env_file:
+      - path: .env.docker
+        required: false
+    volumes:
+      - ./client-customer:/app
+      - /app/node_modules
+    ports:
+      - "${CLIENT_CUSTOMER_PORT:-5174}:5173"
+    networks:
+      - ice-network
+
+networks:
+  ice-network:
+    driver: bridge
+
+volumes:
+  mongo_data:

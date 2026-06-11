@@ -1,0 +1,37 @@
+# Restaurante_ICE/server-admin/.dockerignore
+
+# Dependencias
+node_modules
+.pnpm-store
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Git
+.git
+.gitignore
+
+# Docs
+*.md
+README*
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / OS
+.vs/
+.idea/
+.vscode/
+*.suo
+*.user
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache
+.eslintcache

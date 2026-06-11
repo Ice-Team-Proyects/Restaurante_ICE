@@ -1,0 +1,42 @@
+# Restaurante_ICE/authentication-service/auth-service/.dockerignore
+
+# Build output
+**/bin
+**/obj
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Git
+.git
+.gitignore
+
+# Docs
+**/*.md
+**/README*
+
+# Logs
+**/logs
+**/*.log
+
+# VS / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docview
+
+# dotnet watch / hot reload
+**/.dotnet
+**/.watch
+
+# Test results
+**/TestResults
+**/coverage
+
+# Docker
+Dockerfile*
+.dockerignore

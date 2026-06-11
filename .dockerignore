@@ -1,0 +1,51 @@
+# Dependencias
+**/node_modules
+**/.pnpm-store
+
+# Build output
+**/bin
+**/obj
+**/dist
+**/dist-ssr
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+!.env.docker
+
+# Git
+.git
+.gitignore
+
+# Docs
+*.md
+README*
+EDNPOINTS.md
+LICENSE*
+
+# Logs
+**/logs
+**/*.log
+**/npm-debug.log*
+**/pnpm-debug.log*
+
+# Editor / OS
+.vs/
+.idea/
+.vscode/
+**/*.suo
+**/*.user
+.DS_Store
+Thumbs.db
+
+# Cache
+**/.cache
+**/.vite
+**/.eslintcache
+**/.dotnet
+**/.watch
+
+# Test
+**/TestResults
+**/coverage
