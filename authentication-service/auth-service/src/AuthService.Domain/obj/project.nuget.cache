@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "UL6nJ2tF6Rc=",
+  "dgSpecHash": "eNqeXQX8Tcw=",
   "success": true,
-  "projectFilePath": "C:\\gitIN6AV2026\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj",
+  "projectFilePath": "C:\\neww\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Domain\\AuthService.Domain.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\rigof\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+    "C:\\Users\\corre\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }
