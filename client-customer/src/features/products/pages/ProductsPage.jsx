@@ -2,6 +2,25 @@ import { useEffect, useState, useMemo } from "react";
 import axiosInstance from "../../../shared/api/axios";
 import { Spinner } from "../../auth/components/Spinner";
 
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dss7fs6pl";
+const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload`;
+
+const getImageUrl = (photo) => {
+  if (!photo) return null;
+  if (photo.startsWith("http://") || photo.startsWith("https://")) return photo;
+  
+  let path = photo;
+  if (!path.startsWith("Restaurante_ICE/")) {
+    path = "Restaurante_ICE/" + path;
+  }
+  
+  if (!/\.(jpg|jpeg|png|webp|gif)$/i.test(path)) {
+    path = path + ".jpg";
+  }
+  
+  return `${CLOUDINARY_BASE}/${path}`;
+};
+
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -102,34 +121,38 @@ const ProductsPage = () => {
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filtered.map((p) => (
-            <div
-              key={p._id}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-orange-100 hover:scale-[1.02]"
-            >
-              {p.photo && (
+          {filtered.map((p) => {
+            const imageUrl = getImageUrl(p.photo);
+            return (
+              <div
+                key={p._id}
+                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-orange-100 hover:scale-[1.02]"
+              >
                 <img
-                  src={p.photo}
+                  src={imageUrl || "https://placehold.co/400x240/fff7ed/ea580c?text=Sin+Imagen"}
                   alt={p.saucer}
-                  className="w-full h-44 object-cover"
+                  className="w-full h-44 object-cover bg-gray-100"
+                  onError={(e) => {
+                    e.target.src = "https://placehold.co/400x240/fff7ed/ea580c?text=Sin+Imagen";
+                  }}
                 />
-              )}
-              <div className="p-4">
-                <h3 className="text-base font-bold text-gray-800">
-                  {p.saucer}
-                </h3>
-                <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-                  {p.description}
-                </p>
-                <p
-                  className="text-xl font-black mt-2"
-                  style={{ color: "#dc2626" }}
-                >
-                  Q{p.price}
-                </p>
+                <div className="p-4">
+                  <h3 className="text-base font-bold text-gray-800">
+                    {p.saucer}
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                    {p.description}
+                  </p>
+                  <p
+                    className="text-xl font-black mt-2"
+                    style={{ color: "#dc2626" }}
+                  >
+                    Q{p.price}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

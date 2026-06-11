@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axiosInstance from "../../../shared/api/axios";
 import { useAuthStore } from "../../auth/store/authStore";
 import { Spinner } from "../../auth/components/Spinner";
@@ -7,22 +7,51 @@ import { showSuccess, showError } from "../../../shared/utils/toast";
 const ReservationsPage = () => {
   const { isAuthenticated } = useAuthStore();
   const [loading, setLoading] = useState(false);
+  const [loadingTables, setLoadingTables] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [form, setForm] = useState({ name_customer: "", number_people: "" });
+  const [tables, setTables] = useState([]);
+  const [form, setForm] = useState({
+    name_customer: "",
+    number_people: "",
+    time_reservation: "",
+    table: "",
+  });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setLoadingTables(true);
+      axiosInstance
+        .get("/table?limit=100")
+        .then((res) => {
+          const allTables = res.data?.data || [];
+          // Filtrar mesas activas y disponibles
+          setTables(
+            allTables.filter((t) => t.isActive !== false && t.status === "disponible"),
+          );
+          setLoadingTables(false);
+        })
+        .catch((err) => {
+          console.error("Error al cargar mesas:", err);
+          setLoadingTables(false);
+        });
+    }
+  }, [isAuthenticated]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name_customer.trim() || !form.number_people)
+    if (!form.name_customer.trim() || !form.number_people || !form.time_reservation || !form.table)
       return showError("Completa todos los campos");
     setLoading(true);
     try {
       await axiosInstance.post("/reservation", {
         name_customer: form.name_customer,
         number_people: Number(form.number_people),
+        time_reservation: new Date(form.time_reservation).toISOString(),
+        table: form.table,
       });
       showSuccess("Reservación creada exitosamente");
       setSuccess(true);
-      setForm({ name_customer: "", number_people: "" });
+      setForm({ name_customer: "", number_people: "", time_reservation: "", table: "" });
     } catch (err) {
       showError(err.response?.data?.message || "Error al crear reservación");
     }
@@ -88,21 +117,66 @@ const ReservationsPage = () => {
               required
             />
           </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                Número de personas
+              </label>
+              <input
+                type="number"
+                value={form.number_people}
+                onChange={(e) =>
+                  setForm({ ...form, number_people: e.target.value })
+                }
+                placeholder="Ej. 4"
+                min="1"
+                className={inputClass}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                Fecha y Hora
+              </label>
+              <input
+                type="datetime-local"
+                value={form.time_reservation}
+                onChange={(e) =>
+                  setForm({ ...form, time_reservation: e.target.value })
+                }
+                className={inputClass}
+                required
+              />
+            </div>
+          </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-              Número de personas
+              Mesa
             </label>
-            <input
-              type="number"
-              value={form.number_people}
-              onChange={(e) =>
-                setForm({ ...form, number_people: e.target.value })
-              }
-              placeholder="Ej. 4"
-              min="1"
-              className={inputClass}
-              required
-            />
+            {loadingTables ? (
+              <div className="text-gray-400 text-xs py-2 flex items-center gap-2">
+                <Spinner small /> Cargando mesas disponibles...
+              </div>
+            ) : (
+              <select
+                value={form.table}
+                onChange={(e) => setForm({ ...form, table: e.target.value })}
+                className={inputClass}
+                required
+              >
+                <option value="">Seleccionar mesa...</option>
+                {tables.map((t) => (
+                  <option key={t._id} value={t._id}>
+                    Mesa {t.number} — Capacidad: {t.capacity} personas
+                  </option>
+                ))}
+              </select>
+            )}
+            {tables.length === 0 && !loadingTables && (
+              <span className="text-yellow-600 text-xs mt-1 block">
+                No hay mesas disponibles en este momento
+              </span>
+            )}
           </div>
           <button
             type="submit"

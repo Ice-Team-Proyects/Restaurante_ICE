@@ -1,9 +1,9 @@
 import Swal from 'sweetalert2';
 import { useMenuStore } from '../store/menuStore';
+import { getImageUrl } from '../../../shared/utils/cloudinary.js';
 
 const MenuList = () => {
     const { menus, deleteMenu, setSelectedMenu, setIsModalOpen } = useMenuStore();
-    const basePathCloudinary = import.meta.env.VITE_BASE_PATH_CLOUDINARY;
 
     if (!menus || menus.length === 0) {
         return (
@@ -64,9 +64,7 @@ const MenuList = () => {
                                 <p className="text-sm text-gray-400">Sin productos asignados</p>
                             )}
                             {menu.products?.map((product) => {
-                                const imageUrl = product.photo
-                                    ? `${basePathCloudinary}Restaurante_ICE/${product.photo}.jpg`
-                                    : null;
+                                const imageUrl = getImageUrl(product.photo);
                                 return (
                                     <div key={product._id} className="flex items-center gap-3">
                                         <img

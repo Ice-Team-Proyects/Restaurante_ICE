@@ -5,15 +5,12 @@ import { useUIStore } from '../../auth/store/uiStore.js';
 import { Spinner } from '../../auth/components/Spinner.jsx';
 import { ProductModal } from '../components/ProductModal.jsx';
 import { showSuccess, showError } from '../../../shared/utils/toast.js';
-
-const basePathCloudinary = import.meta.env.VITE_BASE_PATH_CLOUDINARY;
+import { getImageUrl } from '../../../shared/utils/cloudinary.js';
 
 /* ─── PRODUCT CARD ─── */
 const ProductCard = ({ product, onEdit, onDelete, onRestore }) => {
   const isInactive = product.isActive === false;
-  const imageUrl = product.photo
-    ? `${basePathCloudinary}Restaurante_ICE/${product.photo}.jpg`
-    : null;
+  const imageUrl = getImageUrl(product.photo);
 
   const categoryName =
     typeof product.category === 'object'
