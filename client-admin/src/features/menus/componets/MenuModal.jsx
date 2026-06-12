@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useMenuStore } from '../store/menuStore';
+import { getImageUrl } from '../../../shared/utils/cloudinary.js';
 
 const MenuModal = () => {
     const {
@@ -62,8 +63,6 @@ const MenuModal = () => {
         setIsModalOpen(false);
     };
 
-    const basePathCloudinary = import.meta.env.VITE_BASE_PATH_CLOUDINARY;
-
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-xl shadow-lg w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
@@ -105,9 +104,7 @@ const MenuModal = () => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto border rounded-lg p-3">
                                 {products.map((product) => {
                                     const isSelected = (selectedProductIds || []).includes(product._id);
-                                    const imageUrl = product.photo
-                                        ? `${basePathCloudinary}Restaurante_ICE/${product.photo}.jpg`
-                                        : null;
+                                    const imageUrl = getImageUrl(product.photo);
 
                                     return (
                                         <div

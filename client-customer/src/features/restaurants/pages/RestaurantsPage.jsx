@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../shared/api/axios";
 import { Spinner } from "../../auth/components/Spinner";
 
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dss7fs6pl";
+const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload`;
+
+const getImageUrl = (photo) => {
+  if (!photo) return null;
+  if (photo.startsWith("http://") || photo.startsWith("https://")) return photo;
+  const prefix = photo.startsWith("Restaurante_ICE/") ? "" : "Restaurante_ICE/";
+  return `${CLOUDINARY_BASE}/${prefix}${photo}`;
+};
+
 const RestaurantsPage = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,31 +47,35 @@ const RestaurantsPage = () => {
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {restaurants.map((r) => (
-            <div
-              key={r._id}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-orange-100"
-            >
-              {r.photo && (
+          {restaurants.map((r) => {
+            const imageUrl = getImageUrl(r.photo);
+            return (
+              <div
+                key={r._id}
+                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-orange-100"
+              >
                 <img
-                  src={r.photo}
+                  src={imageUrl || "https://placehold.co/400x240/fff7ed/ea580c?text=Sin+Imagen"}
                   alt={r.name}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 object-cover bg-gray-100"
+                  onError={(e) => {
+                    e.target.src = "https://placehold.co/400x240/fff7ed/ea580c?text=Sin+Imagen";
+                  }}
                 />
-              )}
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-800">{r.name}</h3>
-                <p className="text-sm text-gray-500 mt-1">📍 {r.address}</p>
-                <p className="text-sm text-gray-500">📞 {r.phone}</p>
-                {r.openingHours && (
-                  <p className="text-sm text-gray-500">🕐 {r.openingHours}</p>
-                )}
-                {r.description && (
-                  <p className="text-sm text-gray-400 mt-2">{r.description}</p>
-                )}
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-gray-800">{r.name}</h3>
+                  <p className="text-sm text-gray-500 mt-1">📍 {r.address}</p>
+                  <p className="text-sm text-gray-500">📞 {r.phone}</p>
+                  {r.openingHours && (
+                    <p className="text-sm text-gray-500">🕐 {r.openingHours}</p>
+                  )}
+                  {r.description && (
+                    <p className="text-sm text-gray-400 mt-2">{r.description}</p>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
