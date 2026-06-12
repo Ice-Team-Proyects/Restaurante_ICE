@@ -12,10 +12,10 @@ export const useTablesStore = create((set, get) => ({
   loading: false,
   error: null,
 
-  fetchTables: async () => {
+  fetchTables: async (params = {}) => {
     try {
       set({ loading: true, error: null });
-      const res = await getTables();
+      const res = await getTables(params);
       set({ tables: res.data.data || [], loading: false });
     } catch (err) {
       set({

@@ -3,24 +3,35 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useReservationStore } from '../store/reservationStore';
 import { useTablesStore } from '../../tables/store/tablesStore';
+import { useRestaurantStore } from '../../restaurants/store/restaurantStore';
 
 const ReservationModal = () => {
   const { isModalOpen, setIsModalOpen, createReservation, selectedReservation, setSelectedReservation } =
     useReservationStore();
   const { tables, fetchTables } = useTablesStore();
+  const { restaurants, fetchRestaurants } = useRestaurantStore();
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm();
 
+  const selectedRestaurantId = watch('restaurant');
+
   useEffect(() => {
     if (isModalOpen) {
-      fetchTables();
+      fetchRestaurants();
     }
-  }, [isModalOpen]);
+  }, [isModalOpen, fetchRestaurants]);
+
+  useEffect(() => {
+    if (isModalOpen && selectedRestaurantId) {
+      fetchTables({ restaurant: selectedRestaurantId });
+    }
+  }, [isModalOpen, selectedRestaurantId, fetchTables]);
 
   useEffect(() => {
     if (!selectedReservation) {
@@ -36,6 +47,7 @@ const ReservationModal = () => {
       number_people: Number(data.number_people),
       time_reservation: new Date(data.time_reservation).toISOString(),
       table: data.table,
+      restaurant: data.restaurant,
     };
 
     const success = await createReservation(payload);
@@ -66,6 +78,10 @@ const ReservationModal = () => {
 
   const activeTables = Array.isArray(tables)
     ? tables.filter((t) => t.isActive && t.status === 'disponible')
+    : [];
+
+  const activeRestaurants = Array.isArray(restaurants)
+    ? restaurants.filter((r) => r.isActive !== false)
     : [];
 
   return (
@@ -144,14 +160,41 @@ const ReservationModal = () => {
             </div>
 
             <div>
+              <label className="block text-sm font-medium mb-1">Sucursal</label>
+              <select
+                {...register('restaurant', { required: true })}
+                className={`w-full border rounded-lg px-3 py-2 ${
+                  errors.restaurant ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                }`}
+              >
+                <option value="">Seleccionar sucursal...</option>
+                {activeRestaurants.map((r) => (
+                  <option key={r._id} value={r._id}>
+                    {r.name}
+                  </option>
+                ))}
+              </select>
+              {errors.restaurant && (
+                <span className="text-red-500 text-xs mt-1 block">
+                  Debe seleccionar una sucursal
+                </span>
+              )}
+            </div>
+
+            <div>
               <label className="block text-sm font-medium mb-1">Mesa</label>
               <select
                 {...register('table', { required: true })}
+                disabled={!selectedRestaurantId}
                 className={`w-full border rounded-lg px-3 py-2 ${
                   errors.table ? 'border-red-500 bg-red-50' : 'border-gray-300'
                 }`}
               >
-                <option value="">Seleccionar mesa...</option>
+                <option value="">
+                  {!selectedRestaurantId
+                    ? 'Primero seleccione una sucursal...'
+                    : 'Seleccionar mesa...'}
+                </option>
                 {activeTables.map((t) => (
                   <option key={t._id} value={t._id}>
                     Mesa {t.number} — cap. {t.capacity}
@@ -163,9 +206,9 @@ const ReservationModal = () => {
                   Debe seleccionar una mesa
                 </span>
               )}
-              {activeTables.length === 0 && (
+              {selectedRestaurantId && activeTables.length === 0 && (
                 <span className="text-yellow-600 text-xs mt-1 block">
-                  No hay mesas disponibles en este momento
+                  No hay mesas disponibles en esta sucursal en este momento
                 </span>
               )}
             </div>

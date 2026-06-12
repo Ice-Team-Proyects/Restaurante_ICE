@@ -77,10 +77,14 @@ const ReservationList = () => {
                 {formatDate(reservation.time_reservation)}
               </p>
               <p className="text-sm text-gray-600">
-                <span className="font-medium">Mesa ID:</span>{' '}
+                <span className="font-medium">Mesa:</span>{' '}
                 {reservation.table?.number
                   ? `Mesa ${reservation.table.number}`
                   : reservation.table || '—'}
+              </p>
+              <p className="text-sm text-gray-600">
+                <span className="font-medium">Sucursal:</span>{' '}
+                {reservation.restaurant?.name || '—'}
               </p>
             </div>
 

@@ -206,7 +206,7 @@ export const OrderForm = ({ order = null, onClose }) => {
                       <option value="">Selecciona un producto</option>
                       {products.map((product) => (
                         <option key={product._id} value={product._id}>
-                          {product.saucer} - ${product.price?.toFixed(2)}
+                          {product.saucer} - Q{product.price?.toFixed(2)}
                         </option>
                       ))}
                     </select>
@@ -249,7 +249,7 @@ export const OrderForm = ({ order = null, onClose }) => {
           {/* Total */}
           <div className="bg-slate-100 p-4 rounded-lg">
             <p className="text-lg font-semibold text-slate-800">
-              Total: <span className="text-main-orange">${formData.totalAmount.toFixed(2)}</span>
+              Total: <span className="text-main-orange">Q{formData.totalAmount.toFixed(2)}</span>
             </p>
           </div>
 

@@ -1,14 +1,8 @@
 import Swal from 'sweetalert2';
 import { useRestaurantStore } from '../store/restaurantStore';
 
-const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dss7fs6pl';
-const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload`;
+import { getImageUrl } from '../../../shared/utils/cloudinary';
 
-const getImageUrl = (photo) => {
-  if (!photo) return null;
-  if (photo.startsWith('http://') || photo.startsWith('https://')) return photo;
-  return `${CLOUDINARY_BASE}/${photo}`;
-};
 
 const RestaurantList = () => {
   const { 

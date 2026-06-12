@@ -21,6 +21,11 @@ const tableSchema = new Schema({
     type: String,
     enum: ["disponible", "ocupada", "reservada"],
     default: "disponible"
+  },
+  restaurant: {
+    type: Schema.Types.ObjectId,
+    ref: 'Restaurant',
+    required: false
   }
 }, {
   timestamps: true
