@@ -1,0 +1,5 @@
+# local gitignore for client-user
+node_modules/
+.expo/
+*.log
+.env

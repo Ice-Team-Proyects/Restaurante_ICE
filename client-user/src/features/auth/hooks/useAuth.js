@@ -40,24 +40,6 @@ export const useAuth = () => {
       await loginStore(finalToken, finalUser, finalRefresh);
       return { success: true };
     } catch (err) {
-      const isNetworkError =
-        err.message?.includes("Network") ||
-        err.code === "ERR_NETWORK" ||
-        err.message?.includes("timeout");
-
-      if (isNetworkError) {
-        console.warn("Servidor fuera de línea. Iniciando sesión con usuario simulado local...");
-        const mockUser = {
-          id: "u1",
-          username: emailOrUsername || "carlos_lopez",
-          name: "Carlos López",
-          email: emailOrUsername.includes("@") ? emailOrUsername : "carlos@email.com",
-          role: "Cliente",
-        };
-        await loginStore("mock-access-token-123456", mockUser, "mock-refresh-token-abcdef");
-        return { success: true, isMock: true };
-      }
-
       const errorMsg =
         err.response?.data?.message || err.message || "Error al iniciar sesión";
       setError(errorMsg);
@@ -99,16 +81,6 @@ export const useAuth = () => {
 
       return { success: true, message: message || "Registro exitoso." };
     } catch (err) {
-      const isNetworkError =
-        err.message?.includes("Network") ||
-        err.code === "ERR_NETWORK" ||
-        err.message?.includes("timeout");
-
-      if (isNetworkError) {
-        console.warn("Servidor fuera de línea. Simulando registro exitoso...");
-        return { success: true, message: "Registro exitoso (Modo Demostración Local)." };
-      }
-
       const errorMsg =
         err.response?.data?.message || err.message || "Error al registrar usuario";
       setError(errorMsg);
