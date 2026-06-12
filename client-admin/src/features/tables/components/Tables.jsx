@@ -178,6 +178,18 @@ const TableCard = ({ table, onEdit, onDelete, onRestore, onStatusChange }) => {
             </span>
           </div>
 
+          {table.restaurant && (
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2M3 21h2" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 10h6M9 14h6" stroke="#9ca3af" strokeWidth="2"/>
+              </svg>
+              <span>
+                Sucursal: <strong className="text-gray-700">{table.restaurant.name || table.restaurant}</strong>
+              </span>
+            </div>
+          )}
+
           <div className="flex items-center gap-2 text-xs text-gray-400">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#9ca3af" strokeWidth="2"/>

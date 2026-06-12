@@ -145,7 +145,7 @@ export const OrdersTable = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-sm font-semibold text-main-orange">
-                      ${order.totalAmount?.toFixed(2) || '0.00'}
+                      Q{order.totalAmount?.toFixed(2) || '0.00'}
                     </td>
                     <td className="px-6 py-4 text-sm">
                       <span

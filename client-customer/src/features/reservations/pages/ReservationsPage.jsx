@@ -7,21 +7,44 @@ import { showSuccess, showError } from "../../../shared/utils/toast";
 const ReservationsPage = () => {
   const { isAuthenticated } = useAuthStore();
   const [loading, setLoading] = useState(false);
+  const [loadingRestaurants, setLoadingRestaurants] = useState(false);
   const [loadingTables, setLoadingTables] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [restaurants, setRestaurants] = useState([]);
   const [tables, setTables] = useState([]);
   const [form, setForm] = useState({
     name_customer: "",
     number_people: "",
     time_reservation: "",
+    restaurant: "",
     table: "",
   });
 
+  // Cargar sucursales (Restaurantes) al montar
   useEffect(() => {
     if (isAuthenticated) {
-      setLoadingTables(true);
+      setLoadingRestaurants(true);
       axiosInstance
-        .get("/table?limit=100")
+        .get("/restaurant")
+        .then((res) => {
+          const allRestaurants = res.data?.data || res.data || [];
+          setRestaurants(allRestaurants.filter((r) => r.isActive !== false));
+          setLoadingRestaurants(false);
+        })
+        .catch((err) => {
+          console.error("Error al cargar sucursales:", err);
+          setLoadingRestaurants(false);
+        });
+    }
+  }, [isAuthenticated]);
+
+  // Cargar mesas cuando cambie la sucursal seleccionada
+  useEffect(() => {
+    if (form.restaurant) {
+      setLoadingTables(true);
+      setForm((prev) => ({ ...prev, table: "" })); // reset selected table
+      axiosInstance
+        .get(`/table?limit=100&restaurant=${form.restaurant}`)
         .then((res) => {
           const allTables = res.data?.data || [];
           // Filtrar mesas activas y disponibles
@@ -34,13 +57,22 @@ const ReservationsPage = () => {
           console.error("Error al cargar mesas:", err);
           setLoadingTables(false);
         });
+    } else {
+      setTables([]);
     }
-  }, [isAuthenticated]);
+  }, [form.restaurant]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name_customer.trim() || !form.number_people || !form.time_reservation || !form.table)
+    if (
+      !form.name_customer.trim() ||
+      !form.number_people ||
+      !form.time_reservation ||
+      !form.restaurant ||
+      !form.table
+    ) {
       return showError("Completa todos los campos");
+    }
     setLoading(true);
     try {
       await axiosInstance.post("/reservation", {
@@ -48,10 +80,11 @@ const ReservationsPage = () => {
         number_people: Number(form.number_people),
         time_reservation: new Date(form.time_reservation).toISOString(),
         table: form.table,
+        restaurant: form.restaurant,
       });
       showSuccess("Reservación creada exitosamente");
       setSuccess(true);
-      setForm({ name_customer: "", number_people: "", time_reservation: "", table: "" });
+      setForm({ name_customer: "", number_people: "", time_reservation: "", restaurant: "", table: "" });
     } catch (err) {
       showError(err.response?.data?.message || "Error al crear reservación");
     }
@@ -149,14 +182,44 @@ const ReservationsPage = () => {
               />
             </div>
           </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+              Sucursal / Local
+            </label>
+            {loadingRestaurants ? (
+              <div className="text-gray-400 text-xs py-2 flex items-center gap-2">
+                <Spinner small /> Cargando sucursales...
+              </div>
+            ) : (
+              <select
+                value={form.restaurant}
+                onChange={(e) => setForm({ ...form, restaurant: e.target.value })}
+                className={inputClass}
+                required
+              >
+                <option value="">Seleccionar sucursal...</option>
+                {restaurants.map((r) => (
+                  <option key={r._id} value={r._id}>
+                    {r.name} — {r.address}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">
               Mesa
             </label>
             {loadingTables ? (
               <div className="text-gray-400 text-xs py-2 flex items-center gap-2">
-                <Spinner small /> Cargando mesas disponibles...
+                <Spinner small /> Cargando mesas disponibles en esta sucursal...
               </div>
+            ) : !form.restaurant ? (
+              <select className={inputClass} disabled>
+                <option value="">Primero selecciona una sucursal...</option>
+              </select>
             ) : (
               <select
                 value={form.table}
@@ -172,9 +235,9 @@ const ReservationsPage = () => {
                 ))}
               </select>
             )}
-            {tables.length === 0 && !loadingTables && (
+            {form.restaurant && tables.length === 0 && !loadingTables && (
               <span className="text-yellow-600 text-xs mt-1 block">
-                No hay mesas disponibles en este momento
+                No hay mesas disponibles en esta sucursal en este momento
               </span>
             )}
           </div>

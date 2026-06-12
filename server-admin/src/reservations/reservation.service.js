@@ -33,6 +33,7 @@ export const fetchReservation = async ({
 
     const reservations = await Reservation.find(filter)
         .populate('table', 'number capacity status')
+        .populate('restaurant', 'name address phone')
         .limit(limitNumber * 1)
         .skip((pageNumber - 1) * limitNumber)
         .sort({ createdAt: -1 });

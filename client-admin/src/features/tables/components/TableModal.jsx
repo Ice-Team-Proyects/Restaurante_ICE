@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTablesStore } from '../store/tablesStore.js';
+import { useRestaurantStore } from '../../restaurants/store/restaurantStore.js';
 import { Spinner } from '../../auth/components/Spinner.jsx';
 import { showSuccess, showError } from '../../../shared/utils/toast.js';
 
@@ -11,21 +12,28 @@ const STATUS_OPTIONS = [
 
 export const TableModal = ({ isOpen, onClose, table }) => {
   const { addTable, editTable, loading } = useTablesStore();
+  const { restaurants, fetchRestaurants } = useRestaurantStore();
   const isEdit = Boolean(table);
 
-  const [form, setForm] = useState({ number: '', capacity: '', status: 'disponible' });
+  const [form, setForm] = useState({ number: '', capacity: '', status: 'disponible', restaurant: '' });
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (isOpen) {
+      fetchRestaurants();
       if (table) {
-        setForm({ number: table.number, capacity: table.capacity, status: table.status });
+        setForm({
+          number: table.number,
+          capacity: table.capacity,
+          status: table.status,
+          restaurant: table.restaurant?._id || table.restaurant || '',
+        });
       } else {
-        setForm({ number: '', capacity: '', status: 'disponible' });
+        setForm({ number: '', capacity: '', status: 'disponible', restaurant: '' });
       }
       setErrors({});
     }
-  }, [isOpen, table]);
+  }, [isOpen, table, fetchRestaurants]);
 
   const validate = () => {
     const errs = {};
@@ -34,6 +42,9 @@ export const TableModal = ({ isOpen, onClose, table }) => {
     }
     if (!form.capacity || isNaN(form.capacity) || Number(form.capacity) < 1) {
       errs.capacity = 'Capacidad debe ser mayor a 0';
+    }
+    if (!form.restaurant) {
+      errs.restaurant = 'Debes seleccionar una sucursal';
     }
     return errs;
   };
@@ -47,6 +58,7 @@ export const TableModal = ({ isOpen, onClose, table }) => {
       number: Number(form.number),
       capacity: Number(form.capacity),
       status: form.status,
+      restaurant: form.restaurant,
     };
 
     const result = isEdit
@@ -60,6 +72,10 @@ export const TableModal = ({ isOpen, onClose, table }) => {
       showError(result.error || 'Error al guardar la mesa');
     }
   };
+
+  const activeRestaurants = Array.isArray(restaurants)
+    ? restaurants.filter((r) => r.isActive !== false)
+    : [];
 
   if (!isOpen) return null;
 
@@ -95,6 +111,32 @@ export const TableModal = ({ isOpen, onClose, table }) => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          {/* Sucursal */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+              Sucursal / Local <span className="text-red-500">*</span>
+            </label>
+            <select
+              value={form.restaurant}
+              onChange={(e) => setForm({ ...form, restaurant: e.target.value })}
+              className="w-full px-4 py-2.5 rounded-xl border-2 text-gray-800 text-sm transition focus:outline-none"
+              style={{
+                borderColor: errors.restaurant ? '#ef4444' : '#e5e7eb',
+                background: '#f9fafb',
+              }}
+            >
+              <option value="">Seleccionar sucursal...</option>
+              {activeRestaurants.map((r) => (
+                <option key={r._id} value={r._id}>
+                  {r.name}
+                </option>
+              ))}
+            </select>
+            {errors.restaurant && (
+              <p className="text-red-500 text-xs mt-1">{errors.restaurant}</p>
+            )}
+          </div>
+
           {/* Número */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">

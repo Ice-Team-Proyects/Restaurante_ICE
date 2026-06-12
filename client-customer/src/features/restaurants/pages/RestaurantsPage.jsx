@@ -2,15 +2,8 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../../shared/api/axios";
 import { Spinner } from "../../auth/components/Spinner";
 
-const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dss7fs6pl";
-const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload`;
+import { getImageUrl } from "../../../shared/utils/cloudinary";
 
-const getImageUrl = (photo) => {
-  if (!photo) return null;
-  if (photo.startsWith("http://") || photo.startsWith("https://")) return photo;
-  const prefix = photo.startsWith("Restaurante_ICE/") ? "" : "Restaurante_ICE/";
-  return `${CLOUDINARY_BASE}/${prefix}${photo}`;
-};
 
 const RestaurantsPage = () => {
   const [restaurants, setRestaurants] = useState([]);
