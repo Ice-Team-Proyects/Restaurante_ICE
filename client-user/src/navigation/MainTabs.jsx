@@ -10,6 +10,8 @@ import { View } from "react-native";
 // Importar pantallas del restaurante
 import RestaurantListScreen from "../features/restaurant/screens/RestaurantListScreen.jsx";
 import RestaurantDetailScreen from "../features/restaurant/screens/RestaurantDetailScreen.jsx";
+import TableListScreen from "../features/restaurant/screens/TableListScreen.jsx";
+import TableDetailScreen from "../features/restaurant/screens/TableDetailScreen.jsx";
 
 import MenuListScreen from "../features/menu/screens/MenuListScreen.jsx";
 import MenuDetailScreen from "../features/menu/screens/MenuDetailScreen.jsx";
@@ -31,14 +33,6 @@ const Tab = createBottomTabNavigator();
 
 // 1. Restaurant / Tables Stack
 function RestaurantStack() {
-  const user = useAuthStore((state) => state.user);
-  const isAdmin = user && (
-    user.role?.toUpperCase() === 'ADMIN' ||
-    user.role?.toUpperCase() === 'ADMIN_ROLE' ||
-    user.email?.toLowerCase() === 'admin@restaurante.com' ||
-    user.email?.toLowerCase().includes('admin')
-  );
-
   return (
     <Stack.Navigator
       screenOptions={{
@@ -49,12 +43,12 @@ function RestaurantStack() {
     >
       <Stack.Screen
         name="RestaurantList"
-        options={{ title: isAdmin ? "Mesas de Clientes" : "Sucursales" }}
+        options={{ title: "Restaurantes" }}
         component={RestaurantListScreen}
       />
       <Stack.Screen
         name="RestaurantDetail"
-        options={{ title: isAdmin ? "Gestión de Mesa" : "Detalle Sucursal" }}
+        options={{ title: "Detalle Sucursal" }}
         component={RestaurantDetailScreen}
       />
       <Stack.Screen
@@ -121,11 +115,26 @@ function OrdersStack() {
         headerTitleStyle: { fontWeight: "700" },
       }}
     >
-      <Stack.Screen
-        name="OrdersList"
-        options={{ title: isAdmin ? "Pedidos de Mesa" : "Mis Pedidos" }}
-        component={OrdersListScreen}
-      />
+      {isAdmin ? (
+        <>
+          <Stack.Screen
+            name="TableList"
+            options={{ title: "Gestión de Mesas" }}
+            component={TableListScreen}
+          />
+          <Stack.Screen
+            name="TableDetail"
+            options={{ title: "Detalle de Mesa" }}
+            component={TableDetailScreen}
+          />
+        </>
+      ) : (
+        <Stack.Screen
+          name="OrdersList"
+          options={{ title: "Mis Pedidos" }}
+          component={OrdersListScreen}
+        />
+      )}
     </Stack.Navigator>
   );
 }
@@ -211,11 +220,11 @@ export default function MainTabs() {
           let iconName;
 
           if (route.name === "RestaurantTab") {
-            iconName = isAdmin ? "table-restaurant" : "storefront";
+            iconName = "storefront";
           } else if (route.name === "MenuTab") {
             iconName = "restaurant-menu";
           } else if (route.name === "OrdersTab") {
-            iconName = isAdmin ? "assignment" : "shopping-bag";
+            iconName = isAdmin ? "table-restaurant" : "shopping-bag";
           } else if (route.name === "EventsTab") {
             iconName = "event";
           } else if (route.name === "ReservationsTab") {
@@ -276,7 +285,7 @@ export default function MainTabs() {
       <Tab.Screen
         name="RestaurantTab"
         component={RestaurantStack}
-        options={{ tabBarLabel: isAdmin ? "Mesas" : "Sucursales" }}
+        options={{ tabBarLabel: "Restaurantes" }}
       />
       <Tab.Screen
         name="MenuTab"
@@ -286,7 +295,7 @@ export default function MainTabs() {
       <Tab.Screen
         name="OrdersTab"
         component={OrdersStack}
-        options={{ tabBarLabel: isAdmin ? "Pedidos Mesa" : "Pedidos" }}
+        options={{ tabBarLabel: isAdmin ? "Mesas" : "Pedidos" }}
       />
       <Tab.Screen
         name="EventsTab"

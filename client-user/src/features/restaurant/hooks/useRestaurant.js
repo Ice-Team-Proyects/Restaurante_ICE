@@ -4,7 +4,8 @@ import { userClient } from "../../../shared/api/userClient.js";
 import { useAuthStore } from "../../../shared/store/authStore.js";
 
 export const useRestaurant = () => {
-  const [restaurants, setRestaurants] = useState([]); // holds branches (customer) or tables (admin)
+  const [restaurants, setRestaurants] = useState([]); // holds branches/sucursales
+  const [tables, setTables] = useState([]); // holds tables/mesas
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const user = useAuthStore((state) => state.user);
@@ -19,19 +20,11 @@ export const useRestaurant = () => {
     setLoading(true);
     setError("");
     try {
-      if (isAdmin) {
-        // ADMIN: Cargar mesas de /table
-        const response = await userClient.get("/table");
-        const resData = response.data?.data || response.data || [];
-        setRestaurants(resData);
-      } else {
-        // CLIENTE: Cargar sucursales de /restaurant
-        const response = await userClient.get("/restaurant");
-        const resData = response.data?.data || response.data || [];
-        setRestaurants(resData);
-      }
+      const response = await userClient.get("/restaurant");
+      const resData = response.data?.data || response.data || [];
+      setRestaurants(resData);
     } catch (err) {
-      console.error("Error al obtener restaurantes/mesas:", err);
+      console.error("Error al obtener restaurantes:", err);
       setError(
         err.response?.data?.message ||
           err.message ||
@@ -40,7 +33,26 @@ export const useRestaurant = () => {
     } finally {
       setLoading(false);
     }
-  }, [isAdmin]);
+  }, []);
+
+  const fetchTables = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await userClient.get("/table");
+      const resData = response.data?.data || response.data || [];
+      setTables(resData);
+    } catch (err) {
+      console.error("Error al obtener mesas:", err);
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Error al conectar con el servidor"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const createTable = async (tableData) => {
     setLoading(true);
@@ -51,7 +63,7 @@ export const useRestaurant = () => {
         capacity: parseInt(tableData.capacity),
         status: "disponible"
       });
-      await fetchRestaurants();
+      await fetchTables();
       return { success: true, data: response.data };
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error al crear mesa";
@@ -67,7 +79,7 @@ export const useRestaurant = () => {
     setError("");
     try {
       const response = await userClient.put(`/table/${id}`, tableData);
-      await fetchRestaurants();
+      await fetchTables();
       return { success: true, data: response.data };
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error al actualizar mesa";
@@ -83,7 +95,7 @@ export const useRestaurant = () => {
     setError("");
     try {
       await userClient.patch(`/table/delete/${id}`);
-      await fetchRestaurants();
+      await fetchTables();
       return { success: true };
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error al eliminar mesa";
@@ -96,9 +108,11 @@ export const useRestaurant = () => {
 
   return {
     restaurants,
+    tables,
     loading,
     error,
     fetchRestaurants,
+    fetchTables,
     createTable,
     updateTable,
     deleteTable,
