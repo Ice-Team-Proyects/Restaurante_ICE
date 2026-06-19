@@ -28,12 +28,15 @@ services:
       dockerfile: ../../dockerfiles/Dockerfile.auth-service
     container_name: ice_auth_service
     restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:5296
+      ASPNETCORE_URLS: http://+:5227
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
       DOTNET_WATCH_RESTART_ON_RUDE_EDIT: "1"
-      ConnectionStrings__DefaultConnection: "Host=localhost;Database=restaurant_ice;Username=ICE;Password=restaICE1@;Port=5437"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Database=restaurant_ice;Username=ICE;Password=restaICE1@;Port=5432"
       CloudinarySettings__Cloudname: ${CLOUDINARY_CLOUD_NAME:-dss7fs6pl}
       CloudinarySettings__ApiKey: ${CLOUDINARY_API_KEY:-576915661566217}
       CloudinarySettings__ApiSecret: ${CLOUDINARY_API_SECRET:-d5QSRBAe6VUFv2zb3oTU6NueJ3g}
@@ -72,10 +75,30 @@ services:
       - /src/src/AuthService.Persistence/bin
       - /src/src/AuthService.Persistence/obj
     ports:
-      - "${AUTH_SERVICE_PORT:-5296}:5296"
+      - "${AUTH_SERVICE_PORT:-5227}:5227"
     networks:
       - ice-network
-
+  # --- BD POSTGRES
+  postgres:
+    image: postgres:13
+    container_name: ice_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ICE
+      POSTGRES_PASSWORD: restaICE1@
+      POSTGRES_DB: restaurant_ice
+    ports:
+      - "${POSTGRES_PORT:-5437}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ICE -d restaurant_ice"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - ice-network
   # ── SERVER ADMIN (Express) ───────────────────────────────────
   server-admin:
     build:
@@ -172,3 +195,4 @@ networks:
 
 volumes:
   mongo_data:
+  postgres_data:

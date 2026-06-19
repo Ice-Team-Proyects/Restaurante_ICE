@@ -4,10 +4,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0
 
 WORKDIR /src
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY auth-service.sln ./
 COPY src/AuthService.Domain/ src/AuthService.Domain/
 COPY src/AuthService.Persistence/ src/AuthService.Persistence/
@@ -17,10 +13,10 @@ COPY src/AuthService.Api/ src/AuthService.Api/
 RUN dotnet restore auth-service.sln
 
 ENV ASPNETCORE_ENVIRONMENT=Development
-ENV ASPNETCORE_URLS=http://+:5296
+ENV ASPNETCORE_URLS=http://+:5227
 ENV DOTNET_USE_POLLING_FILE_WATCHER=1
 ENV DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1
 
-EXPOSE 5296
+EXPOSE 5227
 
 CMD ["dotnet", "watch", "--project", "src/AuthService.Api", "run", "--urls", "http://+:5296"]
