@@ -1,14 +1,8 @@
 import Swal from 'sweetalert2';
 import { useRestaurantStore } from '../store/restaurantStore';
 
-const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dss7fs6pl';
-const CLOUDINARY_BASE = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload`;
+import { getImageUrl } from '../../../shared/utils/cloudinary';
 
-const getImageUrl = (photo) => {
-  if (!photo) return null;
-  if (photo.startsWith('http://') || photo.startsWith('https://')) return photo;
-  return `${CLOUDINARY_BASE}/${photo}`;
-};
 
 const RestaurantList = () => {
   const { 
@@ -57,7 +51,7 @@ const RestaurantList = () => {
           const imageUrl = getImageUrl(restaurant.photo) || restaurant.image;
 
           return (
-            <div key={restaurant._id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+            <div key={restaurant._id} className="bg-white rounded-2xl border border-gray-50 overflow-hidden">
               {imageUrl ? (
                 <img
                   src={imageUrl}
@@ -83,7 +77,7 @@ const RestaurantList = () => {
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="text-lg font-bold text-gray-800">{restaurant.name}</h3>
                   <span
-                    className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                       restaurant.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                     }`}
                   >

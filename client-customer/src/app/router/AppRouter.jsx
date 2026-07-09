@@ -8,6 +8,7 @@ import ReservationsPage from "../../features/reservations/pages/ReservationsPage
 import MenusPage from "../../features/menus/pages/MenusPage";
 import EventsPage from "../../features/events/pages/EventsPage";
 import PromotionsPage from "../../features/promotions/pages/PromotionsPage";
+import ProfilePage from "../../features/profile/pages/ProfilePage";
 
 export const AppRouter = () => (
   <Routes>
@@ -20,6 +21,7 @@ export const AppRouter = () => (
       <Route path="reservations" element={<ReservationsPage />} />
       <Route path="events" element={<EventsPage />} />
       <Route path="promotions" element={<PromotionsPage />} />
+      <Route path="perfil" element={<ProfilePage />} />
     </Route>
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>

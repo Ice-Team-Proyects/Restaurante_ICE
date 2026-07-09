@@ -26,5 +26,10 @@ export const validateCreateReservation = [
         .withMessage('La reservación debe tener una mesa asignada')
         .isMongoId()
         .withMessage('El ID de la mesa no es válido'),
+    body('restaurant')
+        .notEmpty()
+        .withMessage('La reservación debe tener una sucursal asignada')
+        .isMongoId()
+        .withMessage('El ID de la sucursal no es válido'),
     checkValidators,
 ];
