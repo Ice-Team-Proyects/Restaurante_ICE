@@ -5,15 +5,12 @@ import { useUIStore } from '../../auth/store/uiStore.js';
 import { Spinner } from '../../auth/components/Spinner.jsx';
 import { ProductModal } from '../components/ProductModal.jsx';
 import { showSuccess, showError } from '../../../shared/utils/toast.js';
-
-const basePathCloudinary = import.meta.env.VITE_BASE_PATH_CLOUDINARY;
+import { getImageUrl } from '../../../shared/utils/cloudinary.js';
 
 /* ─── PRODUCT CARD ─── */
 const ProductCard = ({ product, onEdit, onDelete, onRestore }) => {
   const isInactive = product.isActive === false;
-  const imageUrl = product.photo
-    ? `${basePathCloudinary}Restaurante_ICE/${product.photo}.jpg`
-    : null;
+  const imageUrl = getImageUrl(product.photo);
 
   const categoryName =
     typeof product.category === 'object'
@@ -22,7 +19,7 @@ const ProductCard = ({ product, onEdit, onDelete, onRestore }) => {
 
   return (
     <div
-      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col animate-fadeInUp"
+      className="bg-white rounded-2xl transition-colors overflow-hidden flex flex-col animate-fadeInUp"
       style={{ border: '2px solid #e5e7eb', opacity: isInactive ? 0.7 : 1 }}
     >
       {/* Image */}
@@ -50,7 +47,7 @@ const ProductCard = ({ product, onEdit, onDelete, onRestore }) => {
       <div className="p-4 flex flex-col gap-2 flex-1">
         {/* Category tag */}
         <span
-          className="self-start text-xs font-semibold px-2 py-0.5 rounded-lg"
+          className="self-start text-xs font-semibold px-2 py-0.5 rounded-xl"
           style={{ background: '#fff7ed', color: '#ea580c' }}
         >
           {categoryName}
@@ -64,7 +61,7 @@ const ProductCard = ({ product, onEdit, onDelete, onRestore }) => {
 
         {/* Price */}
         <div className="flex items-center gap-1 mt-1">
-          <span className="text-xl font-black" style={{ color: '#ea580c' }}>
+          <span className="text-xl font-semibold" style={{ color: '#ea580c' }}>
             Q{Number(product.price).toFixed(2)}
           </span>
         </div>
@@ -75,7 +72,7 @@ const ProductCard = ({ product, onEdit, onDelete, onRestore }) => {
             <button
               onClick={() => onRestore(product._id)}
               className="flex-1 py-2 rounded-xl text-xs font-bold text-white transition hover:opacity-90 flex items-center justify-center gap-1.5"
-              style={{ background: 'linear-gradient(to right,#22c55e,#16a34a)' }}
+              style={{ background: '#22c55e' }}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                 <path d="M4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
@@ -222,15 +219,15 @@ const ProductsPage = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-black text-gray-800 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="text-3xl font-bold text-gray-800 leading-tight">
             Gestión de Productos
           </h1>
           <p className="text-gray-500 text-sm mt-0.5">Administra el menú de platillos y bebidas</p>
         </div>
         <button
           onClick={() => { setSelectedProduct(null); setModalOpen(true); }}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-[1.03] active:scale-95"
-          style={{ background: 'linear-gradient(to right,#ea580c,#dc2626)' }}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm transition-colors"
+          style={{ background: '#ff5722' }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
@@ -257,7 +254,7 @@ const ProductsPage = () => {
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all .15s',
-                background: filter === tab.key ? 'linear-gradient(to right,#ea580c,#dc2626)' : 'transparent',
+                background: filter === tab.key ? '#ff5722' : 'transparent',
                 color: filter === tab.key ? '#fff' : '#6b7280',
               }}
             >
@@ -276,14 +273,14 @@ const ProductsPage = () => {
             placeholder="Buscar producto..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: '100%', paddingLeft: '32px', paddingRight: '12px', paddingTop: '7px', paddingBottom: '7px', borderRadius: '10px', border: '1px solid #e5e7eb', background: '#fff', fontSize: '13px', color: '#374151', outline: 'none' }}
+            style={{ width: '100%', paddingLeft: '32px', paddingRight: '12px', paddingTop: '7px', paddingBottom: '7px', borderRadius: '10px', border: 'none', background: '#fff', fontSize: '13px', color: '#374151', outline: 'none' }}
           />
         </div>
 
         <button
           onClick={fetchProducts}
           disabled={loading}
-          style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 14px', borderRadius: '10px', border: '1px solid #e5e7eb', background: '#fff', color: '#6b7280', fontSize: '13px', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 14px', borderRadius: '10px', border: 'none', background: '#fff', color: '#6b7280', fontSize: '13px', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }}>
             <path d="M4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -295,7 +292,7 @@ const ProductsPage = () => {
 
       {/* Error */}
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2" style={{ background: '#fee2e2', color: '#b91c1c', border: '1.5px solid #fca5a5' }}>
+        <div className="mb-6 px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2" style={{ background: '#fee2e2', color: '#b91c1c' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="9" stroke="#ef4444" strokeWidth="2"/>
             <path d="M12 8v4M12 16h.01" stroke="#ef4444" strokeWidth="2" strokeLinecap="round"/>
@@ -307,7 +304,7 @@ const ProductsPage = () => {
       {/* Empty state */}
       {!loading && displayProducts.length === 0 && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4 shadow-lg text-4xl" style={{ background: 'linear-gradient(135deg,#fff7ed,#ffedd5)' }}>
+          <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4 text-4xl" style={{ background: '#fff7ed' }}>
             🍽️
           </div>
           <h3 className="text-xl font-bold text-gray-700 mb-1">No hay productos</h3>

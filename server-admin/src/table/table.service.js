@@ -11,8 +11,12 @@ export const fetchTables = async ({
     limit = 50,
     // isActive may be true, false, or undefined (when undefined we do not filter by activity)
     isActive,
+    restaurant
 }) => {
     const filter = {};
+    if (restaurant) {
+        filter.restaurant = restaurant;
+    }
     if (typeof isActive !== 'undefined') {
         // accept string values from query param
         if (typeof isActive === 'string') {
@@ -28,6 +32,7 @@ export const fetchTables = async ({
     const limitNumber = parseInt(limit);
 
     const tables = await Table.find(filter)
+        .populate('restaurant')
         .limit(limitNumber * 1)
         .skip((pageNumber - 1) * limitNumber)
         .sort({ createdAt: -1 });
@@ -47,7 +52,7 @@ export const fetchTables = async ({
 
 // busca una mesa por su id
 export const fetchTableById = async ({ id }) => {
-    const table = await Table.findById(id);
+    const table = await Table.findById(id).populate('restaurant');
     if (!table) {
         const err = new Error('Mesa no encontrada');
         err.status = 404;

@@ -111,48 +111,48 @@ const RestaurantModal = () => {
           <div className="p-6 space-y-4 overflow-y-auto max-h-[calc(90vh-160px)]">
             <div>
               <label className="block text-sm font-medium mb-1">Nombre</label>
-              <input { ...register('name', { required: true }) } className={`w-full border rounded-lg px-3 py-2 ${errors.name ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
+              <input { ...register('name', { required: true }) } className={`w-full border rounded-xl px-3 py-2 ${errors.name ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
               {errors.name && <span className="text-red-500 text-xs mt-1 block">El nombre es obligatorio</span>}
             </div>
 
             <div>
               <label className="block text-sm font-medium mb-1">Dirección</label>
-              <input { ...register('address', { required: true }) } className={`w-full border rounded-lg px-3 py-2 ${errors.address ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
+              <input { ...register('address', { required: true }) } className={`w-full border rounded-xl px-3 py-2 ${errors.address ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
               {errors.address && <span className="text-red-500 text-xs mt-1 block">La dirección es obligatoria</span>}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">Teléfono</label>
-                <input { ...register('phone', { required: true }) } className={`w-full border rounded-lg px-3 py-2 ${errors.phone ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
+                <input { ...register('phone', { required: true }) } className={`w-full border rounded-xl px-3 py-2 ${errors.phone ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
                 {errors.phone && <span className="text-red-500 text-xs mt-1 block">El teléfono es obligatorio</span>}
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">Horario</label>
-                <input { ...register('openingHours', { required: true }) } className={`w-full border rounded-lg px-3 py-2 ${errors.openingHours ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
+                <input { ...register('openingHours', { required: true }) } className={`w-full border rounded-xl px-3 py-2 ${errors.openingHours ? 'border-red-500 bg-red-50' : 'border-gray-300'}`} type="text" />
                 {errors.openingHours && <span className="text-red-500 text-xs mt-1 block">El horario es obligatorio</span>}
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium mb-1">Descripción</label>
-              <textarea { ...register('description') } className="w-full border border-gray-300 rounded-lg px-3 py-2" rows="2"></textarea>
+              <textarea { ...register('description') } className="w-full border border-gray-300 rounded-xl px-3 py-2" rows="2"></textarea>
             </div>
             
             <div>
               <label className="block text-sm font-medium mb-1">Imagen</label>
               <input type="file" { ...register('image') } className="w-full text-sm" />
               { preview && (
-                <img src={preview} className="mt-2 w-full h-32 object-cover rounded-lg border" alt="Previsualización" />
+                <img src={preview} className="mt-2 w-full h-32 object-cover rounded-xl border" alt="Previsualización" />
               ) }
             </div>
           </div>
 
           <div className="p-6 pt-4 border-t border-gray-100 flex justify-end gap-3 bg-gray-50 rounded-b-xl">
-            <button type="button" onClick={handleClose} className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors">
+            <button type="button" onClick={handleClose} className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-xl transition-colors">
               Cancelar
             </button>
-            <button type="submit" className="bg-main-orange text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors">
+            <button type="submit" className="bg-main-orange text-white px-4 py-2 rounded-xl hover:bg-orange-600 transition-colors">
               {selectedRestaurant ? 'Actualizar' : 'Guardar'}
             </button>
           </div>

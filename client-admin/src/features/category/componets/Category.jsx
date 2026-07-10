@@ -44,7 +44,6 @@ const StatsRow = ({ categories }) => {
           className="rounded-2xl transition hover:scale-[1.02]"
           style={{
             background: s.bg,
-            border: `1.5px solid ${s.border}`,
             padding: '12px 16px',
             display: 'flex',
             alignItems: 'center',
@@ -66,17 +65,17 @@ const CategoryCard = ({ category, onEdit, onDelete, onRestore }) => {
 
   return (
     <div
-      className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col animate-fadeInUp"
-      style={{ border: `2px solid ${cfg.border}`, opacity: isInactive ? 0.7 : 1 }}
+      className="bg-white rounded-2xl transition-colors overflow-hidden flex flex-col animate-fadeInUp"
+      style={{ opacity: isInactive ? 0.7 : 1 }}
     >
       {/* Top accent */}
-      <div className="h-1.5 w-full" style={{ background: `linear-gradient(to right, ${cfg.color}, ${cfg.border})` }} />
+      <div className="h-1.5 w-full" style={{ background: cfg.color }} />
 
       <div className="p-5 flex flex-col gap-3 flex-1">
         {/* Header */}
         <div className="flex items-start justify-between gap-2">
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-sm flex-shrink-0"
+            className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
             style={{ background: cfg.bg }}
           >
             {cfg.emoji}
@@ -86,7 +85,6 @@ const CategoryCard = ({ category, onEdit, onDelete, onRestore }) => {
             style={{
               background: isInactive ? '#fee2e2' : cfg.bg,
               color: isInactive ? '#b91c1c' : cfg.color,
-              border: `1px solid ${isInactive ? '#fca5a5' : cfg.border}`,
             }}
           >
             {isInactive ? 'Inactiva' : 'Activa'}
@@ -97,7 +95,7 @@ const CategoryCard = ({ category, onEdit, onDelete, onRestore }) => {
         <div>
           <h3 className="text-base font-bold text-gray-800 leading-tight">{category.categoryName}</h3>
           <span
-            className="inline-block mt-1 text-xs font-semibold px-2 py-0.5 rounded-lg"
+            className="inline-block mt-1 text-xs font-semibold px-2 py-0.5 rounded-xl"
             style={{ background: cfg.bg, color: cfg.color }}
           >
             {category.type}
@@ -111,7 +109,7 @@ const CategoryCard = ({ category, onEdit, onDelete, onRestore }) => {
             <button
               onClick={() => onRestore(category._id)}
               className="flex-1 py-2 rounded-xl text-xs font-bold text-white transition hover:opacity-90 flex items-center justify-center gap-1.5"
-              style={{ background: 'linear-gradient(to right,#22c55e,#16a34a)' }}
+              style={{ background: '#22c55e' }}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                 <path d="M4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
@@ -221,15 +219,15 @@ const CategoriesPage = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-black text-gray-800 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="text-3xl font-bold text-gray-800 leading-tight">
             Gestión de Categorías
           </h1>
           <p className="text-gray-500 text-sm mt-0.5">Administra las categorías del menú del restaurante</p>
         </div>
         <button
           onClick={() => { setSelectedCategory(null); setModalOpen(true); }}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-[1.03] active:scale-95"
-          style={{ background: 'linear-gradient(to right,#ea580c,#dc2626)' }}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm transition-colors"
+          style={{ background: '#ff5722' }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
@@ -243,7 +241,7 @@ const CategoriesPage = () => {
 
       {/* Filters + Search */}
       <div className="mb-5" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
-        <div style={{ display: 'flex', gap: '4px', padding: '4px', borderRadius: '14px', background: '#fff', border: '1px solid #e5e7eb', boxShadow: '0 1px 4px rgba(0,0,0,0.04)', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '4px', padding: '4px', borderRadius: '14px', background: '#fff', flexWrap: 'wrap' }}>
           {FILTER_TABS.map((tab) => (
             <button
               key={tab.key}
@@ -256,7 +254,7 @@ const CategoriesPage = () => {
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all .15s',
-                background: filter === tab.key ? 'linear-gradient(to right,#ea580c,#dc2626)' : 'transparent',
+                background: filter === tab.key ? '#ff5722' : 'transparent',
                 color: filter === tab.key ? '#fff' : '#6b7280',
               }}
             >
@@ -275,14 +273,14 @@ const CategoriesPage = () => {
             placeholder="Buscar categoría..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{ width: '100%', paddingLeft: '32px', paddingRight: '12px', paddingTop: '7px', paddingBottom: '7px', borderRadius: '10px', border: '1px solid #e5e7eb', background: '#fff', fontSize: '13px', color: '#374151', outline: 'none' }}
+            style={{ width: '100%', paddingLeft: '32px', paddingRight: '12px', paddingTop: '7px', paddingBottom: '7px', borderRadius: '10px', border: 'none', background: '#fff', fontSize: '13px', color: '#374151', outline: 'none' }}
           />
         </div>
 
         <button
           onClick={fetchCategories}
           disabled={loading}
-          style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 14px', borderRadius: '10px', border: '1px solid #e5e7eb', background: '#fff', color: '#6b7280', fontSize: '13px', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '7px 14px', borderRadius: '10px', border: 'none', background: '#fff', color: '#6b7280', fontSize: '13px', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ animation: loading ? 'spin 1s linear infinite' : 'none' }}>
             <path d="M4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
@@ -294,7 +292,7 @@ const CategoriesPage = () => {
 
       {/* Error */}
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2" style={{ background: '#fee2e2', color: '#b91c1c', border: '1.5px solid #fca5a5' }}>
+        <div className="mb-6 px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2" style={{ background: '#fee2e2', color: '#b91c1c' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="9" stroke="#ef4444" strokeWidth="2"/>
             <path d="M12 8v4M12 16h.01" stroke="#ef4444" strokeWidth="2" strokeLinecap="round"/>
@@ -306,7 +304,7 @@ const CategoriesPage = () => {
       {/* Empty state */}
       {!loading && displayCategories.length === 0 && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
-          <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4 shadow-lg text-4xl" style={{ background: 'linear-gradient(135deg,#fff7ed,#ffedd5)' }}>
+          <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4 text-4xl" style={{ background: '#fff7ed' }}>
           </div>
           <h3 className="text-xl font-bold text-gray-700 mb-1">No hay categorías</h3>
           <p className="text-gray-400 text-sm max-w-xs">

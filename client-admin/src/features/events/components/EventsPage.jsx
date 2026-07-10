@@ -16,17 +16,17 @@ const EventCard = ({ event, onDelete, onRestore }) => {
 
   return (
     <div
-      className='bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col animate-fadeInUp'
+      className='bg-white rounded-2xl transition-colors overflow-hidden flex flex-col animate-fadeInUp'
       style={{ border: '2px solid #93c5fd', opacity: isInactive ? 0.7 : 1 }}
     >
       <div
         className='h-1.5 w-full'
-        style={{ background: 'linear-gradient(to right, #1d4ed8, #93c5fd)' }}
+        style={{ background: '#1d4ed8' }}
       />
       <div className='p-5 flex flex-col gap-3 flex-1'>
         <div className='flex items-start justify-between gap-2'>
           <div
-            className='w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-sm flex-shrink-0'
+            className='w-12 h-12 rounded-xl flex items-center justify-center text-2xl  flex-shrink-0'
             style={{ background: '#dbeafe' }}
           >
             🎉
@@ -46,19 +46,19 @@ const EventCard = ({ event, onDelete, onRestore }) => {
           <h3 className='text-base font-bold text-gray-800 leading-tight'>{event.name_event}</h3>
           <div className='flex flex-wrap gap-2 mt-1'>
             <span
-              className='text-xs font-semibold px-2 py-0.5 rounded-lg'
+              className='text-xs font-semibold px-2 py-0.5 rounded-xl'
               style={{ background: '#dbeafe', color: '#1d4ed8' }}
             >
               📅 {dateStr}
             </span>
             <span
-              className='text-xs font-semibold px-2 py-0.5 rounded-lg'
+              className='text-xs font-semibold px-2 py-0.5 rounded-xl'
               style={{ background: '#dcfce7', color: '#15803d' }}
             >
               👥 {event.capacity}
             </span>
             <span
-              className='text-xs font-semibold px-2 py-0.5 rounded-lg'
+              className='text-xs font-semibold px-2 py-0.5 rounded-xl'
               style={{ background: '#ffedd5', color: '#c2410c' }}
             >
               Q{event.price}
@@ -72,7 +72,7 @@ const EventCard = ({ event, onDelete, onRestore }) => {
             <button
               onClick={() => onRestore(event._id)}
               className='flex-1 py-2 rounded-xl text-xs font-bold text-white transition hover:opacity-90 flex items-center justify-center gap-1.5'
-              style={{ background: 'linear-gradient(to right,#22c55e,#16a34a)' }}
+              style={{ background: '#22c55e' }}
             >
               Restaurar
             </button>
@@ -106,17 +106,17 @@ const InscriptionCard = ({ inscription, onDelete, onRestore }) => {
 
   return (
     <div
-      className='bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col animate-fadeInUp'
+      className='bg-white rounded-2xl transition-colors overflow-hidden flex flex-col animate-fadeInUp'
       style={{ border: `2px solid ${sCfg.border}`, opacity: isInactive ? 0.7 : 1 }}
     >
       <div
         className='h-1.5 w-full'
-        style={{ background: `linear-gradient(to right, ${sCfg.color}, ${sCfg.border})` }}
+        style={{ background: sCfg.color }}
       />
       <div className='p-5 flex flex-col gap-3 flex-1'>
         <div className='flex items-start justify-between gap-2'>
           <div
-            className='w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-sm flex-shrink-0'
+            className='w-12 h-12 rounded-xl flex items-center justify-center text-2xl  flex-shrink-0'
             style={{ background: sCfg.bg }}
           >
             📝
@@ -136,13 +136,13 @@ const InscriptionCard = ({ inscription, onDelete, onRestore }) => {
           <p className='text-xs text-gray-500'>📞 {inscription.phone_customer}</p>
           <div className='flex flex-wrap gap-2 mt-2'>
             <span
-              className='text-xs font-semibold px-2 py-0.5 rounded-lg'
+              className='text-xs font-semibold px-2 py-0.5 rounded-xl'
               style={{ background: '#dbeafe', color: '#1d4ed8' }}
             >
               👥 {inscription.number_people} personas
             </span>
             <span
-              className='text-xs font-semibold px-2 py-0.5 rounded-lg'
+              className='text-xs font-semibold px-2 py-0.5 rounded-xl'
               style={{ background: '#ffedd5', color: '#c2410c' }}
             >
               Q{inscription.total_price}
@@ -154,7 +154,7 @@ const InscriptionCard = ({ inscription, onDelete, onRestore }) => {
             <button
               onClick={() => onRestore(inscription._id)}
               className='flex-1 py-2 rounded-xl text-xs font-bold text-white transition hover:opacity-90 flex items-center justify-center gap-1.5'
-              style={{ background: 'linear-gradient(to right,#22c55e,#16a34a)' }}
+              style={{ background: '#22c55e' }}
             >
               Restaurar
             </button>
@@ -185,17 +185,17 @@ const PromotionCard = ({ promotion, onDelete, onRestore }) => {
 
   return (
     <div
-      className='bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col animate-fadeInUp'
+      className='bg-white rounded-2xl transition-colors overflow-hidden flex flex-col animate-fadeInUp'
       style={{ border: '2px solid #fdba74', opacity: isInactive ? 0.7 : 1 }}
     >
       <div
         className='h-1.5 w-full'
-        style={{ background: 'linear-gradient(to right, #c2410c, #fdba74)' }}
+        style={{ background: '#c2410c' }}
       />
       <div className='p-5 flex flex-col gap-3 flex-1'>
         <div className='flex items-start justify-between gap-2'>
           <div
-            className='w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-sm flex-shrink-0'
+            className='w-12 h-12 rounded-xl flex items-center justify-center text-2xl  flex-shrink-0'
             style={{ background: '#ffedd5' }}
           >
             🎁
@@ -217,13 +217,13 @@ const PromotionCard = ({ promotion, onDelete, onRestore }) => {
           </h3>
           <div className='flex flex-wrap gap-2 mt-1'>
             <span
-              className='text-xs font-semibold px-2 py-0.5 rounded-lg'
+              className='text-xs font-semibold px-2 py-0.5 rounded-xl'
               style={{ background: '#dcfce7', color: '#15803d' }}
             >
               {promotion.discount_percentage}% descuento
             </span>
             <span
-              className='text-xs font-semibold px-2 py-0.5 rounded-lg'
+              className='text-xs font-semibold px-2 py-0.5 rounded-xl'
               style={{ background: '#dbeafe', color: '#1d4ed8' }}
             >
               Mín. {promotion.min_people} personas
@@ -239,7 +239,7 @@ const PromotionCard = ({ promotion, onDelete, onRestore }) => {
             <button
               onClick={() => onRestore(promotion._id)}
               className='flex-1 py-2 rounded-xl text-xs font-bold text-white transition hover:opacity-90 flex items-center justify-center gap-1.5'
-              style={{ background: 'linear-gradient(to right,#22c55e,#16a34a)' }}
+              style={{ background: '#22c55e' }}
             >
               Restaurar
             </button>
@@ -442,8 +442,8 @@ const EventsPage = () => {
       <div className='flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6'>
         <div>
           <h1
-            className='text-3xl font-black text-gray-800 leading-tight'
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            className='text-3xl font-semibold text-gray-800 leading-tight'
+           
           >
             Gestión de Eventos
           </h1>
@@ -453,8 +453,8 @@ const EventsPage = () => {
         </div>
         <button
           onClick={openModal}
-          className='flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-[1.03] active:scale-95'
-          style={{ background: 'linear-gradient(to right,#ea580c,#dc2626)' }}
+          className='flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm transition-colors'
+          style={{ background: '#ff5722' }}
         >
           <svg width='16' height='16' viewBox='0 0 24 24' fill='none'>
             <path d='M12 5v14M5 12h14' stroke='white' strokeWidth='2.5' strokeLinecap='round' />
@@ -500,7 +500,6 @@ const EventsPage = () => {
             className='rounded-2xl transition hover:scale-[1.02]'
             style={{
               background: s.bg,
-              border: `1.5px solid ${s.border}`,
               padding: '12px 16px',
               display: 'flex',
               alignItems: 'center',
@@ -529,9 +528,7 @@ const EventsPage = () => {
             padding: '4px',
             borderRadius: '14px',
             background: '#fff',
-            border: '1px solid #e5e7eb',
-            boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-          }}
+            }}
         >
           {TABS.map((tab) => (
             <button
@@ -550,7 +547,7 @@ const EventsPage = () => {
                 transition: 'all .15s',
                 background:
                   activeTab === tab.key
-                    ? 'linear-gradient(to right,#ea580c,#dc2626)'
+                    ? '#ff5722'
                     : 'transparent',
                 color: activeTab === tab.key ? '#fff' : '#6b7280',
               }}
@@ -617,7 +614,7 @@ const EventsPage = () => {
       {error && (
         <div
           className='mb-6 px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2'
-          style={{ background: '#fee2e2', color: '#b91c1c', border: '1.5px solid #fca5a5' }}
+          style={{ background: '#fee2e2', color: '#b91c1c' }}
         >
           {error}
         </div>
