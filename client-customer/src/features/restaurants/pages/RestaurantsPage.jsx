@@ -5,6 +5,9 @@ import { Spinner } from "../../auth/components/Spinner";
 import PageHeader from "../../../shared/components/ui/PageHeader";
 import ServiceCard from "../../../shared/components/ui/ServiceCard";
 
+import { getImageUrl } from "../../../shared/utils/cloudinary";
+
+
 const RestaurantsPage = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);

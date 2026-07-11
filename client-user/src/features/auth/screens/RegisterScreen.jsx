@@ -265,20 +265,35 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.xl,
   },
   glassCard: {
+<<<<<<< HEAD
     backgroundColor: "rgba(255, 255, 255, 0.45)",
     borderColor: "rgba(255, 255, 255, 0.65)",
     borderWidth: 1.5,
+=======
+    backgroundColor: "#FFFFFF",
+    borderColor: "#FCE8D9", // Beautiful soft peach border
+    borderWidth: 1,
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
     borderRadius: 24,
     padding: SPACING.lg,
     ...Platform.select({
       ios: {
         shadowColor: COLORS.primary,
+<<<<<<< HEAD
         shadowOffset: { width: 0, height: 12 },
         shadowOpacity: 0.1,
         shadowRadius: 24,
       },
       android: {
         elevation: 6,
+=======
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.05,
+        shadowRadius: 16,
+      },
+      android: {
+        elevation: 3,
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
       },
     }),
   },
@@ -299,8 +314,13 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
   },
   glassInput: {
+<<<<<<< HEAD
     backgroundColor: "rgba(255, 255, 255, 0.75)",
     borderColor: "rgba(226, 92, 0, 0.2)",
+=======
+    backgroundColor: "#FFFFFF",
+    borderColor: "#FCE8D9",
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
     borderRadius: 14,
     height: 50,
   },

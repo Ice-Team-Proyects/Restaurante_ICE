@@ -63,16 +63,17 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 52,
-    borderWidth: 1.5,
-    borderColor: COLORS.border,
-    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#FCE8D9", // Soft pastel peach border
+    borderRadius: 14,
     paddingHorizontal: SPACING.md,
     fontSize: FONT_SIZE.md,
     color: COLORS.text,
-    backgroundColor: COLORS.surface,
+    backgroundColor: "#FFFFFF", // Clean solid white background
   },
   inputFocused: {
     borderColor: COLORS.primary,
+    backgroundColor: "#FFFFFF",
   },
   inputError: {
     borderColor: COLORS.error,

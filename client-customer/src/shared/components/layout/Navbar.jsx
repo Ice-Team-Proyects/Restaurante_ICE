@@ -95,7 +95,17 @@ const Navbar = () => {
               <>
                 <Link
                   to="/perfil"
+<<<<<<< HEAD
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-red-900/80 hover:bg-red-800/10 transition"
+=======
+                  className="text-white/80 hover:text-white text-sm hidden sm:block font-semibold transition"
+                >
+                  👤 Mi perfil ({user?.username})
+                </Link>
+                <button
+                  onClick={logout}
+                  className="px-4 py-1.5 rounded-lg text-sm font-bold bg-white/20 text-white hover:bg-white/30 transition"
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
                 >
                   <User size={15} />
                   {user?.username}

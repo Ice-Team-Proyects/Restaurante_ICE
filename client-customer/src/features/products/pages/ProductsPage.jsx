@@ -4,6 +4,9 @@ import axiosInstance from "../../../shared/api/axios";
 import { Spinner } from "../../auth/components/Spinner";
 import PageHeader from "../../../shared/components/ui/PageHeader";
 
+import { getImageUrl } from "../../../shared/utils/cloudinary";
+
+
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);

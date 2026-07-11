@@ -65,7 +65,7 @@ export default function OrdersListScreen({ navigation }) {
 
         <View style={styles.orderFooter}>
           <Text style={styles.footerDetails}>{itemsCount} {itemsCount === 1 ? "platillo" : "platillos"}</Text>
-          <Text style={styles.orderTotal}>Total: ${totalAmount}</Text>
+          <Text style={styles.orderTotal}>Total: Q{totalAmount}</Text>
         </View>
 
         {/* ADMIN Preparation Workflow Actions */}
@@ -174,10 +174,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
   },
   bar: {
-    backgroundColor: COLORS.surface,
+    backgroundColor: "#FFFFFF", // Clean solid white header
     padding: SPACING.md,
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
+    borderBottomColor: "#F5E2D0", // Soft pastel peach border
     alignItems: "center",
     ...SHADOWS.sm,
   },
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: SPACING.md,
-    paddingBottom: SPACING.xl,
+    paddingBottom: 90,
   },
   orderCard: {
     marginBottom: SPACING.md,
