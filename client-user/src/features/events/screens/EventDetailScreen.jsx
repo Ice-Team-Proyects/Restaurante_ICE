@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, ScrollView, Alert, FlatList, TouchableOpacity }
 import { useEvents } from "../hooks/useEvents.js";
 import { COLORS, SPACING, FONT_SIZE, SHADOWS } from "../../../shared/constants/theme.js";
 import { Button } from "../../../shared/components/common/Button.jsx";
-import { Card, GlassBackground } from "../../../shared/components/common/Common.jsx";
+import { Card } from "../../../shared/components/common/Common.jsx";
 import { Input } from "../../../shared/components/common/Input.jsx";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -68,152 +68,148 @@ export default function EventDetailScreen({ route, navigation }) {
   if (isAdmin) {
     // VISTA DE ADMINISTRADOR: Lista de asistentes/inscritos al evento
     return (
-      <GlassBackground style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+        <Card style={styles.card}>
+          <Text style={styles.eventName}>{event.name_event}</Text>
+          <Text style={styles.detailText}>📅 {formatDate(event.date_event)}</Text>
+          <Text style={styles.detailText}>📍 {event.location}</Text>
+          <Text style={styles.detailText}>👥 Capacidad Máxima: {event.capacity} personas</Text>
+          <Text style={styles.detailText}>💵 Precio Base: ${event.price}</Text>
+          
+          <View style={styles.divider} />
+          
+          <Text style={styles.sectionTitle}>Descripción</Text>
+          <Text style={styles.description}>{event.description}</Text>
+        </Card>
+
+        <View style={styles.attendeesHeaderRow}>
+          <Text style={styles.subTitle}>Lista de Asistentes ({eventAttendees.length})</Text>
+        </View>
+
+        {eventAttendees.length === 0 ? (
           <Card style={styles.card}>
-            <Text style={styles.eventName}>{event.name_event}</Text>
-            <Text style={styles.detailText}>📅 {formatDate(event.date_event)}</Text>
-            <Text style={styles.detailText}>📍 {event.location}</Text>
-            <Text style={styles.detailText}>👥 Capacidad Máxima: {event.capacity} personas</Text>
-            <Text style={styles.detailText}>💵 Precio Base: Q{event.price}</Text>
-            
-            <View style={styles.divider} />
-            
-            <Text style={styles.sectionTitle}>Descripción</Text>
-            <Text style={styles.description}>{event.description}</Text>
+            <Text style={styles.noAttendees}>No hay clientes inscritos en este evento todavía.</Text>
           </Card>
-
-          <View style={styles.attendeesHeaderRow}>
-            <Text style={styles.subTitle}>Lista de Asistentes ({eventAttendees.length})</Text>
-          </View>
-
-          {eventAttendees.length === 0 ? (
-            <Card style={styles.card}>
-              <Text style={styles.noAttendees}>No hay clientes inscritos en este evento todavía.</Text>
-            </Card>
-          ) : (
-            eventAttendees.map((att) => (
-              <Card key={att._id} style={styles.attendeeCard}>
-                <View style={styles.attendeeHeader}>
-                  <Text style={styles.attendeeName}>{att.name_customer}</Text>
-                  <View style={styles.attendeeBadge}>
-                    <Text style={styles.attendeeBadgeText}>{att.number_people} pzs</Text>
-                  </View>
+        ) : (
+          eventAttendees.map((att) => (
+            <Card key={att._id} style={styles.attendeeCard}>
+              <View style={styles.attendeeHeader}>
+                <Text style={styles.attendeeName}>{att.name_customer}</Text>
+                <View style={styles.attendeeBadge}>
+                  <Text style={styles.attendeeBadgeText}>{att.number_people} pzs</Text>
                 </View>
-                <Text style={styles.attendeeInfo}>✉️ {att.email_customer}</Text>
-                <Text style={styles.attendeeInfo}>📞 {att.phone_customer}</Text>
-              </Card>
-            ))
-          )}
-        </ScrollView>
-      </GlassBackground>
+              </View>
+              <Text style={styles.attendeeInfo}>✉️ {att.email_customer}</Text>
+              <Text style={styles.attendeeInfo}>📞 {att.phone_customer}</Text>
+            </Card>
+          ))
+        )}
+      </ScrollView>
     );
   }
 
   // VISTA DE CLIENTE: Detalles y formulario de registro
   return (
-    <GlassBackground style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Card style={styles.card}>
-          <Text style={styles.eventName}>{event.name_event}</Text>
-          <Text style={styles.priceTag}>Precio: Q{event.price} por persona</Text>
-          
-          <View style={styles.infoRow}>
-            <MaterialIcons name="event" size={20} color={COLORS.primary} />
-            <Text style={styles.infoText}>{formatDate(event.date_event)}</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <MaterialIcons name="place" size={20} color={COLORS.primary} />
-            <Text style={styles.infoText}>{event.location}</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <MaterialIcons name="people" size={20} color={COLORS.primary} />
-            <Text style={styles.infoText}>Cupo disponible: {event.capacity} personas</Text>
-          </View>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+      <Card style={styles.card}>
+        <Text style={styles.eventName}>{event.name_event}</Text>
+        <Text style={styles.priceTag}>Precio: ${event.price} por persona</Text>
+        
+        <View style={styles.infoRow}>
+          <MaterialIcons name="event" size={20} color={COLORS.primary} />
+          <Text style={styles.infoText}>{formatDate(event.date_event)}</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <MaterialIcons name="place" size={20} color={COLORS.primary} />
+          <Text style={styles.infoText}>{event.location}</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <MaterialIcons name="people" size={20} color={COLORS.primary} />
+          <Text style={styles.infoText}>Cupo disponible: {event.capacity} personas</Text>
+        </View>
 
-          <View style={styles.divider} />
+        <View style={styles.divider} />
 
-          <Text style={styles.sectionTitle}>Acerca de la Experiencia</Text>
-          <Text style={styles.description}>{event.description}</Text>
-        </Card>
+        <Text style={styles.sectionTitle}>Acerca de la Experiencia</Text>
+        <Text style={styles.description}>{event.description}</Text>
+      </Card>
 
-        {/* Formulario de registro */}
-        <Card style={styles.formCard}>
-          <Text style={styles.formTitle}>Reservar Entradas</Text>
-          
-          <Input
-            label="Cantidad de Personas"
-            placeholder="Ej. 2"
-            value={numPeople}
-            onChangeText={setNumPeople}
-            keyboardType="numeric"
-          />
+      {/* Formulario de registro */}
+      <Card style={styles.formCard}>
+        <Text style={styles.formTitle}>Reservar Entradas</Text>
+        
+        <Input
+          label="Cantidad de Personas"
+          placeholder="Ej. 2"
+          value={numPeople}
+          onChangeText={setNumPeople}
+          keyboardType="numeric"
+        />
 
-          {/* Promotions Selector */}
-          {promotions.length > 0 && (
-            <View style={styles.promoContainer}>
-              <Text style={styles.promoLabel}>Aplicar Promoción Especial</Text>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.promoScroll}>
+        {/* Promotions Selector */}
+        {promotions.length > 0 && (
+          <View style={styles.promoContainer}>
+            <Text style={styles.promoLabel}>Aplicar Promoción Especial</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.promoScroll}>
+              <TouchableOpacity
+                style={[
+                  styles.promoPill,
+                  selectedPromo === null ? styles.promoPillActive : null
+                ]}
+                onPress={() => setSelectedPromo(null)}
+              >
+                <Text style={[
+                  styles.promoText,
+                  selectedPromo === null ? styles.promoTextActive : null
+                ]}>
+                  Ninguna
+                </Text>
+              </TouchableOpacity>
+              
+              {promotions.map((p) => (
                 <TouchableOpacity
+                  key={p._id}
                   style={[
                     styles.promoPill,
-                    selectedPromo === null ? styles.promoPillActive : null
+                    selectedPromo?._id === p._id ? styles.promoPillActive : null
                   ]}
-                  onPress={() => setSelectedPromo(null)}
+                  onPress={() => setSelectedPromo(p)}
                 >
                   <Text style={[
                     styles.promoText,
-                    selectedPromo === null ? styles.promoTextActive : null
+                    selectedPromo?._id === p._id ? styles.promoTextActive : null
                   ]}>
-                    Ninguna
+                    {p.name_promotion} (-{p.discount_percentage}%)
                   </Text>
                 </TouchableOpacity>
-                
-                {promotions.map((p) => (
-                  <TouchableOpacity
-                    key={p._id}
-                    style={[
-                      styles.promoPill,
-                      selectedPromo?._id === p._id ? styles.promoPillActive : null
-                    ]}
-                    onPress={() => setSelectedPromo(p)}
-                  >
-                    <Text style={[
-                      styles.promoText,
-                      selectedPromo?._id === p._id ? styles.promoTextActive : null
-                    ]}>
-                      {p.name_promotion} (-{p.discount_percentage}%)
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            </View>
-          )}
-
-          <View style={styles.divider} />
-
-          <View style={styles.totalRow}>
-            <Text style={styles.totalLabel}>Total Estimado:</Text>
-            <Text style={styles.totalValue}>Q{calculateTotalPrice().toFixed(2)}</Text>
+              ))}
+            </ScrollView>
           </View>
+        )}
 
-          <Button
-            title="Confirmar Inscripción"
-            type="primary"
-            loading={loading}
-            onPress={handleRegister}
-            style={styles.regBtn}
-          />
-        </Card>
-      </ScrollView>
-    </GlassBackground>
+        <View style={styles.divider} />
+
+        <View style={styles.totalRow}>
+          <Text style={styles.totalLabel}>Total Estimado:</Text>
+          <Text style={styles.totalValue}>${calculateTotalPrice().toFixed(2)}</Text>
+        </View>
+
+        <Button
+          title="Confirmar Inscripción"
+          type="primary"
+          loading={loading}
+          onPress={handleRegister}
+          style={styles.regBtn}
+        />
+      </Card>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "transparent",
+    backgroundColor: COLORS.background,
   },
   scrollContent: {
     padding: SPACING.md,
@@ -297,9 +293,9 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#FCE8D9",
+    borderColor: COLORS.border,
     marginRight: SPACING.xs,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: COLORS.surface,
   },
   promoPillActive: {
     borderColor: COLORS.primary,

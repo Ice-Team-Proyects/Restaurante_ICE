@@ -17,17 +17,17 @@ logs/
 .idea/
 *.suo
 *.user
-*.sln
+#*.sln
 
 # ======================
 # Builds / Dependencias
 # ======================
-/bin/
-/obj/
-/build/
-/dist/
-/out/
-/target/
+bin/
+obj/
+build/
+dist/
+out/
+target/
 
 # ======================
 # Configs sensibles

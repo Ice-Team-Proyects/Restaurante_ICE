@@ -87,16 +87,12 @@ const styles = StyleSheet.create({
     height: 44,
   },
   card: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: COLORS.surface,
     borderRadius: 16,
     padding: SPACING.lg,
     borderWidth: 1,
-    borderColor: "#FCE8D9", // Soft pastel peach border
-    shadowColor: "#E25C00", // Soft tasty orange tint shadow
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
+    borderColor: COLORS.border,
+    ...SHADOWS.md,
     marginBottom: SPACING.md,
   },
 });
@@ -104,9 +100,10 @@ const styles = StyleSheet.create({
 export const GlassBackground = ({ children, style }) => {
   return (
     <View style={[bgStyles.bgContainer, style]}>
-      {/* Soft Pastel Orange Background Glows */}
-      <View style={[bgStyles.sphere, bgStyles.glow1]} />
-      <View style={[bgStyles.sphere, bgStyles.glow2]} />
+      <View style={[bgStyles.sphere, bgStyles.sphereOrange]} />
+      <View style={[bgStyles.sphere, bgStyles.sphereDeep]} />
+      <View style={[bgStyles.sphere, bgStyles.sphereGold]} />
+      <View style={[bgStyles.sphere, bgStyles.sphereRed]} />
       {children}
     </View>
   );
@@ -115,27 +112,43 @@ export const GlassBackground = ({ children, style }) => {
 const bgStyles = StyleSheet.create({
   bgContainer: {
     flex: 1,
-    backgroundColor: COLORS.background, // Soft warm apricot cream (#FFF5EC)
+    backgroundColor: COLORS.background,
   },
   sphere: {
     position: "absolute",
     borderRadius: 999,
   },
-  glow1: {
-    top: -100,
-    right: -100,
-    width: 350,
-    height: 350,
-    backgroundColor: "#FFE5D4", // Soft warm pastel orange
-    opacity: 0.6,
+  sphereOrange: {
+    top: -60,
+    left: -40,
+    width: 240,
+    height: 240,
+    backgroundColor: "#FF6D00",
+    opacity: 0.08,
   },
-  glow2: {
-    bottom: -150,
-    left: -150,
-    width: 450,
-    height: 450,
-    backgroundColor: "#FFF0E6", // Very soft pastel peach
-    opacity: 0.8,
+  sphereDeep: {
+    bottom: -60,
+    right: -60,
+    width: 280,
+    height: 280,
+    backgroundColor: "#E65100",
+    opacity: 0.06,
+  },
+  sphereGold: {
+    top: "32%",
+    right: -80,
+    width: 180,
+    height: 180,
+    backgroundColor: "#FFD54F",
+    opacity: 0.1,
+  },
+  sphereRed: {
+    bottom: "35%",
+    left: -90,
+    width: 200,
+    height: 200,
+    backgroundColor: "#FF3D00",
+    opacity: 0.04,
   },
 });
 

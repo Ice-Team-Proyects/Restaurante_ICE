@@ -96,13 +96,13 @@ export const ProductModal = ({ isOpen, onClose, product }) => {
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
       <div
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-scaleIn"
+        className="bg-white rounded-2xl  w-full max-w-lg overflow-hidden animate-scaleIn"
         style={{ border: '1px solid #e5e7eb', maxHeight: '90vh', overflowY: 'auto' }}
       >
         {/* Header */}
         <div
           className="px-6 py-5 text-white sticky top-0 z-10"
-          style={{ background: 'linear-gradient(to right, #ea580c, #dc2626)' }}
+          style={{ background: '#ff5722' }}
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
@@ -111,7 +111,7 @@ export const ProductModal = ({ isOpen, onClose, product }) => {
               </svg>
             </div>
             <div>
-              <h2 className="text-xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-xl font-bold">
                 {isEdit ? 'Editar Producto' : 'Nuevo Producto'}
               </h2>
               <p className="text-orange-100 text-xs">
@@ -210,7 +210,7 @@ export const ProductModal = ({ isOpen, onClose, product }) => {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
+              className="w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
             />
             {preview && (
               <img
@@ -233,7 +233,7 @@ export const ProductModal = ({ isOpen, onClose, product }) => {
             <button
               type="submit"
               className="flex-1 py-2.5 rounded-xl text-white font-semibold transition text-sm flex items-center justify-center gap-2"
-              style={{ background: 'linear-gradient(to right, #ea580c, #dc2626)' }}
+              style={{ background: '#ff5722' }}
             >
               {loading ? <Spinner small /> : (isEdit ? 'Guardar cambios' : 'Crear Producto')}
             </button>

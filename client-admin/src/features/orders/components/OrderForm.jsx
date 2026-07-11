@@ -127,7 +127,7 @@ export const OrderForm = ({ order = null, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-xl  w-full max-w-2xl max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-gradient-to-r from-main-orange to-orange-600 p-6 text-white flex justify-between items-center">
           <h2 className="text-2xl font-bold">{order ? 'Editar Orden' : 'Nueva Orden'}</h2>
           <button
@@ -148,7 +148,7 @@ export const OrderForm = ({ order = null, onClose }) => {
               name="tableId"
               value={formData.tableId}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-main-orange focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-main-orange focus:border-transparent"
             >
               <option value="">Selecciona una mesa</option>
               {tables.map((table) => (
@@ -168,7 +168,7 @@ export const OrderForm = ({ order = null, onClose }) => {
               name="status"
               value={formData.status}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-main-orange focus:border-transparent"
+              className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-main-orange focus:border-transparent"
             >
               {ORDER_STATUS_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -187,7 +187,7 @@ export const OrderForm = ({ order = null, onClose }) => {
               <button
                 type="button"
                 onClick={addItem}
-                className="px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition"
+                className="px-3 py-1 bg-blue-500 text-white rounded-xl text-sm hover:bg-blue-600 transition"
               >
                 + Agregar Producto
               </button>
@@ -195,13 +195,13 @@ export const OrderForm = ({ order = null, onClose }) => {
 
             <div className="space-y-3">
               {formData.items.map((item, index) => (
-                <div key={index} className="flex gap-3 items-end bg-slate-50 p-3 rounded-lg">
+                <div key={index} className="flex gap-3 items-end bg-slate-50 p-3 rounded-xl">
                   <div className="flex-1">
                     <label className="block text-xs font-semibold text-slate-600 mb-1">Producto</label>
                     <select
                       value={item.productId}
                       onChange={(e) => handleItemChange(index, 'productId', e.target.value)}
-                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-main-orange focus:border-transparent"
+                      className="w-full px-3 py-2 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-main-orange focus:border-transparent"
                     >
                       <option value="">Selecciona un producto</option>
                       {products.map((product) => (
@@ -219,7 +219,7 @@ export const OrderForm = ({ order = null, onClose }) => {
                       min="1"
                       value={item.quantity}
                       onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
-                      className="w-20 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-main-orange"
+                      className="w-20 px-3 py-2 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-main-orange"
                     />
                   </div>
                   <div>
@@ -231,13 +231,13 @@ export const OrderForm = ({ order = null, onClose }) => {
                       step="0.01"
                       value={item.price}
                       onChange={(e) => handleItemChange(index, 'price', e.target.value)}
-                      className="w-24 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-main-orange"
+                      className="w-24 px-3 py-2 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-main-orange"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={() => removeItem(index)}
-                    className="px-3 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition"
+                    className="px-3 py-2 bg-red-500 text-white rounded-xl text-sm hover:bg-red-600 transition"
                   >
                     Eliminar
                   </button>
@@ -247,7 +247,7 @@ export const OrderForm = ({ order = null, onClose }) => {
           </div>
 
           {/* Total */}
-          <div className="bg-slate-100 p-4 rounded-lg">
+          <div className="bg-slate-100 p-4 rounded-xl">
             <p className="text-lg font-semibold text-slate-800">
               Total: <span className="text-main-orange">Q{formData.totalAmount.toFixed(2)}</span>
             </p>
@@ -258,13 +258,13 @@ export const OrderForm = ({ order = null, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 border border-slate-300 rounded-lg text-slate-700 font-semibold hover:bg-slate-100 transition"
+              className="px-6 py-2 border border-slate-300 rounded-xl text-slate-700 font-semibold hover:bg-slate-100 transition"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-gradient-to-r from-main-orange to-orange-600 text-white rounded-lg font-semibold hover:shadow-lg transition"
+              className="px-6 py-2 bg-gradient-to-r from-main-orange to-orange-600 text-white rounded-xl font-semibold hover: transition"
             >
               {order ? 'Actualizar' : 'Crear'} Orden
             </button>

@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { Flame } from "lucide-react";
 import Navbar from "./Navbar";
 
 const CustomerLayout = () => (
@@ -8,10 +9,11 @@ const CustomerLayout = () => (
       <Outlet />
     </main>
     <footer
-      className="text-center py-6 text-sm text-gray-400"
+      className="text-center py-6 text-sm flex items-center justify-center gap-2"
       style={{ background: "#7f1d1d" }}
     >
-      <p className="text-orange-200">🐉 Restaurante ICE — Sabores de Oriente</p>
+      <Flame size={16} className="text-orange-300" />
+      <span className="text-orange-200">Restaurante ICE — Sabores de Oriente</span>
     </footer>
   </div>
 );

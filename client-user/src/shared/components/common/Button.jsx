@@ -58,6 +58,19 @@ const styles = StyleSheet.create({
     ...SHADOWS.sm,
   },
   primaryButton: {
+<<<<<<< HEAD
+    backgroundColor: COLORS.primary,
+  },
+  secondaryButton: {
+    backgroundColor: COLORS.surface,
+    borderWidth: 1.5,
+    borderColor: COLORS.primary,
+  },
+  disabledButton: {
+    opacity: 0.6,
+    backgroundColor: COLORS.secondary,
+    borderColor: COLORS.secondary,
+=======
     backgroundColor: COLORS.primary, // Solid Tasty Orange (#E25C00)
     borderWidth: 0,
   },
@@ -70,6 +83,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     backgroundColor: "rgba(124, 139, 161, 0.3)",
     borderColor: "rgba(124, 139, 161, 0.2)",
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
   },
   text: {
     fontSize: FONT_SIZE.md,

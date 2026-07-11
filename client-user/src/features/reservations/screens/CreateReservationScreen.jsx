@@ -336,6 +336,7 @@ const styles = StyleSheet.create({
   sucursalCard: {
     borderRadius: 16,
     padding: SPACING.md,
+    backgroundColor: COLORS.surface,
     marginBottom: SPACING.md,
   },
   sucursalInfoRow: {
@@ -357,6 +358,7 @@ const styles = StyleSheet.create({
   sectionCard: {
     borderRadius: 18,
     padding: SPACING.md,
+    backgroundColor: COLORS.surface,
     marginBottom: SPACING.md,
   },
   sectionTitle: {
@@ -381,11 +383,11 @@ const styles = StyleSheet.create({
     width: "48%",
     paddingVertical: SPACING.md,
     paddingHorizontal: SPACING.sm,
-    borderWidth: 1,
-    borderColor: "#FCE8D9",
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
     borderRadius: 12,
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: COLORS.surface,
     gap: 4,
   },
   tableItemActive: {
@@ -474,10 +476,10 @@ const styles = StyleSheet.create({
     width: "31%",
     paddingVertical: 10,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#FCE8D9",
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: COLORS.surface,
   },
   timeSlotActive: {
     borderColor: COLORS.primary,
@@ -515,7 +517,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: COLORS.surface,
   },
   stepperVal: {
     fontSize: FONT_SIZE.md,

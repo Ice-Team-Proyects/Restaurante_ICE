@@ -67,7 +67,7 @@ export default function MenuListScreen({ navigation }) {
           />
           <View style={styles.productContent}>
             <Text style={styles.productName}>{item.saucer}</Text>
-            <Text style={styles.productPrice}>Q{item.price}</Text>
+            <Text style={styles.productPrice}>${item.price}</Text>
             <Text style={styles.productDesc} numberOfLines={2}>
               {item.description}
             </Text>
@@ -244,8 +244,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: SPACING.md,
     borderBottomWidth: 1,
-    borderBottomColor: "#F5E2D0", // Soft pastel peach border
-    backgroundColor: "#FFFFFF", // Clean solid white header
+    borderBottomColor: COLORS.border,
+    backgroundColor: COLORS.surface,
     ...SHADOWS.sm,
   },
   barTitle: {
@@ -282,10 +282,10 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.sm,
   },
   categoriesContainer: {
-    backgroundColor: "#FFF2E8", // Soft warm pastel orange/cream container background
+    backgroundColor: COLORS.surface,
     paddingVertical: SPACING.sm,
     borderBottomWidth: 1,
-    borderBottomColor: "#F5E2D0",
+    borderBottomColor: COLORS.border,
   },
   categoriesScroll: {
     paddingHorizontal: SPACING.md,
@@ -295,10 +295,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.md,
     paddingVertical: 6,
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#FCE8D9",
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
     marginRight: SPACING.sm,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: COLORS.surface,
   },
   categoryPillActive: {
     borderColor: COLORS.primary,
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: SPACING.md,
-    paddingBottom: 90,
+    paddingBottom: SPACING.xl,
   },
   productCard: {
     flexDirection: "row",

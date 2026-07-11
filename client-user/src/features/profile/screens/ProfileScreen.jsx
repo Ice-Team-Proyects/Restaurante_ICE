@@ -268,11 +268,11 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "transparent",
+    backgroundColor: COLORS.background,
   },
   scrollContent: {
     padding: SPACING.md,
-    paddingBottom: 90,
+    paddingBottom: SPACING.xl,
   },
   header: {
     alignItems: "center",

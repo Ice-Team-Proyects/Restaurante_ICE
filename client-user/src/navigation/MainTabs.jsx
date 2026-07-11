@@ -5,13 +5,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../shared/constants/theme.js";
 import { useAuthStore } from "../shared/store/authStore.js";
-import { View } from "react-native";
 
 // Importar pantallas del restaurante
 import RestaurantListScreen from "../features/restaurant/screens/RestaurantListScreen.jsx";
 import RestaurantDetailScreen from "../features/restaurant/screens/RestaurantDetailScreen.jsx";
-import TableListScreen from "../features/restaurant/screens/TableListScreen.jsx";
-import TableDetailScreen from "../features/restaurant/screens/TableDetailScreen.jsx";
 
 import MenuListScreen from "../features/menu/screens/MenuListScreen.jsx";
 import MenuDetailScreen from "../features/menu/screens/MenuDetailScreen.jsx";
@@ -33,6 +30,14 @@ const Tab = createBottomTabNavigator();
 
 // 1. Restaurant / Tables Stack
 function RestaurantStack() {
+  const user = useAuthStore((state) => state.user);
+  const isAdmin = user && (
+    user.role?.toUpperCase() === 'ADMIN' ||
+    user.role?.toUpperCase() === 'ADMIN_ROLE' ||
+    user.email?.toLowerCase() === 'admin@restaurante.com' ||
+    user.email?.toLowerCase().includes('admin')
+  );
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -43,12 +48,12 @@ function RestaurantStack() {
     >
       <Stack.Screen
         name="RestaurantList"
-        options={{ title: "Restaurantes" }}
+        options={{ title: isAdmin ? "Mesas de Clientes" : "Sucursales" }}
         component={RestaurantListScreen}
       />
       <Stack.Screen
         name="RestaurantDetail"
-        options={{ title: "Detalle Sucursal" }}
+        options={{ title: isAdmin ? "Gestión de Mesa" : "Detalle Sucursal" }}
         component={RestaurantDetailScreen}
       />
       <Stack.Screen
@@ -115,26 +120,11 @@ function OrdersStack() {
         headerTitleStyle: { fontWeight: "700" },
       }}
     >
-      {isAdmin ? (
-        <>
-          <Stack.Screen
-            name="TableList"
-            options={{ title: "Gestión de Mesas" }}
-            component={TableListScreen}
-          />
-          <Stack.Screen
-            name="TableDetail"
-            options={{ title: "Detalle de Mesa" }}
-            component={TableDetailScreen}
-          />
-        </>
-      ) : (
-        <Stack.Screen
-          name="OrdersList"
-          options={{ title: "Mis Pedidos" }}
-          component={OrdersListScreen}
-        />
-      )}
+      <Stack.Screen
+        name="OrdersList"
+        options={{ title: isAdmin ? "Pedidos de Mesa" : "Mis Pedidos" }}
+        component={OrdersListScreen}
+      />
     </Stack.Navigator>
   );
 }
@@ -216,15 +206,15 @@ export default function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ color, size }) => {
           let iconName;
 
           if (route.name === "RestaurantTab") {
-            iconName = "storefront";
+            iconName = isAdmin ? "table-restaurant" : "storefront";
           } else if (route.name === "MenuTab") {
             iconName = "restaurant-menu";
           } else if (route.name === "OrdersTab") {
-            iconName = isAdmin ? "table-restaurant" : "shopping-bag";
+            iconName = isAdmin ? "assignment" : "shopping-bag";
           } else if (route.name === "EventsTab") {
             iconName = "event";
           } else if (route.name === "ReservationsTab") {
@@ -233,51 +223,17 @@ export default function MainTabs() {
             iconName = "person";
           }
  
-          const iconEl = <MaterialIcons name={iconName} size={focused ? 20 : 24} color={color} />;
-
-          if (focused) {
-            return (
-              <View
-                style={{
-                  width: 42,
-                  height: 42,
-                  borderRadius: 21,
-                  backgroundColor: "#FFEBE0", // Beautiful soft pastel orange circle
-                  justifyContent: "center",
-                  alignItems: "center",
-                  shadowColor: COLORS.primary,
-                  shadowOffset: { width: 0, height: 2 },
-                  shadowOpacity: 0.05,
-                  shadowRadius: 3,
-                  elevation: 1,
-                  marginBottom: -4,
-                }}
-              >
-                {iconEl}
-              </View>
-            );
-          }
- 
-          return iconEl;
+          return <MaterialIcons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.secondary,
         tabBarStyle: {
-          backgroundColor: "#FFFFFF", // Clean solid white tab bar
-          height: 70,
-          borderTopWidth: 1,
-          borderTopColor: "#F5E2D0", // Soft pastel peach border
-          paddingBottom: 10,
+          backgroundColor: COLORS.surface,
+          height: 60,
+          borderTopWidth: 1.5,
+          borderTopColor: COLORS.border,
+          paddingBottom: 8,
           paddingTop: 6,
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          elevation: 8,
-          shadowColor: "#E25C00",
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.04,
-          shadowRadius: 8,
         },
         headerShown: false,
       })}
@@ -285,7 +241,7 @@ export default function MainTabs() {
       <Tab.Screen
         name="RestaurantTab"
         component={RestaurantStack}
-        options={{ tabBarLabel: "Restaurantes" }}
+        options={{ tabBarLabel: isAdmin ? "Mesas" : "Sucursales" }}
       />
       <Tab.Screen
         name="MenuTab"
@@ -295,7 +251,7 @@ export default function MainTabs() {
       <Tab.Screen
         name="OrdersTab"
         component={OrdersStack}
-        options={{ tabBarLabel: isAdmin ? "Mesas" : "Pedidos" }}
+        options={{ tabBarLabel: isAdmin ? "Pedidos Mesa" : "Pedidos" }}
       />
       <Tab.Screen
         name="EventsTab"

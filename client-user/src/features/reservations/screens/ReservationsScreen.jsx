@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: SPACING.md,
-    paddingBottom: 90,
+    paddingBottom: SPACING.xl,
   },
   card: {
     marginBottom: SPACING.md,

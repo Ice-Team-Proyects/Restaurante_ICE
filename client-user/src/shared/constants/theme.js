@@ -4,7 +4,7 @@ export const COLORS = {
   primary: "#E25C00", // Warm Tasty Orange
   primaryDark: "#A83C00",
   secondary: "#7C8BA1",
-  background: "#FFF5EC", // Soft warm apricot cream
+  background: "#FFFBF7", // Soft warm cream
   surface: "#FFFFFF",
   text: "#1E1B18", // Dark Coffee
   textLight: "#7A7065", // Warm gray

@@ -4,8 +4,12 @@ import { userClient } from "../../../shared/api/userClient.js";
 import { useAuthStore } from "../../../shared/store/authStore.js";
 
 export const useRestaurant = () => {
+<<<<<<< HEAD
+  const [restaurants, setRestaurants] = useState([]); // holds branches (customer) or tables (admin)
+=======
   const [restaurants, setRestaurants] = useState([]); // holds branches/sucursales
   const [tables, setTables] = useState([]); // holds tables/mesas
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const user = useAuthStore((state) => state.user);
@@ -20,11 +24,27 @@ export const useRestaurant = () => {
     setLoading(true);
     setError("");
     try {
+<<<<<<< HEAD
+      if (isAdmin) {
+        // ADMIN: Cargar mesas de /table
+        const response = await userClient.get("/table");
+        const resData = response.data?.data || response.data || [];
+        setRestaurants(resData);
+      } else {
+        // CLIENTE: Cargar sucursales de /restaurant
+        const response = await userClient.get("/restaurant");
+        const resData = response.data?.data || response.data || [];
+        setRestaurants(resData);
+      }
+    } catch (err) {
+      console.error("Error al obtener restaurantes/mesas:", err);
+=======
       const response = await userClient.get("/restaurant");
       const resData = response.data?.data || response.data || [];
       setRestaurants(resData);
     } catch (err) {
       console.error("Error al obtener restaurantes:", err);
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
       setError(
         err.response?.data?.message ||
           err.message ||
@@ -33,6 +53,9 @@ export const useRestaurant = () => {
     } finally {
       setLoading(false);
     }
+<<<<<<< HEAD
+  }, [isAdmin]);
+=======
   }, []);
 
   const fetchTables = useCallback(async () => {
@@ -53,6 +76,7 @@ export const useRestaurant = () => {
       setLoading(false);
     }
   }, []);
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
 
   const createTable = async (tableData) => {
     setLoading(true);
@@ -63,7 +87,11 @@ export const useRestaurant = () => {
         capacity: parseInt(tableData.capacity),
         status: "disponible"
       });
+<<<<<<< HEAD
+      await fetchRestaurants();
+=======
       await fetchTables();
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
       return { success: true, data: response.data };
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error al crear mesa";
@@ -79,7 +107,11 @@ export const useRestaurant = () => {
     setError("");
     try {
       const response = await userClient.put(`/table/${id}`, tableData);
+<<<<<<< HEAD
+      await fetchRestaurants();
+=======
       await fetchTables();
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
       return { success: true, data: response.data };
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error al actualizar mesa";
@@ -95,7 +127,11 @@ export const useRestaurant = () => {
     setError("");
     try {
       await userClient.patch(`/table/delete/${id}`);
+<<<<<<< HEAD
+      await fetchRestaurants();
+=======
       await fetchTables();
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
       return { success: true };
     } catch (err) {
       const msg = err.response?.data?.message || err.message || "Error al eliminar mesa";
@@ -108,11 +144,17 @@ export const useRestaurant = () => {
 
   return {
     restaurants,
+<<<<<<< HEAD
+    loading,
+    error,
+    fetchRestaurants,
+=======
     tables,
     loading,
     error,
     fetchRestaurants,
     fetchTables,
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
     createTable,
     updateTable,
     deleteTable,

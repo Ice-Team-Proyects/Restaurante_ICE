@@ -65,7 +65,7 @@ const MenuModal = () => {
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl shadow-lg w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-xl w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
                 <h3 className="text-xl font-bold mb-4">
                     {selectedMenu ? 'Editar Menú' : 'Nuevo Menú'}
                 </h3>
@@ -76,7 +76,7 @@ const MenuModal = () => {
                         <label className="block text-sm font-medium mb-1">Nombre</label>
                         <input
                             {...register('name', { required: true })}
-                            className="w-full border rounded-lg px-3 py-2"
+                            className="w-full border rounded-xl px-3 py-2"
                             type="text"
                             placeholder="Ej. Menú del Día"
                         />
@@ -87,7 +87,7 @@ const MenuModal = () => {
                         <label className="block text-sm font-medium mb-1">Descripción</label>
                         <textarea
                             {...register('description')}
-                            className="w-full border rounded-lg px-3 py-2"
+                            className="w-full border rounded-xl px-3 py-2"
                             rows="2"
                             placeholder="Describe brevemente este menú..."
                         />
@@ -101,7 +101,7 @@ const MenuModal = () => {
                         {products.length === 0 ? (
                             <p className="text-sm text-gray-400">Cargando productos...</p>
                         ) : (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto border rounded-lg p-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-64 overflow-y-auto border rounded-xl p-3">
                                 {products.map((product) => {
                                     const isSelected = (selectedProductIds || []).includes(product._id);
                                     const imageUrl = getImageUrl(product.photo);
@@ -110,7 +110,7 @@ const MenuModal = () => {
                                         <div
                                             key={product._id}
                                             onClick={() => toggleProduct(product._id)}
-                                            className={`flex items-center gap-3 p-2 rounded-lg border-2 cursor-pointer transition-all ${
+                                            className={`flex items-center gap-3 p-2 rounded-xl border-2 cursor-pointer transition-all ${
                                                 isSelected
                                                     ? 'border-orange-400 bg-orange-50'
                                                     : 'border-gray-200 hover:border-gray-300'
@@ -119,7 +119,7 @@ const MenuModal = () => {
                                             <img
                                                 src={imageUrl || 'https://placehold.co/48x48/fff7ed/ea580c?text=?'}
                                                 alt={product.saucer}
-                                                className="w-12 h-12 object-cover rounded-lg flex-shrink-0"
+                                                className="w-12 h-12 object-cover rounded-xl flex-shrink-0"
                                                 onError={(e) => { e.target.src = 'https://placehold.co/48x48/fff7ed/ea580c?text=?'; }}
                                             />
                                             <div className="flex-1 min-w-0">
@@ -144,10 +144,10 @@ const MenuModal = () => {
 
                     {/* Buttons */}
                     <div className="flex justify-end gap-3 pt-4">
-                        <button type="button" onClick={handleClose} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                        <button type="button" onClick={handleClose} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-xl">
                             Cancelar
                         </button>
-                        <button type="submit" className="bg-main-orange text-white px-4 py-2 rounded-lg">
+                        <button type="submit" className="bg-main-orange; text-white px-4 py-2 rounded-xl">
                             {selectedMenu ? 'Actualizar' : 'Guardar'}
                         </button>
                     </div>

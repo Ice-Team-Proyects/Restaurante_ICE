@@ -84,10 +84,9 @@ const QuickStatusPill = ({ table, onChange }) => {
     <div className="relative">
       <button
         onClick={(e) => { e.stopPropagation(); setOpen(!open); }}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border-2 transition-all hover:scale-105 active:scale-95"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all hover:scale-105 active:scale-95"
         style={{
           background: STATUS_CONFIG[table.status]?.bg || '#f3f4f6',
-          borderColor: STATUS_CONFIG[table.status]?.border || '#e5e7eb',
           color: STATUS_CONFIG[table.status]?.text || '#374151',
         }}
         title="Cambiar estado"
@@ -101,7 +100,7 @@ const QuickStatusPill = ({ table, onChange }) => {
 
       {open && (
         <div
-          className="absolute bottom-full mb-2 left-0 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-20 animate-fadeIn"
+          className="absolute bottom-full mb-2 left-0 bg-white rounded-xl  border border-gray-100 overflow-hidden z-20 animate-fadeIn"
           style={{ minWidth: 140 }}
           onMouseLeave={() => setOpen(false)}
         >
@@ -132,16 +131,15 @@ const TableCard = ({ table, onEdit, onDelete, onRestore, onStatusChange }) => {
 
   return (
     <div
-      className="table-card animate-fadeInUp bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
+      className="table-card animate-fadeInUp bg-white rounded-2xl overflow-hidden flex flex-col"
       style={{
-        border: `2px solid ${cfg.border}`,
         opacity: isInactive ? 0.75 : 1,
       }}
     >
       {/* Top accent bar */}
       <div
         className="h-1.5 w-full"
-        style={{ background: `linear-gradient(to right, ${cfg.icon}, ${cfg.border})` }}
+        style={{ background: cfg.icon }}
       />
 
       {/* Card body */}
@@ -150,16 +148,16 @@ const TableCard = ({ table, onEdit, onDelete, onRestore, onStatusChange }) => {
         <div className="flex items-start justify-between">
           {/* Big number */}
           <div
-            className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-md flex-shrink-0"
-            style={{ background: 'linear-gradient(135deg, #f97316, #dc2626)' }}
+            className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0"
+            style={{ background: '#ff5722' }}
           >
-            <span className="text-white text-2xl font-black">{table.number}</span>
+            <span className="text-white text-2xl font-bold">{table.number}</span>
           </div>
 
           {/* Status badge */}
           <span
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold"
-            style={{ background: cfg.bg, color: cfg.text, border: `1.5px solid ${cfg.border}` }}
+            style={{ background: cfg.bg, color: cfg.text }}
           >
             {cfg.icon_svg}
             {cfg.label}
@@ -208,8 +206,7 @@ const TableCard = ({ table, onEdit, onDelete, onRestore, onStatusChange }) => {
             /* Inactive table: restore button */
             <button
               onClick={() => onRestore(table._id)}
-              className="flex-1 py-2 rounded-xl text-xs font-bold text-white transition hover:opacity-90 flex items-center justify-center gap-1.5"
-              style={{ background: 'linear-gradient(to right,#22c55e,#16a34a)' }}
+              className="flex-1 py-2 rounded-xl text-xs font-bold text-white transition hover:opacity-90 flex items-center justify-center gap-1.5 bg-green-500"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
                 <path d="M4 12c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
@@ -225,7 +222,7 @@ const TableCard = ({ table, onEdit, onDelete, onRestore, onStatusChange }) => {
               {/* Edit */}
               <button
                 onClick={() => onEdit(table)}
-                className="p-2 rounded-xl transition hover:bg-orange-50 border border-gray-200 hover:border-orange-300"
+                className="p-2 rounded-xl transition hover:bg-orange-50"
                 title="Editar mesa"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
@@ -237,7 +234,7 @@ const TableCard = ({ table, onEdit, onDelete, onRestore, onStatusChange }) => {
               {/* Delete */}
               <button
                 onClick={() => onDelete(table._id, table.number)}
-                className="p-2 rounded-xl transition hover:bg-red-50 border border-gray-200 hover:border-red-300"
+                className="p-2 rounded-xl transition hover:bg-red-50"
                 title="Eliminar mesa"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
@@ -264,11 +261,11 @@ const StatsRow = ({ tables }) => {
   };
 
   const stats = [
-    { label: 'Total Mesas', value: counts.total, color: '#ea580c', bg: '#fff7ed', border: '#fdba74' },
-    { label: 'Disponibles', value: counts.disponible, color: '#15803d', bg: '#dcfce7', border: '#86efac' },
-    { label: 'Ocupadas', value: counts.ocupada, color: '#c2410c', bg: '#ffedd5', border: '#fdba74' },
-    { label: 'Reservadas', value: counts.reservada, color: '#1d4ed8', bg: '#dbeafe', border: '#93c5fd' },
-    { label: 'Inactivas', value: counts.inactiva, color: '#b91c1c', bg: '#fee2e2', border: '#fca5a5' },
+    { label: 'Total Mesas', value: counts.total, color: '#ea580c' },
+    { label: 'Disponibles', value: counts.disponible, color: '#15803d' },
+    { label: 'Ocupadas', value: counts.ocupada, color: '#c2410c' },
+    { label: 'Reservadas', value: counts.reservada, color: '#1d4ed8' },
+    { label: 'Inactivas', value: counts.inactiva, color: '#b91c1c' },
   ];
 
   return (
@@ -276,18 +273,16 @@ const StatsRow = ({ tables }) => {
       {stats.map((s) => (
         <div
           key={s.label}
-          className="rounded-2xl transition hover:scale-[1.02]"
+          className="rounded-2xl bg-white"
           style={{
-            background: s.bg,
-            border: `1.5px solid ${s.border}`,
             padding: '14px 18px',
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
           }}
         >
-          <span style={{ color: s.color, fontSize: '2rem', fontWeight: 900, lineHeight: 1 }}>{s.value}</span>
-          <span style={{ color: s.color, fontSize: '12px', fontWeight: 600, lineHeight: 1.3 }}>{s.label}</span>
+          <span style={{ color: s.color, fontSize: '2rem', fontWeight: 600, lineHeight: 1 }}>{s.value}</span>
+          <span className="text-gray-500" style={{ fontSize: '12px', fontWeight: 600, lineHeight: 1.3 }}>{s.label}</span>
         </div>
       ))}
     </div>
@@ -375,10 +370,7 @@ export const Tables = () => {
       {/* ── PAGE HEADER ── */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
-          <h1
-            className="text-3xl font-black text-gray-800 leading-tight"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
+          <h1 className="text-3xl font-bold text-gray-800 leading-tight">
             Gestión de Mesas
           </h1>
           <p className="text-gray-500 text-sm mt-0.5">
@@ -388,8 +380,7 @@ export const Tables = () => {
 
         <button
           onClick={() => { setSelectedTable(null); setModalOpen(true); }}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-[1.03] active:scale-95"
-          style={{ background: 'linear-gradient(to right,#ea580c,#dc2626)' }}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-semibold text-sm bg-main-orange hover:bg-orange-600 transition-colors"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
@@ -413,8 +404,6 @@ export const Tables = () => {
               padding: '4px',
               borderRadius: '14px',
               background: '#ffffff',
-              border: '1px solid #e5e7eb',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
               flexWrap: 'wrap',
             }}
           >
@@ -432,7 +421,7 @@ export const Tables = () => {
                     border: 'none',
                     cursor: 'pointer',
                     transition: 'all .15s',
-                    background: active ? 'linear-gradient(to right,#ea580c,#dc2626)' : 'transparent',
+                    background: active ? '#ff5722' : 'transparent',
                     color: active ? '#fff' : '#6b7280',
                   }}
                 >
@@ -460,7 +449,7 @@ export const Tables = () => {
                 paddingTop: '7px',
                 paddingBottom: '7px',
                 borderRadius: '10px',
-                border: '1px solid #e5e7eb',
+                border: 'none',
                 background: '#fff',
                 fontSize: '13px',
                 color: '#374151',
@@ -479,7 +468,7 @@ export const Tables = () => {
               gap: '6px',
               padding: '7px 14px',
               borderRadius: '10px',
-              border: '1px solid #e5e7eb',
+              border: 'none',
               background: '#fff',
               color: '#6b7280',
               fontSize: '13px',
@@ -504,14 +493,14 @@ export const Tables = () => {
       {error && (
         <div
           className="mb-6 px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2"
-          style={{ background: '#fee2e2', color: '#b91c1c', border: '1.5px solid #fca5a5' }}
+          style={{ background: '#fee2e2', color: '#b91c1c' }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="9" stroke="#ef4444" strokeWidth="2"/>
             <path d="M12 8v4M12 16h.01" stroke="#ef4444" strokeWidth="2" strokeLinecap="round"/>
           </svg>
           {error} — Verifica que el servidor esté corriendo en{' '}
-          <code className="bg-red-100 px-1 rounded">localhost:3021</code>
+          <code className="bg-red-100 px-1 rounded-full">localhost:3021</code>
         </div>
       )}
 
@@ -519,8 +508,8 @@ export const Tables = () => {
       {!loading && displayTables.length === 0 && (
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div
-            className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4 shadow-lg"
-            style={{ background: 'linear-gradient(135deg,#fff7ed,#ffedd5)' }}
+            className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4"
+            style={{ background: '#fff7ed' }}
           >
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
               <rect x="2" y="7" width="20" height="3" rx="1.5" stroke="#ea580c" strokeWidth="2"/>

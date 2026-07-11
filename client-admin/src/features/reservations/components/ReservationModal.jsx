@@ -86,7 +86,7 @@ const ReservationModal = () => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-lg w-full max-w-lg flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded-xl w-full max-w-lg flex flex-col max-h-[90vh]">
         <div className="p-6 pb-4 border-b border-gray-100">
           <h3 className="text-xl font-bold">Nueva Reservación</h3>
         </div>
@@ -103,7 +103,7 @@ const ReservationModal = () => {
               <input
                 {...register('name_customer', { required: true, minLength: 2, maxLength: 150 })}
                 type="text"
-                className={`w-full border rounded-lg px-3 py-2 ${
+                className={`w-full border rounded-xl px-3 py-2 ${
                   errors.name_customer ? 'border-red-500 bg-red-50' : 'border-gray-300'
                 }`}
               />
@@ -129,7 +129,7 @@ const ReservationModal = () => {
                   type="number"
                   min={1}
                   max={500}
-                  className={`w-full border rounded-lg px-3 py-2 ${
+                  className={`w-full border rounded-xl px-3 py-2 ${
                     errors.number_people ? 'border-red-500 bg-red-50' : 'border-gray-300'
                   }`}
                 />
@@ -147,7 +147,7 @@ const ReservationModal = () => {
                 <input
                   {...register('time_reservation', { required: true })}
                   type="datetime-local"
-                  className={`w-full border rounded-lg px-3 py-2 ${
+                  className={`w-full border rounded-xl px-3 py-2 ${
                     errors.time_reservation ? 'border-red-500 bg-red-50' : 'border-gray-300'
                   }`}
                 />
@@ -163,7 +163,7 @@ const ReservationModal = () => {
               <label className="block text-sm font-medium mb-1">Sucursal</label>
               <select
                 {...register('restaurant', { required: true })}
-                className={`w-full border rounded-lg px-3 py-2 ${
+                className={`w-full border rounded-xl px-3 py-2 ${
                   errors.restaurant ? 'border-red-500 bg-red-50' : 'border-gray-300'
                 }`}
               >
@@ -186,7 +186,7 @@ const ReservationModal = () => {
               <select
                 {...register('table', { required: true })}
                 disabled={!selectedRestaurantId}
-                className={`w-full border rounded-lg px-3 py-2 ${
+                className={`w-full border rounded-xl px-3 py-2 ${
                   errors.table ? 'border-red-500 bg-red-50' : 'border-gray-300'
                 }`}
               >
@@ -218,13 +218,13 @@ const ReservationModal = () => {
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors"
+              className="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-xl transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="bg-main-orange text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+              className="bg-main-orange text-white px-4 py-2 rounded-xl hover:bg-orange-600 transition-colors"
             >
               Guardar
             </button>

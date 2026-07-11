@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { CalendarCheck, Lock, CheckCircle2 } from "lucide-react";
 import axiosInstance from "../../../shared/api/axios";
 import { useAuthStore } from "../../auth/store/authStore";
 import { Spinner } from "../../auth/components/Spinner";
 import { showSuccess, showError } from "../../../shared/utils/toast";
+import PageHeader from "../../../shared/components/ui/PageHeader";
 
 const ReservationsPage = () => {
   const { isAuthenticated } = useAuthStore();
@@ -92,40 +94,33 @@ const ReservationsPage = () => {
   };
 
   const inputClass =
-    "w-full px-4 py-2.5 rounded-xl border-2 border-orange-200 text-gray-800 text-sm focus:outline-none focus:border-red-500 bg-white";
+    "w-full px-4 py-2.5 rounded-2xl text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-main-orange bg-bg-light";
 
   return (
     <div className="animate-fadeIn max-w-lg mx-auto">
-      <h1
-        className="text-3xl font-black text-gray-800 mb-2 text-center"
-        style={{ fontFamily: "'Playfair Display', serif" }}
-      >
-        📅 Reservar Mesa
-      </h1>
+      <PageHeader icon={CalendarCheck} title="Reservar Mesa" subtitle="Asegura tu lugar con anticipación" />
       <p className="text-gray-500 text-sm mb-8 text-center">
         Reserva tu lugar en nuestro restaurante
       </p>
 
       {!isAuthenticated ? (
-        <div className="bg-white rounded-2xl shadow-md p-8 text-center border border-orange-100">
-          <span className="text-5xl block mb-4">🔒</span>
+        <div className="bg-white rounded-2xl p-8 text-center border border-dashed" style={{ borderColor: "#f0997b" }}>
+          <Lock size={40} className="mx-auto mb-4 text-main-orange" />
           <p className="text-gray-600 font-semibold">
             Inicia sesión para hacer una reservación
           </p>
         </div>
       ) : success ? (
-        <div className="bg-white rounded-2xl shadow-md p-8 text-center border border-green-200">
-          <span className="text-5xl block mb-4">✅</span>
-          <h3 className="text-xl font-bold text-green-700">
+        <div className="bg-white rounded-2xl p-8 text-center border border-dashed" style={{ borderColor: "#bbf7d0" }}>
+          <CheckCircle2 size={40} className="mx-auto mb-4 text-green-600" />
+          <h3 className="text-xl font-semibold text-green-700">
             ¡Reservación confirmada!
           </h3>
           <p className="text-gray-500 mt-2">Te esperamos pronto</p>
           <button
             onClick={() => setSuccess(false)}
-            className="mt-4 px-6 py-2 rounded-xl text-sm font-bold text-white"
-            style={{
-              background: "linear-gradient(to right, #dc2626, #ea580c)",
-            }}
+            className="mt-4 px-6 py-2 rounded-full text-sm font-semibold text-white transition hover:opacity-90"
+            style={{ background: "#ea580c" }}
           >
             Nueva Reservación
           </button>
@@ -133,7 +128,8 @@ const ReservationsPage = () => {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="bg-white rounded-2xl shadow-md p-8 space-y-5 border border-orange-100"
+          className="bg-white rounded-2xl p-8 space-y-5 border border-dashed"
+          style={{ borderColor: "#f0997b" }}
         >
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">
@@ -244,10 +240,8 @@ const ReservationsPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
-            style={{
-              background: "linear-gradient(to right, #dc2626, #ea580c)",
-            }}
+            className="w-full py-3 rounded-full text-white font-semibold text-sm transition hover:opacity-90 flex items-center justify-center gap-2"
+            style={{ background: "#ea580c" }}
           >
             {loading ? <Spinner small /> : "Confirmar Reservación"}
           </button>

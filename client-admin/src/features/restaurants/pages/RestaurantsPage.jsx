@@ -14,8 +14,7 @@ const StatsRow = ({ restaurants }) => {
       label: 'Total Restaurantes',
       value: total,
       color: '#ea580c',
-      bg: '#fff7ed',
-      border: '#fdba74',
+      bg: '#fff',
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <path d="M3 6h18M3 12h18M3 18h18" stroke="#ea580c" strokeWidth="2.2" strokeLinecap="round"/>
@@ -26,8 +25,7 @@ const StatsRow = ({ restaurants }) => {
       label: 'Activos',
       value: activos,
       color: '#15803d',
-      bg: '#dcfce7',
-      border: '#86efac',
+      bg: '#fff',
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
@@ -39,8 +37,7 @@ const StatsRow = ({ restaurants }) => {
       label: 'Inactivos',
       value: inactivos,
       color: '#b91c1c',
-      bg: '#fee2e2',
-      border: '#fca5a5',
+      bg: '#fff',
       icon: (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <circle cx="12" cy="12" r="9" stroke="#ef4444" strokeWidth="2.2"/>
@@ -62,10 +59,9 @@ const StatsRow = ({ restaurants }) => {
       {stats.map((s) => (
         <div
           key={s.label}
-          className="rounded-2xl transition hover:scale-[1.02]"
+          className="rounded-2xl"
           style={{
             background: s.bg,
-            border: `1.5px solid ${s.border}`,
             padding: '14px 18px',
             display: 'flex',
             alignItems: 'center',
@@ -99,7 +95,7 @@ const RestaurantsPage = () => {
         </div>
         <button 
           onClick={() => setIsModalOpen(true)} 
-          className="bg-main-orange text-white px-6 py-2 rounded-lg font-bold shadow-md hover:bg-orange-600 transition-colors"
+          className="bg-main-orange text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-orange-600 transition-colors"
         >
           + Nuevo Restaurante
         </button>

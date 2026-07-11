@@ -4,7 +4,11 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity, ScrollView, Alert }
 import { useCartStore } from "../../../shared/store/cartStore.js";
 import { useOrders } from "../hooks/useOrders.js";
 import { userClient } from "../../../shared/api/userClient.js";
+<<<<<<< HEAD
+import { Card, LoadingSpinner } from "../../../shared/components/common/Common.jsx";
+=======
 import { Card, LoadingSpinner, GlassBackground } from "../../../shared/components/common/Common.jsx";
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
 import { Button } from "../../../shared/components/common/Button.jsx";
 import { COLORS, SPACING, FONT_SIZE, SHADOWS } from "../../../shared/constants/theme.js";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -82,7 +86,11 @@ export default function CreateOrderScreen({ navigation }) {
         </View>
         
         <View style={styles.cartFooter}>
+<<<<<<< HEAD
+          <Text style={styles.itemPrice}>${item.product.price} c/u</Text>
+=======
           <Text style={styles.itemPrice}>Q{item.product.price} c/u</Text>
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
           <View style={styles.stepperContainer}>
             <TouchableOpacity
               style={styles.stepperBtn}
@@ -108,7 +116,11 @@ export default function CreateOrderScreen({ navigation }) {
   }
 
   return (
+<<<<<<< HEAD
+    <View style={styles.container}>
+=======
     <GlassBackground style={styles.container}>
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
       {items.length === 0 ? (
         <View style={styles.emptyContainer}>
           <MaterialIcons name="shopping-basket" size={64} color={COLORS.secondary} />
@@ -158,7 +170,11 @@ export default function CreateOrderScreen({ navigation }) {
 
             <View style={styles.row}>
               <Text style={styles.totalLabel}>Subtotal:</Text>
+<<<<<<< HEAD
+              <Text style={styles.totalVal}>${getTotalAmount().toFixed(2)}</Text>
+=======
               <Text style={styles.totalVal}>Q{getTotalAmount().toFixed(2)}</Text>
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
             </View>
             <View style={styles.row}>
               <Text style={styles.totalLabel}>Servicio:</Text>
@@ -166,7 +182,11 @@ export default function CreateOrderScreen({ navigation }) {
             </View>
             <View style={[styles.row, { marginTop: SPACING.xs }]}>
               <Text style={styles.grandTotalLabel}>Total a Pagar:</Text>
+<<<<<<< HEAD
+              <Text style={styles.grandTotalVal}>${getTotalAmount().toFixed(2)}</Text>
+=======
               <Text style={styles.grandTotalVal}>Q{getTotalAmount().toFixed(2)}</Text>
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
             </View>
 
             <Button
@@ -178,14 +198,22 @@ export default function CreateOrderScreen({ navigation }) {
           </Card>
         </View>
       )}
+<<<<<<< HEAD
+    </View>
+=======
     </GlassBackground>
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+<<<<<<< HEAD
+    backgroundColor: COLORS.background,
+=======
     backgroundColor: "transparent",
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
   },
   emptyContainer: {
     flex: 1,
@@ -254,7 +282,11 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
     justifyContent: "center",
     alignItems: "center",
+<<<<<<< HEAD
+    backgroundColor: COLORS.surface,
+=======
     backgroundColor: "#FFFFFF",
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
   },
   stepperVal: {
     fontSize: FONT_SIZE.sm,
@@ -267,11 +299,15 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     borderRadius: 0,
     padding: SPACING.lg,
+<<<<<<< HEAD
+    backgroundColor: COLORS.surface,
+=======
     backgroundColor: "#FFFFFF",
     borderTopWidth: 1,
     borderLeftWidth: 1,
     borderRightWidth: 1,
     borderColor: "#FCE8D9",
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
     ...SHADOWS.lg,
   },
   sectionTitle: {
@@ -287,10 +323,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 12,
+<<<<<<< HEAD
+    borderWidth: 1.5,
+    borderColor: COLORS.border,
+    marginRight: SPACING.sm,
+    backgroundColor: COLORS.surface,
+=======
     borderWidth: 1,
     borderColor: "#FCE8D9",
     marginRight: SPACING.sm,
     backgroundColor: "#FFFFFF",
+>>>>>>> 86dfc5480411a3aa8ee51d5b4f125727a6f8945a
   },
   tablePillActive: {
     borderColor: COLORS.primary,

@@ -65,13 +65,13 @@ export const CategoryModal = ({ isOpen, onClose, category }) => {
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
       <div
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-scaleIn"
+        className="bg-white rounded-2xl  w-full max-w-md overflow-hidden animate-scaleIn"
         style={{ border: '1px solid #e5e7eb' }}
       >
         {/* Header */}
         <div
           className="px-6 py-5 text-white"
-          style={{ background: 'linear-gradient(to right, #ea580c, #dc2626)' }}
+          style={{ background: '#ff5722' }}
         >
           <div className="flex items-center gap-3">
             <div
@@ -83,7 +83,7 @@ export const CategoryModal = ({ isOpen, onClose, category }) => {
               </svg>
             </div>
             <div>
-              <h2 className="text-xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-xl font-bold">
                 {isEdit ? 'Editar Categoría' : 'Nueva Categoría'}
               </h2>
               <p className="text-orange-100 text-xs">
@@ -182,7 +182,7 @@ export const CategoryModal = ({ isOpen, onClose, category }) => {
             <button
               type="submit"
               className="flex-1 py-2.5 rounded-xl text-white font-semibold transition text-sm flex items-center justify-center gap-2"
-              style={{ background: 'linear-gradient(to right, #ea580c, #dc2626)' }}
+              style={{ background: '#ff5722' }}
             >
               {loading ? <Spinner small /> : (isEdit ? 'Guardar cambios' : 'Crear Categoría')}
             </button>
