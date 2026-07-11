@@ -11,6 +11,9 @@ export const validateCreateTable = [
     body('status')
         .optional()
         .isIn(["disponible", "ocupada", "reservada"]).withMessage('El estado debe ser "disponible", "ocupada" o "reservada"'),  
+    body('restaurant')
+        .optional()
+        .isMongoId().withMessage('El ID de la sucursal no es válido'),
     checkValidators
 ];
 
@@ -24,6 +27,9 @@ export const validateUpdateTable = [
     body('status')
         .optional()
         .isIn(["disponible", "ocupada", "reservada"]).withMessage('El estado debe ser "disponible", "ocupada" o "reservada"'),
+    body('restaurant')
+        .optional()
+        .isMongoId().withMessage('El ID de la sucursal no es válido'),
     checkValidators
 ];
 

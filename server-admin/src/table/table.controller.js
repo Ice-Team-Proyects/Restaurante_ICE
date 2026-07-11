@@ -23,9 +23,9 @@ export const createTable = async (req, res) => {
 
 export const getTables = async (req, res) => {
     try {
-        const { page = 1, limit = 10, isActive } = req.query;
+        const { page = 1, limit = 10, isActive, restaurant } = req.query;
         // if user wants all mesas, omit isActive or pass 'all'
-        const { tables, pagination } = await fetchTables({ page, limit, isActive });
+        const { tables, pagination } = await fetchTables({ page, limit, isActive, restaurant });
 
         res.status(200).json({
             success: true,

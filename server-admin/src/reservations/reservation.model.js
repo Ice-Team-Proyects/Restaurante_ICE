@@ -22,9 +22,14 @@ const reservationSchema = new Schema(
             required: [true, 'Debe Establecer Hora Para La Reserva']
         },
         table: {
-        type: Schema.Types.ObjectId,
-        ref: 'Table',
-        required: [true, 'Una reservación debe tener una mesa asignada']
+            type: Schema.Types.ObjectId,
+            ref: 'Table',
+            required: [true, 'Una reservación debe tener una mesa asignada']
+        },
+        restaurant: {
+            type: Schema.Types.ObjectId,
+            ref: 'Restaurant',
+            required: [true, 'Una reservación debe tener una sucursal asignada']
         },
         isActive: {
             type: Boolean,

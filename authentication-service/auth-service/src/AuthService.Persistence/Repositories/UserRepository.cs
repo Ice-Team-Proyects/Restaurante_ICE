@@ -124,4 +124,14 @@ public class UserRepository(ApplicationDb context) : IUserRepository
         context.UserRoles.Add(newUserRole);
         await context.SaveChangesAsync();
     }
+
+    public async Task<IReadOnlyList<User>> GetAllAsync()
+    {
+        return await context.Users
+            .Include(u => u.UserProfile)
+            .Include(u => u.UserEmail)
+            .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+            .ToListAsync();
+    }
 }

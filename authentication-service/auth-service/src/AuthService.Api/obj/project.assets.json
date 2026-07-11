@@ -7683,19 +7683,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\corre\\.nuget\\packages\\": {}
+    "/home/emi/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\neww\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
+      "projectUniqueName": "/home/emi/Documentos/Restaurante_ICE/authentication-service/auth-service/src/AuthService.Api/AuthService.Api.csproj",
       "projectName": "AuthService.Api",
-      "projectPath": "C:\\neww\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Api\\AuthService.Api.csproj",
-      "packagesPath": "C:\\Users\\corre\\.nuget\\packages\\",
-      "outputPath": "C:\\neww\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Api\\obj\\",
+      "projectPath": "/home/emi/Documentos/Restaurante_ICE/authentication-service/auth-service/src/AuthService.Api/AuthService.Api.csproj",
+      "packagesPath": "/home/emi/.nuget/packages/",
+      "outputPath": "/home/emi/Documentos/Restaurante_ICE/authentication-service/auth-service/src/AuthService.Api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\corre\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/emi/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -7707,11 +7707,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\neww\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj": {
-              "projectPath": "C:\\neww\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Application\\AuthService.Application.csproj"
+            "/home/emi/Documentos/Restaurante_ICE/authentication-service/auth-service/src/AuthService.Application/AuthService.Application.csproj": {
+              "projectPath": "/home/emi/Documentos/Restaurante_ICE/authentication-service/auth-service/src/AuthService.Application/AuthService.Application.csproj"
             },
-            "C:\\neww\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj": {
-              "projectPath": "C:\\neww\\Restaurante_ICE\\authentication-service\\auth-service\\src\\AuthService.Persistence\\AuthService.Persistence.csproj"
+            "/home/emi/Documentos/Restaurante_ICE/authentication-service/auth-service/src/AuthService.Persistence/AuthService.Persistence.csproj": {
+              "projectPath": "/home/emi/Documentos/Restaurante_ICE/authentication-service/auth-service/src/AuthService.Persistence/AuthService.Persistence.csproj"
             }
           }
         }
@@ -7785,7 +7785,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.417/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/emi/.dotnet/sdk/8.0.417/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

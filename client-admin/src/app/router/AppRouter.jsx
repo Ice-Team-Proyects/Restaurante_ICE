@@ -11,7 +11,7 @@ import ReservationsPage from '../../features/reservations/pages/ReservationsPage
 import MenuPage from '../../features/menus/page/MenuPage';
 import AnalyticsPage from '../../features/analytics/components/Analytics';
 import EventsPage from '../../features/events/components/EventsPage';
-
+import ProfilePage from '../../features/profile/pages/ProfilePage';
 
 export const AppRouter = () => {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -35,6 +35,7 @@ export const AppRouter = () => {
           <Route path='menus' element={<MenuPage />} />
           <Route path='analytics' element={<AnalyticsPage />} />
           <Route path='events' element={<EventsPage />} />
+          <Route path='perfil' element={<ProfilePage />} />
           
           <Route path='*' element={<div>Página no encontrada</div>} />
         </Route>

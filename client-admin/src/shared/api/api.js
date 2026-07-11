@@ -7,6 +7,17 @@ const authAxios = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+authAxios.interceptors.request.use((config) => {
+  try {
+    const stored = localStorage.getItem('ice-auth');
+    if (stored) {
+      const { state } = JSON.parse(stored);
+      if (state?.token) config.headers.Authorization = `Bearer ${state.token}`;
+    }
+  } catch (_) {}
+  return config;
+});
+
 export const loginRequest = async (emailOrUsername, password) => {
   return await authAxios.post('/auth/login', { emailOrUsername, password });
 };
@@ -71,4 +82,33 @@ export const deleteMenuRequest = async (id) => {
 
 export const restoreMenuRequest = async (id) => {
   return await adminAxios.patch(`/menu/restore/${id}`);
+};
+
+// --- USER & PROFILE ENDPOINTS ---
+export const getProfileRequest = async () => {
+  return await authAxios.get('/users/me');
+};
+
+export const getAllUsersRequest = async () => {
+  return await authAxios.get('/users');
+};
+
+export const createUserRequest = async (userData) => {
+  return await authAxios.post('/users', userData);
+};
+
+export const updateUserRequest = async (id, userData) => {
+  return await authAxios.put(`/users/${id}`, userData);
+};
+
+export const deleteUserRequest = async (id) => {
+  return await authAxios.delete(`/users/${id}`);
+};
+
+export const changePasswordRequest = async (passwordData) => {
+  return await authAxios.post('/users/change-password', passwordData);
+};
+
+export const deleteAccountRequest = async () => {
+  return await authAxios.delete('/users/delete-account');
 };
