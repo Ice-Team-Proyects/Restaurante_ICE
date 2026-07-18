@@ -1,5 +1,7 @@
 # Despliegue Auth Service
 
-Esta guía se amplió al **stack completo** (Auth + server-admin + clients) para que las páginas funcionen.
+Esta guía se amplió al **stack web** (Auth + server-admin + client-admin + client-customer).
 
-👉 Usa **[DEPLOY.md](./DEPLOY.md)** — Neon + Atlas + Render + Expo, todo gratis, < 2 horas.
+**No incluye** la app móvil (`client-user`).
+
+👉 Usa **[DEPLOY.md](./DEPLOY.md)** — Neon + Atlas + Render, todo gratis, < 2 horas.

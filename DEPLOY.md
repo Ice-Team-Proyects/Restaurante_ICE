@@ -1,6 +1,6 @@
 # Despliegue gratis del stack Restaurante_ICE (< 2 horas)
 
-Despliega **todos los servicios que hacen funcionar la página**, sin usar el `docker-compose.yml` completo (Mongo + fronts + hot-reload + SDK .NET = demasiado pesado para free tiers).
+Despliega **los servicios web** que hacen funcionar la página, sin usar el `docker-compose.yml` completo (Mongo + fronts + hot-reload + SDK .NET = demasiado pesado para free tiers) y **sin la app móvil** (`client-user`).
 
 ---
 
@@ -14,7 +14,8 @@ Despliega **todos los servicios que hacen funcionar la página**, sin usar el `d
 | 4 | **server-admin** | API Node/Express | Render Web Service Free (Node) | Sin Docker; `pnpm start` |
 | 5 | **client-admin** | SPA React/Vite | Render **Static Site** Free | Panel admin web |
 | 6 | **client-customer** | SPA React/Vite | Render **Static Site** Free | Página del cliente web |
-| 7 | **client-user** | App Expo/RN | [Expo](https://expo.dev) Free + Expo Go | App móvil (no es SPA Vite) |
+
+**No se despliega:** `client-user` (Expo / app móvil).
 
 **No despliegues con Docker Compose en la nube.** Cada pieza va a su PaaS free. Cloudinary/Gmail SMTP ya están en el código (no son contenedores).
 
@@ -23,23 +24,23 @@ Despliega **todos los servicios que hacen funcionar la página**, sin usar el `d
 ## 2. Orden de despliegue (importante)
 
 ```
-Neon + Atlas  →  auth-service  →  server-admin  →  client-admin + client-customer  →  client-user
+Neon + Atlas  →  auth-service  →  server-admin  →  client-admin + client-customer
 ```
 
-Los fronts necesitan las URLs públicas de Auth y server-admin **en el build** (`VITE_*` / `EXPO_PUBLIC_*`).
+Los fronts necesitan las URLs públicas de Auth y server-admin **en el build** (`VITE_*`).
 
 ---
 
-## 3. Cronograma (~100–120 min)
+## 3. Cronograma (~90–110 min)
 
 | Bloque | Min | Acción |
 |---|---|---|
-| A | 15 | Cuentas: GitHub, Neon, Atlas, Render, Expo |
+| A | 10 | Cuentas: GitHub, Neon, Atlas, Render |
 | B | 15 | Crear Neon + Atlas y copiar connection strings |
 | C | 25 | Deploy auth-service (Render Docker) |
 | D | 20 | Deploy server-admin (Render Node) |
 | E | 25 | Deploy client-admin + client-customer (Static) |
-| F | 15 | Configurar client-user (Expo) y probar flujo |
+| F | 10 | Probar flujo web (login, páginas) |
 
 ---
 
@@ -49,7 +50,6 @@ Los fronts necesitan las URLs públicas de Auth y server-admin **en el build** (
 2. Neon → Postgres
 3. MongoDB Atlas → cluster M0
 4. Render → APIs + static sites
-5. Expo → app móvil
 
 > En Render, evita añadir tarjeta si quieres quedarte en free. Los Web Services Free se duermen ~15 min sin tráfico (primer request ~30–60 s).
 
@@ -225,53 +225,7 @@ AppSettings__FrontendUrl=https://ice-client-customer.onrender.com
 
 ---
 
-## 10. client-user (Expo Free) — app móvil
-
-No va en Render Static (es React Native / Expo).
-
-### Opción A — Expo Go (más rápido, gratis, < 15 min)
-
-1. Crea cuenta en [expo.dev](https://expo.dev).
-2. En tu máquina (o CI):
-
-```bash
-cd client-user
-cp .env.example .env
-```
-
-Edita `.env`:
-
-```bash
-EXPO_PUBLIC_AUTH_URL=https://ice-auth-service.onrender.com/api/v1
-EXPO_PUBLIC_USER_URL=https://ice-server-admin.onrender.com/RestauranteICE/v1
-```
-
-3. Instala y arranca:
-
-```bash
-corepack enable
-pnpm install
-pnpm start
-```
-
-4. Escanea el QR con **Expo Go** (Android/iOS).  
-   La app habla con Auth + server-admin en la nube.
-
-### Opción B — Build web con Expo (opcional)
-
-Si necesitas una URL web además de móvil:
-
-```bash
-npx expo install react-dom react-native-web @expo/metro-runtime
-npx expo export -p web
-```
-
-Luego sube la carpeta de export a un Static Site.  
-La experiencia principal de `client-user` está pensada para **móvil**.
-
----
-
-## 11. Mapa final de URLs
+## 10. Mapa final de URLs
 
 Sustituye por tus URLs reales de Render:
 
@@ -282,23 +236,21 @@ Sustituye por tus URLs reales de Render:
 | server-admin | `https://ice-server-admin.onrender.com/RestauranteICE/v1` |
 | Admin web | `https://ice-client-admin.onrender.com` |
 | Customer web | `https://ice-client-customer.onrender.com` |
-| App móvil | Expo Go / EAS |
 
 ---
 
-## 12. Checklist de humo (páginas funcionando)
+## 11. Checklist de humo (páginas funcionando)
 
 - [ ] `GET` Auth `/health` → OK
 - [ ] Login Auth → JWT
 - [ ] `GET` server-admin `/RestauranteICE/v1/health` → OK
 - [ ] client-customer carga home y lista restaurantes/menús
 - [ ] client-admin login + CRUD básico
-- [ ] client-user en Expo Go login contra Auth cloud
 - [ ] `AppSettings__FrontendUrl` apunta al customer desplegado
 
 ---
 
-## 13. Por qué NO usar docker-compose en la nube
+## 12. Por qué NO usar docker-compose en la nube
 
 El compose del root:
 
@@ -307,11 +259,11 @@ El compose del root:
 - apunta Auth a `Host=localhost;Port=5437` (roto dentro del contenedor);
 - supera fácilmente límites de RAM/CPU de free tiers.
 
-En su lugar: **DBs managed free + 2 Web Services + 2 Static Sites + Expo**.
+En su lugar: **DBs managed free + 2 Web Services + 2 Static Sites**.
 
 ---
 
-## 14. Gotchas
+## 13. Gotchas
 
 1. **Cold start Free:** Auth y server-admin duermen; el primer click en la web puede tardar ~1 min.
 2. **JWT compartido:** `JWT_SECRET` (server-admin) = `JwtSettings__SecretKey` (auth).
@@ -324,7 +276,7 @@ En su lugar: **DBs managed free + 2 Web Services + 2 Static Sites + Expo**.
 
 ---
 
-## 15. Alternativa rápida de fronts (también gratis)
+## 14. Alternativa rápida de fronts (también gratis)
 
 Si prefieres Vercel para las SPAs:
 
