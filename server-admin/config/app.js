@@ -14,7 +14,7 @@ import { errorHandler } from '../middleware/handle-errors.js';
 import { swaggerDocs, swaggerUi } from './documentation.js';
 
 import analyticsRoutes from '../src/analytics/analytics.routes.js'; 
-import categoryRoutes from '../src/Category/category.routes.js';
+import categoryRoutes from '../src/category/category.routes.js';
 import productRoutes from '../src/product/product.routes.js';
 import restaurantRoutes from '../src/restaurant/restaurant.routes.js'; 
 import tableRoutes from '../src/table/table.routes.js'; 
