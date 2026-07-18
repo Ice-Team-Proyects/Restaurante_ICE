@@ -19,9 +19,11 @@ RUN dotnet publish "AuthService.Api.csproj" -c Release -o /app/publish /p:UseApp
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
 
-EXPOSE 5296
-ENV ASPNETCORE_URLS=http://+:5296
+# Render inyecta PORT; el entrypoint escucha en ese puerto.
+EXPOSE 8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 
-ENTRYPOINT ["dotnet", "AuthService.Api.dll"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
