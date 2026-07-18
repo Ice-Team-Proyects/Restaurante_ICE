@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const authAxios = axios.create({
   baseURL: import.meta.env.VITE_AUTH_URL,
-  timeout: 8000,
+  timeout: 60000,
   headers: { 'Content-Type': 'application/json' },
 });
 
