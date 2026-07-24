@@ -20,8 +20,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-EXPOSE 5296
-ENV ASPNETCORE_URLS=http://+:5296
+# Render inyecta PORT; default 8080 si no existe.
+EXPOSE 8080
 ENV ASPNETCORE_ENVIRONMENT=Production
 
-ENTRYPOINT ["dotnet", "AuthService.Api.dll"]
+ENTRYPOINT ["sh", "-c", "export ASPNETCORE_URLS=http://0.0.0.0:${PORT:-8080} && exec dotnet AuthService.Api.dll"]
